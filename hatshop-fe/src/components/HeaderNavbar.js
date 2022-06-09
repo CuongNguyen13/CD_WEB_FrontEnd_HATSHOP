@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import '../style/main.css';
-import '../style/util.css';
-import '../style/index.css';
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,94 +7,81 @@ import {
     Link,
     Routes
 } from "react-router-dom";
-import About from './About';
 import Home from './Home';
+import Product from './Product';
+import ContactUs from './ContactUs';
 
 class HeaderNavbar extends Component {
     render() {
         return (
+            
             <div>
-                
-                    <div>
-                    <div className="container-menu-desktop trans-03">
-                        <div className="wrap-menu-desktop">
-                            <nav className="limiter-menu-desktop p-l-45">
-                                {/* Logo desktop */}
-                                {/* <a href="#" className="logo">
-                                    <img src="images/icons/logo-01.png" alt="IMG-LOGO" />
-                                </a> */}
-                                {/* Menu desktop */}
-                                <div className="menu-desktop">
-                                    <ul className="main-menu">
-                                        <li className="active-menu">
-                                            <a href="index.html">Home</a>
-                                            <ul className="sub-menu">
-                                                <li>
-                                                    <a href="index.html">Homepage 1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="home-02.html">Homepage 2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="home-03.html">Homepage 3</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="product.html">Shop</a>
-                                        </li>
-                                        <li className="label1" data-label1="hot">
-                                            <a href="shoping-cart.html">Features</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog.html">Blog</a>
-                                        </li>
-                                        <li>
-                                            <a href="about.html">About</a>
-                                        </li>
-                                        <li>
-                                            <a href="contact.html">Contact</a>
-                                        </li>
-                                    </ul>
+                    {/* Navbar Start */}
+                    <div
+                        className="container-fluid fixed-top px-0 wow fadeIn"
+                        data-wow-delay="0.1s"
+                    >
+                        
+                        <nav
+                            className="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn"
+                            data-wow-delay="0.1s"
+                        >
+                            <a href="index.html" className="navbar-brand ms-4 ms-lg-0">
+                                <h1 className="fw-bold text-primary m-0">
+                                    F<span className="text-secondary">oo</span>dy
+                                </h1>
+                            </a>
+                            <button
+                                type="button"
+                                className="navbar-toggler me-4"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#navbarCollapse"
+                            >
+                                <span className="navbar-toggler-icon" />
+                            </button>
+                            <div className="collapse navbar-collapse" id="navbarCollapse">
+                                <div className="navbar-nav ms-auto p-4 p-lg-0">
+                                    <Link className="nav-item nav-link active" to = "/">
+                                        Trang chủ
+                                    </Link>
+                                <Link to = "/product" className="nav-item nav-link">
+                                        Sản phẩm
+                                </Link>
+                                    
+                                    <Link to="/contact" className="nav-item nav-link">
+                                        Liên hệ
+                                    </Link>
                                 </div>
-                                {/* Icon header */}
-                                <div className="wrap-icon-header flex-w flex-r-m h-full">
-                                    <div className="flex-c-m h-full p-r-24">
-                                        <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
-                                            <i className="zmdi zmdi-search" />
-                                        </div>
-                                    </div>
-                                    <div className="flex-c-m h-full p-l-18 p-r-25 bor5">
-                                        <div
-                                            className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart"
-                                            data-notify={2}
-                                        >
-                                            <i className="zmdi zmdi-shopping-cart" />
-                                        </div>
-                                    </div>
-                                    <div className="flex-c-m h-full p-lr-19">
-                                        <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-sidebar">
-                                            <i className="zmdi zmdi-menu" />
-                                        </div>
-                                    </div>
+                                <div className="d-none d-lg-flex ms-2">
+                                    <a className="btn-sm-square bg-white rounded-circle ms-3" href="">
+                                        <small className="fa fa-search text-body" />
+                                    </a>
+                                    <a className="btn-sm-square bg-white rounded-circle ms-3" href="">
+                                        <small className="fa fa-user text-body" />
+                                    </a>
+                                    <a className="btn-sm-square bg-white rounded-circle ms-3" href="">
+                                        <small className="fa fa-shopping-bag text-body" />
+                                    </a>
                                 </div>
-                            </nav>
-                        </div>
+                            </div>
+                        </nav>
                     </div>
-
-
+                    {/* Navbar End */}
             
                         <Routes>
-                            <Route path="/about" element={<About></About>}>
-
-                            </Route>
+                          
                             <Route path="/" element={<Home></Home>}>
                                 
                             </Route>
+                            <Route path="/product" element={<Product></Product>}>
+
+                            </Route>
+                           <Route path="/contact" element={<ContactUs></ContactUs>}></Route>
                         </Routes>
-                    </div>
+                    
                 
             </div>
+            
         );
     }
 }
