@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import Breadcrum from './Breadcrum';
+
 
 class ContactUs extends Component {
     render() {
         return (
             <div>
-                <Breadcrum></Breadcrum>
                 <div className="container-xxl py-6">
                     <div className="container">
                         <div
