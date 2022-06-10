@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import HeaderNavbar from './HeaderNavbar';
+import NewProduct from './NewProduct';
 import Product from './Product';
 import SlideshowHome from './SlideshowHome';
 
@@ -43,7 +44,7 @@ class Home extends Component {
 
 
                     {/* product */}
-                    <Product></Product>
+                    <NewProduct></NewProduct>
 
                 </>
 

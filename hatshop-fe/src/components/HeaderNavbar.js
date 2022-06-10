@@ -10,6 +10,8 @@ import {
 import Home from './Home';
 import Product from './Product';
 import ContactUs from './ContactUs';
+import Login from './Login';
+import DetailProduct from './DetailProduct';
 
 class HeaderNavbar extends Component {
     render() {
@@ -18,19 +20,20 @@ class HeaderNavbar extends Component {
             <div>
                     {/* Navbar Start */}
                     <div
-                        className="container-fluid fixed-top px-0 wow fadeIn"
+                    className="container-fluid fixed-top wow fadeIn"
                         data-wow-delay="0.1s"
                     >
                         
                         <nav
-                            className="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn"
+                            style={{marginTop:"1em"}}
+                            className="navbar navbar-expand-lg navbar-light py-lg-12 px-lg-8 wow fadeIn"
                             data-wow-delay="0.1s"
                         >
-                            <a href="index.html" className="navbar-brand ms-4 ms-lg-0">
+                            <Link to="/" className="navbar-brand ms-4 ms-lg-0">
                                 <h1 className="fw-bold text-primary m-0">
                                     F<span className="text-secondary">oo</span>dy
                                 </h1>
-                            </a>
+                            </Link>
                             <button
                                 type="button"
                                 className="navbar-toggler me-4"
@@ -51,6 +54,9 @@ class HeaderNavbar extends Component {
                                     <Link to="/contact" className="nav-item nav-link">
                                         Liên hệ
                                     </Link>
+                                <Link to="/login" className="nav-item nav-link">
+                                    Đăng nhập
+                                </Link>
                                 </div>
                                 <div className="d-none d-lg-flex ms-2">
                                     <a className="btn-sm-square bg-white rounded-circle ms-3" href="">
@@ -70,13 +76,12 @@ class HeaderNavbar extends Component {
             
                         <Routes>
                           
-                            <Route path="/" element={<Home></Home>}>
-                                
-                            </Route>
-                            <Route path="/product" element={<Product></Product>}>
+                            <Route path="/" element={<Home></Home>}></Route>
+                            <Route path="/product" element={<Product></Product>}></Route>
+                             <Route path="/contact" element={<ContactUs></ContactUs>}></Route>
+                            <Route path="/login" element={<Login></Login>}></Route>
+                            <Route path="/detailProduct" element={<DetailProduct></DetailProduct>}></Route>
 
-                            </Route>
-                           <Route path="/contact" element={<ContactUs></ContactUs>}></Route>
                         </Routes>
                     
                 
