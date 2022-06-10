@@ -12,6 +12,7 @@ import Product from './Product';
 import ContactUs from './ContactUs';
 import Login from './Login';
 import DetailProduct from './DetailProduct';
+import ShoppingCart from './ShoppingCart';
 
 class HeaderNavbar extends Component {
     render() {
@@ -26,7 +27,7 @@ class HeaderNavbar extends Component {
                         
                         <nav
                             style={{marginTop:"1em"}}
-                            className="navbar navbar-expand-lg navbar-light py-lg-12 px-lg-8 wow fadeIn"
+                            className="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-8 wow fadeIn"
                             data-wow-delay="0.1s"
                         >
                             <Link to="/" className="navbar-brand ms-4 ms-lg-0">
@@ -62,12 +63,10 @@ class HeaderNavbar extends Component {
                                     <a className="btn-sm-square bg-white rounded-circle ms-3" href="">
                                         <small className="fa fa-search text-body" />
                                     </a>
-                                    <a className="btn-sm-square bg-white rounded-circle ms-3" href="">
-                                        <small className="fa fa-user text-body" />
-                                    </a>
-                                    <a className="btn-sm-square bg-white rounded-circle ms-3" href="">
+                                    
+                                    <Link to="/cart" className="btn-sm-square bg-white rounded-circle ms-3" href="">
                                         <small className="fa fa-shopping-bag text-body" />
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </nav>
@@ -80,8 +79,8 @@ class HeaderNavbar extends Component {
                             <Route path="/product" element={<Product></Product>}></Route>
                              <Route path="/contact" element={<ContactUs></ContactUs>}></Route>
                             <Route path="/login" element={<Login></Login>}></Route>
-                            <Route path="/detailProduct" element={<DetailProduct></DetailProduct>}></Route>
-
+                            <Route path="/detailProduct:id" element={<DetailProduct></DetailProduct>}></Route>
+                            <Route path='/cart' element={<ShoppingCart></ShoppingCart>}></Route>
                         </Routes>
                     
                 

@@ -23,13 +23,13 @@ class NewProduct extends Component {
                         <div className="tab-content">
                             <div id="tab-1" className="tab-pane fade show p-0 active">
                                 <div className="row g-4">
-                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg"></ProductItem>
-                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg"></ProductItem>
-                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg"></ProductItem>
-                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg"></ProductItem>
-                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg"></ProductItem>
-                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg"></ProductItem>
-                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg"></ProductItem>
+                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg" id="1"></ProductItem>
+                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg" id="2"></ProductItem>
+                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg" id="3"></ProductItem>
+                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg" id="4"></ProductItem>
+                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg" id="5"></ProductItem>
+                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg" id="6"></ProductItem>
+                                    <ProductItem name="Táo" price="200000" img="img/product-5.jpg" id="7"></ProductItem>
 
                                    
                                    

@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import { useParams } from 'react-router-dom';
+import ProductItem from './ProductItem';
+const DetailProduct =()=> {
 
-class DetailProduct extends Component {
-    render() {
+        let i = useParams();
+        
+        window.scrollTo(0, 0);
         return (
             <div>
                 <div className="container-xxl py-5">
@@ -13,7 +18,7 @@ class DetailProduct extends Component {
                                 </div>
                             </div>
                             <div className="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                                <h1 className="display-5 mb-4">Best Organic Fruits And Vegetables</h1>
+                                <h1 className="display-5 mb-4">id: </h1>
                                 <p className="mb-4">
                                     Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu
                                     diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet
@@ -31,6 +36,10 @@ class DetailProduct extends Component {
             </div>
         );
     }
-}
 
-export default DetailProduct;
+
+
+
+
+
+export default(DetailProduct);

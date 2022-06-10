@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
-import ContactUs from './ContactUs';
+import { Link  } from 'react-router-dom';
+
 
 class ProductItem extends Component {
     render() {
-        let {img, name, price, id } = this.props;
+
+        let ussr = {
+            name:"kkk"
+        }
+        let { img, name, price, id } = this.props;
         return (
             
             
@@ -24,15 +28,12 @@ class ProductItem extends Component {
                             </div>
                         </div>
                         <div className="text-center p-4">
-                            <Link className="d-block h5 mb-2" to="/detailProduct">
+                            <Link className="d-block h5 mb-2" to={`/detailProduct${ussr}`}>
                                 {name}
                             </Link>
 
 
-                        <Routes>
-                            <Route path='/detailProduct' element={<ContactUs></ContactUs>}></Route>
-                        </Routes>
-
+                        
                             <span className="text-primary me-1">{price}</span>
                             
                         </div>
@@ -59,4 +60,7 @@ class ProductItem extends Component {
     }
 }
 
+const rootReducer = (state = this.props.id, action) => {
+    return state;
+}
 export default ProductItem;
