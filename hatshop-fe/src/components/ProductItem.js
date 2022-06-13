@@ -3,9 +3,10 @@ import { Link  } from 'react-router-dom';
 
 
 class ProductItem extends Component {
+    di
     render() {
 
-       
+    
         let { img, name, price, id } = this.props;
         return (
             
@@ -16,11 +17,13 @@ class ProductItem extends Component {
                 >
                     <div className="product-item">
                         <div className="position-relative bg-light overflow-hidden">
+                        <Link className="d-block h5 mb-2" to={`/detailProduct${id}`}>
                             <img
                                 className="img-fluid w-100"
                                 src={img}
                                 alt=""
                             />
+                            </Link>
                             <div className="bg-warning rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
                                 New
                             </div>
@@ -34,10 +37,12 @@ class ProductItem extends Component {
                         </div>
                         <div className="d-flex border-top">
                             <small className="w-50 text-center border-end py-2">
+                            <Link className="d-block h5 mb-2" to={`/detailProduct${id}`}>
                                 <button className="text-body btn" href="">
                                     <i className="fa fa-eye text-primary me-2" />
                                     Xem chi tiết
                                 </button>
+                            </Link>
                             </small>
 
 
@@ -55,7 +60,4 @@ class ProductItem extends Component {
     }
 }
 
-const rootReducer = (state = this.props.id, action) => {
-    return state;
-}
 export default ProductItem;

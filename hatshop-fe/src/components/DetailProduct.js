@@ -1,12 +1,18 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
+// import React, { Component } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import ProductItem from './ProductItem';
-const DetailProduct =()=> {
 
-        let i = useParams();
-        
+ function DetailProduct() {
+
+        let params = useParams();
+        const id = params.id;
+      
         window.scrollTo(0, 0);
+
+        useEffect(()=>{
+            // gọi api chỗ này
+        },[])
+        
         return (
             <div>
                 <div className="container-xxl py-5">
@@ -14,11 +20,11 @@ const DetailProduct =()=> {
                         <div className="row g-5 align-items-center">
                             <div className="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                                 <div className="about-img position-relative overflow-hidden p-5 pe-0">
-                                    <img className="img-fluid w-100" src="img/about.jpg" />
+                                    <img className="img-fluid w-100" src="./img/about.jpg" />
                                 </div>
                             </div>
                             <div className="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                                <h1 className="display-5 mb-4">id: </h1>
+                                <h1 className="display-5 mb-4">id: {id} </h1>
                                 <p className="mb-4">
                                     Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu
                                     diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet
@@ -36,10 +42,5 @@ const DetailProduct =()=> {
             </div>
         );
     }
-
-
-
-
-
 
 export default(DetailProduct);
