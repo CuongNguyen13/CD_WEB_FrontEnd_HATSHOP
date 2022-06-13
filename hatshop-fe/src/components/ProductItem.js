@@ -5,9 +5,7 @@ import { Link  } from 'react-router-dom';
 class ProductItem extends Component {
     render() {
 
-        let ussr = {
-            name:"kkk"
-        }
+       
         let { img, name, price, id } = this.props;
         return (
             
@@ -28,12 +26,9 @@ class ProductItem extends Component {
                             </div>
                         </div>
                         <div className="text-center p-4">
-                            <Link className="d-block h5 mb-2" to={`/detailProduct${ussr}`}>
+                            <Link className="d-block h5 mb-2" to={`/detailProduct${id}`}>
                                 {name}
                             </Link>
-
-
-                        
                             <span className="text-primary me-1">{price}</span>
                             
                         </div>

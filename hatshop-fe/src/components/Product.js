@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 class Product extends Component {
     render() {
+        window.scroll(0,0);
         return (
             <div>
                 <>
