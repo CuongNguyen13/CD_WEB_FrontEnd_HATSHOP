@@ -7,7 +7,7 @@ import CommentFacebook from './CommentFaceBook';
 
         let params = useParams();
         const id = params.id;
-        let curentURL = `http://localhost:3000/detailProduct${id}`
+        let curentURL = window.location.href;
 
         console.log(curentURL)
 
