@@ -3,7 +3,6 @@ import { Link  } from 'react-router-dom';
 
 
 class ProductItem extends Component {
-    di
     render() {
 
     

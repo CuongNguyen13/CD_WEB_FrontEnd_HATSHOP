@@ -1,12 +1,17 @@
 // import React, { Component } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
+// import CommentFB from "./CommentFB"
+import CommentFacebook from './CommentFaceBook';
  function DetailProduct() {
 
         let params = useParams();
         const id = params.id;
-      
+        let curentURL = `http://localhost:3000/detailProduct${id}`
+
+        console.log(curentURL)
+
+
         window.scrollTo(0, 0);
 
         useEffect(()=>{
@@ -35,9 +40,13 @@ import { useParams } from 'react-router-dom';
                                     Read More
                                 </a>
                             </div>
+                            {/* <CommentFB dataURL={curentURL}></CommentFB> */}
+                            <CommentFacebook dataHref={curentURL}></CommentFacebook>
                         </div>
                     </div>
                 </div>
+              
+  
 
             </div>
         );

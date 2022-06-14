@@ -1,8 +1,8 @@
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HeaderNavbar from './components/HeaderNavbar'
-import FooterHat from './components/FooterHat';
+import HeaderNavbar from './componentsHomePage/HeaderNavbar'
+import FooterHat from './componentsHomePage/FooterHat';
 function App() {
   return (
     <div className="App"> 
