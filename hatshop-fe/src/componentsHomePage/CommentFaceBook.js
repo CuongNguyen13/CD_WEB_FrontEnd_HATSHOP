@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 class componentName extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
 
         }
     }
@@ -34,25 +34,25 @@ class componentName extends Component {
 
 
 
-        componentDidMount(){
-            this.initFacebookSDK();
-        }
+    componentDidMount() {
+        this.initFacebookSDK();
+    }
 
 
     render() {
-        let {dataHref} = this.props;
+        let { dataHref } = this.props;
         return (
             <div>
                 <h1>Bình luận</h1>
-                 <div
-                        className="fb-comments"
-                        data-href={dataHref}
-                        // data-href="http://facebook.com"
-                        
-                        data-width="100%"
-                        data-numposts={5}
-                />  
-             </div>   
+                <div
+                    className="fb-comments"
+                    data-href={dataHref}
+                    // data-href="http://facebook.com"
+
+                    data-width="100%"
+                    data-numposts={5}
+                />
+            </div>
         );
     }
 }
