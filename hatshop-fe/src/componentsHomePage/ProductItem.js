@@ -23,15 +23,15 @@ class ProductItem extends Component {
                                 alt=""
                             />
                             </Link>
-                            <div className="bg-warning rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                            <div className="bg-danger rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
                                 New
                             </div>
                         </div>
                         <div className="text-center p-4">
-                            <Link className="d-block h5 mb-2" to={`/detailProduct${id}`}>
+                            <Link className="d-block h5 mb-2" to={`/detailProduct${id}`} style={{textDecoration:"none"}}>
                                 {name}
                             </Link>
-                            <span className="text-primary me-1">{price}</span>
+                            <span className="text-primary me-1">{price} vnđ</span>
                             
                         </div>
                         <div className="d-flex border-top">

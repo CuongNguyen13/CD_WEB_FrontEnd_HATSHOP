@@ -1,23 +1,29 @@
 import React, { Component } from 'react';
+import {Carousel} from 'react-bootstrap';
 
 class SlideshowHome extends Component {
     render() {
         return (
             <div>
-                <div className="carousel-item active">
-                    <img className="w-100" src="img/carousel-1.jpg" alt="Image" />
-                    <div className="carousel-caption">
-                        <div className="container">
-                            <div className="row justify-content-start">
-                                <div className="col-lg-7">
-                                    <h1 className="display-2 mb-5 animated slideInDown">
-                                        Organic Food Is Good For Health
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <Carousel>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src="holder.js/800x400?text=First slide&bg=373940"
+                            alt="First slide"
+                        />
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src="holder.js/800x400?text=Second slide&bg=282c34"
+                            alt="Second slide"
+                        />
+
+
+                    </Carousel.Item>
+                   
+                </Carousel>
             </div>
         );
     }

@@ -18,7 +18,6 @@ class Home extends Component {
                         >
                             <div className="carousel-inner">
                                 <SlideshowHome></SlideshowHome>
-                                <SlideshowHome></SlideshowHome>
                             </div>
                             <button
                                 className="carousel-control-prev"

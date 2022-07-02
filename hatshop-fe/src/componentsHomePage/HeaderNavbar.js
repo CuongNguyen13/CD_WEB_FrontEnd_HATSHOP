@@ -81,6 +81,9 @@ class HeaderNavbar extends Component {
                     <Route path="/login" element={<Login></Login>}></Route>
                     <Route path="/detailProduct:id" element={<DetailProduct></DetailProduct>}></Route>
                     <Route path='/cart' element={<ShoppingCart></ShoppingCart>}></Route>
+                    
+
+
                 </Routes>
 
 

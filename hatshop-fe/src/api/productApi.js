@@ -6,5 +6,13 @@ export const productApi = {
 
         // nếu có tham số thì axiosClient.get(url,{params});
         return axiosClient.get(url);
+
+    },
+    createProduct(params){
+        const url = "/product"
+        return axiosClient.post(url,params)
     }
+
+
+
 }
