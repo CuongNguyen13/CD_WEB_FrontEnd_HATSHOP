@@ -1,8 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
 
-class ContactUs extends Component {
-    render() {
+function ContactUs  () {
+       
+        const [input, setInputs] = useState({});
+      
+        const handleChange = (event) => {
+            const name = event.target.name;
+            const value = event.target.value;
+            setInputs(values => ({ ...values, [name]: value }))
+        }
+
+        const handleSubmit = (event) => {
+            event.preventDefault();
+            console.log("input", input);
+        }
+
+       
         return (
             <div>
                 <div className="container-xxl py-6">
@@ -12,77 +26,48 @@ class ContactUs extends Component {
                             data-wow-delay="0.1s"
                             style={{ maxWidth: 500 }}
                         >
-                            <h1 className="display-5 mb-3">Contact Us</h1>
+                            <h1 className="display-5 mb-3">Liên hệ</h1>
                             <p>
-                                Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo
-                                sed rebum vero dolor duo.
+                               Vui lòng đóng góp ý kiến của bạn
                             </p>
                         </div>
                         <div className="row g-5 justify-content-center">
                             <div className="col-lg-5 col-md-12 wow fadeInUp" data-wow-delay="0.1s">
                                 <div className="bg-primary text-white d-flex flex-column justify-content-center h-100 p-5">
-                                    <h5 className="text-white">Call Us</h5>
+                                    <h5 className="text-white">Số điện thoại</h5>
                                     <p className="mb-5">
                                         <i className="fa fa-phone-alt me-3" />
-                                        +012 345 67890
+                                        0367225111
                                     </p>
-                                    <h5 className="text-white">Email Us</h5>
+                                    <h5 className="text-white">Email</h5>
                                     <p className="mb-5">
                                         <i className="fa fa-envelope me-3" />
-                                        info@example.com
+                                        
                                     </p>
-                                    <h5 className="text-white">Office Address</h5>
+                                    <h5 className="text-white">Địa chỉ</h5>
                                     <p className="mb-5">
                                         <i className="fa fa-map-marker-alt me-3" />
-                                        123 Street, New York, USA
+                                        Linh Xuân, Thủ Đức, Hồ Chí Minh
                                     </p>
-                                    <h5 className="text-white">Follow Us</h5>
-                                    <div className="d-flex pt-2">
-                                        <a
-                                            className="btn btn-square btn-outline-light rounded-circle me-1"
-                                            href=""
-                                        >
-                                            <i className="fab fa-twitter" />
-                                        </a>
-                                        <a
-                                            className="btn btn-square btn-outline-light rounded-circle me-1"
-                                            href=""
-                                        >
-                                            <i className="fab fa-facebook-f" />
-                                        </a>
-                                        <a
-                                            className="btn btn-square btn-outline-light rounded-circle me-1"
-                                            href=""
-                                        >
-                                            <i className="fab fa-youtube" />
-                                        </a>
-                                        <a
-                                            className="btn btn-square btn-outline-light rounded-circle me-0"
-                                            href=""
-                                        >
-                                            <i className="fab fa-linkedin-in" />
-                                        </a>
-                                    </div>
+                                   
                                 </div>
                             </div>
                             <div className="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                                <p className="mb-4">
-                                    The contact form is currently inactive. Get a functional and working
-                                    contact form with Ajax &amp; PHP in a few minutes. Just copy and paste
-                                    the files, add a little code and you're done.{" "}
-                                    <a href="https://htmlcodex.com/contact-form">Download Now</a>.
-                                </p>
-                                <form>
+                                
+                                <form onSubmit={handleSubmit}>
                                     <div className="row g-3">
                                         <div className="col-md-6">
                                             <div className="form-floating">
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    id="name"
+                                                    required 
                                                     placeholder="Your Name"
+                                                    name = "name"
+                                                    value={input.name||""}
+                                                    onChange={handleChange}
                                                 />
-                                                <label htmlFor="name">Your Name</label>
+                                                <label htmlFor="name">Họ và tên</label>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
@@ -92,8 +77,12 @@ class ContactUs extends Component {
                                                     className="form-control"
                                                     id="email"
                                                     placeholder="Your Email"
+                                                    name = "email"
+                                                    required 
+                                                    value={input.email || ""}
+                                                    onChange={handleChange}
                                                 />
-                                                <label htmlFor="email">Your Email</label>
+                                                <label htmlFor="email">Email</label>
                                             </div>
                                         </div>
                                         <div className="col-12">
@@ -103,8 +92,12 @@ class ContactUs extends Component {
                                                     className="form-control"
                                                     id="subject"
                                                     placeholder="Subject"
+                                                    name = "title"
+                                                    required 
+                                                    value={input.title || ""}
+                                                    onChange={handleChange}
                                                 />
-                                                <label htmlFor="subject">Subject</label>
+                                                <label htmlFor="subject">Tiêu đề</label>
                                             </div>
                                         </div>
                                         <div className="col-12">
@@ -115,16 +108,21 @@ class ContactUs extends Component {
                                                     id="message"
                                                     style={{ height: 200 }}
                                                     defaultValue={""}
+                                                    name = "content"
+                                                    required 
+                                                    value={input.content || ""}
+                                                    onChange={handleChange}
                                                 />
-                                                <label htmlFor="message">Message</label>
+                                                <label htmlFor="message">Nội dung</label>
                                             </div>
                                         </div>
                                         <div className="col-12">
                                             <button
                                                 className="btn btn-primary rounded-pill py-3 px-5"
                                                 type="submit"
+                                               
                                             >
-                                                Send Message
+                                                Gửi
                                             </button>
                                         </div>
                                     </div>
@@ -137,6 +135,6 @@ class ContactUs extends Component {
             </div>
         );
     }
-}
+
 
 export default ContactUs;

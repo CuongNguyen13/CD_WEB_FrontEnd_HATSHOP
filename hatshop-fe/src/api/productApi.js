@@ -10,6 +10,7 @@ export const productApi = {
     },
     createProduct(params){
         const url = "/product"
+        // gửi lên params là object
         return axiosClient.post(url,params)
     },
     getListProductNew(){

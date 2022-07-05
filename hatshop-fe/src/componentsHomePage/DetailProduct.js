@@ -69,10 +69,21 @@ function DetailProduct() {
                                 <p className="mb-4">
                                     {product && product.description}
                                 </p>
+                                <form name='add_cart'>
+                                    <div className='col-6'>
+                                        <label><b>Số lượng: </b></label>
+                                        <input className='col-2 mb-1' type='number' id="quantity" name="quantity" min="1" defaultValue={1}></input>
+
+                                    </div>
+                                    <div className='col-6'>
+                                        <input name='id' value={id} style={{ display: 'none' }}></input>
+                                    </div>
+                                </form>
                             </div>
-                            <button className="btn btn-danger rounded-pill py-3 px-3 mt-3" style={{ margin: '1em' }} href="">
+                           
+                            <Link to={checkUserName !== null ? "/cart" : "/login"} className="btn btn-danger rounded-pill py-3 px-3 mt-3" style={{ margin: '1em' }} href="">
                                 Thêm vào giỏ hàng
-                            </button>
+                            </Link>
 
 
                             <Link to={checkUserName!==null?"/cart":"/login"}

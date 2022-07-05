@@ -13,6 +13,7 @@ import ContactUs from './ContactUs';
 import Login from './Login';
 import DetailProduct from './DetailProduct';
 import ShoppingCart from './ShoppingCart';
+import Search from './Search';
 
 class HeaderNavbar extends Component {
     render() {
@@ -32,7 +33,7 @@ class HeaderNavbar extends Component {
                     >
                         <Link to="/" className="navbar-brand ms-4 ms-lg-0">
                             <h1 className="fw-bold text-primary m-0">
-                                F<span className="text-secondary">oo</span>dy
+                                Hat<span className="text-secondary">Sh</span>op
                             </h1>
                         </Link>
                         <button
@@ -60,9 +61,9 @@ class HeaderNavbar extends Component {
                                 </Link>
                             </div>
                             <div className="d-none d-lg-flex ms-2">
-                                <a className="btn-sm-square bg-white rounded-circle ms-3" href="">
+                                <Link to="/search" className="btn-sm-square bg-white rounded-circle ms-3" href="">
                                     <small className="fa fa-search text-body" />
-                                </a>
+                                </Link>
 
                                 <Link to="/cart" className="btn-sm-square bg-white rounded-circle ms-3" href="">
                                     <small className="fa fa-shopping-bag text-body" />
@@ -81,7 +82,7 @@ class HeaderNavbar extends Component {
                     <Route path="/login" element={<Login></Login>}></Route>
                     <Route path="/detailProduct:id" element={<DetailProduct></DetailProduct>}></Route>
                     <Route path='/cart' element={<ShoppingCart></ShoppingCart>}></Route>
-                    
+                    <Route path='/search' element={<Search></Search>}></Route>
 
 
                 </Routes>
