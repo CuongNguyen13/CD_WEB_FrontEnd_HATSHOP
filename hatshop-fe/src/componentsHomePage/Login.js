@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 
-class Login extends Component {
-    render() {
+function Login () {
+
         window.scrollTo(0,0);
+
+        function registerStoragy(){
+            
+        }
+
         return (
             <div>
                 <>
@@ -27,7 +32,7 @@ class Login extends Component {
                                                 type="email"
                                                 id="form3Example3"
                                                 className="form-control form-control-lg"
-                                                placeholder="Enter a valid email address"
+                                                placeholder="Nhập email"
                                             />
                                            
                                         </div>
@@ -37,7 +42,7 @@ class Login extends Component {
                                                 type="password"
                                                 id="form3Example4"
                                                 className="form-control form-control-lg"
-                                                placeholder="Enter password"
+                                                placeholder="Nhập mật khẩu"
                                             />
                                            
                                         </div>
@@ -84,6 +89,6 @@ class Login extends Component {
             </div>
         );
     }
-}
+
 
 export default Login;

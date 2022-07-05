@@ -11,8 +11,11 @@ export const productApi = {
     createProduct(params){
         const url = "/product"
         return axiosClient.post(url,params)
-    }
-
+    },
+    getListProductNew(){
+        const url = "/sort?field=date"
+        return axiosClient.get(url);
+    },
 
 
 }
