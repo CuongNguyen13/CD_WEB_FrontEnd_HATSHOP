@@ -1,4 +1,5 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
+import { contactApi } from '../api/contactApi';
 
 
 function ContactUs  () {
@@ -8,13 +9,15 @@ function ContactUs  () {
         const handleChange = (event) => {
             const name = event.target.name;
             const value = event.target.value;
-            setInputs(values => ({ ...values, [name]: value }))
+            setInputs(values => ({ ...values, [name]: value}))
         }
 
         const handleSubmit = (event) => {
             event.preventDefault();
-            console.log("input", input);
+            console.log(input);
+            contactApi.createContact(input);
         }
+        
 
        
         return (

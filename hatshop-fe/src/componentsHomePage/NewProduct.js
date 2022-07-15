@@ -46,7 +46,7 @@ function NewProduct(){
                                        {
                                            product && product.map((item, index) => {
                                                return (
-                                                   <ProductItem key={index} name={item.name} price={item.price} img={item.img} id={item.id}></ProductItem>
+                                                   <ProductItem key={index} name={item.name} price={item.price} img={item.linkImage1} id={item.id}></ProductItem>
                                                )
                                            })
                                        }
