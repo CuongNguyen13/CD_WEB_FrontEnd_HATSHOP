@@ -1,9 +1,43 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { loginApi } from '../api/loginApi';
 
 function Login () {
 
         window.scrollTo(0,0);
 
+         //sử lý form
+    const [input, setInputs] = useState({});
+    const [isDisplayModal, setIsDisplayModal] = useState(false);
+
+    const handleChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setInputs(values => ({ ...values, [name]: value }))
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        //gọi api login
+        //send form to service
+        console.log(input, "cc")
+        loginApi.createLogin(input).then(res => {
+            sessionStorage.setItem("userName",res);
+            <Link to={"/"}></Link>
+            // if (res) {
+            //     setIsDisplayModal(true)
+            //     setInputs("");
+            // }
+            // else {
+            //     setIsDisplayModal(false);
+            // }
+        
+            console.log(res)
+
+        }).catch(e => {
+            console.log(e)
+        });
+    }
         //xử lý đăng nhập
         //if(seccess)
         // localstoge = userName Nhận từ get api ("/login"), trả về home
@@ -24,7 +58,7 @@ function Login () {
                                     />
                                 </div>
                                 <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                                    <form>
+                                    <form onSubmit={handleSubmit}>
                                         <div className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                                          </div>
                                         {/* Email input */}
@@ -34,6 +68,10 @@ function Login () {
                                                 id="form3Example3"
                                                 className="form-control form-control-lg"
                                                 placeholder="Nhập email"
+                                                name = "email"
+                                                required
+                                                value={input.email || ""}
+                                                onChange={handleChange}
                                             />
                                            
                                         </div>
@@ -41,21 +79,26 @@ function Login () {
                                         <div className="form-outline mb-3">
                                             <input
                                                 type="password"
+                                                name="pass"
+                                              
                                                 id="form3Example4"
                                                 className="form-control form-control-lg"
                                                 placeholder="Nhập mật khẩu"
+                                                required
+                                                value={input.pass || ""}
+                                                onChange={handleChange}
                                             />
                                            
                                         </div>
                                         <div className="d-flex justify-content-between align-items-center">
                                             {/* Checkbox */}
                                             <div className="form-check mb-0">
-                                                <input
+                                                {/* <input
                                                     className="form-check-input me-2"
                                                     type="checkbox"
                                                     defaultValue=""
                                                     id="form2Example3"
-                                                />
+                                                /> */}
                                                 <label className="form-check-label" htmlFor="form2Example3">
                                                     Remember me
                                                 </label>
@@ -66,7 +109,7 @@ function Login () {
                                         </div>
                                         <div className="text-center text-lg-start mt-4 pt-2">
                                             <button
-                                                type="button"
+                                                type="submit"
                                                 className="btn btn-primary btn-lg"
                                                 style={{ paddingLeft: "2.5rem", paddingRight: "2.5rem" }}
                                             >
