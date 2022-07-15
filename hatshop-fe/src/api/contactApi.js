@@ -7,7 +7,7 @@ export const contactApi = {
     },
     //nhận kết quả từ api
     getResult(){
-        const url = `/contact`
+        const url = "/contact"
         return axiosClient.get(url);
 
     }

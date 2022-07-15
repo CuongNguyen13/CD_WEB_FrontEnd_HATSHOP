@@ -5,33 +5,36 @@ import { contactApi } from '../api/contactApi';
 function ContactUs() {
     //sử lý form
     const [input, setInputs] = useState({});
+    const [isDisplayModal, setIsDisplayModal] = useState(false);
+
+    const modal = isDisplayModal ? 'Đã gửi!' : 'Vui lòng thử lại!';
 
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        const date = new Date().getDate;
         setInputs(values => ({ ...values, [name]: value }))
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // console.log(input);
         //gọi api contact
         //send form to service
-        contactApi.createContact(input);
+        contactApi.createContact(input).then(res => {
+            // console.log("kết quả:", res)
+            if (res) {
+                setIsDisplayModal(true)
+                setInputs("");
+            }
+            else {
+                setIsDisplayModal(false);
+            }
+            console.log(res)
+
+        }).catch(e => {
+            console.log(e)
+        });
     }
-    //
 
-    useEffect(() => {
-        // nhận dữ liệu từ service
-        contactApi.getResult()
-            .then(res => {
-                console.log("kết quả:", res)
-
-            }).catch(e => {
-                console.log(e)
-            });
-    }, [])
 
     return (
         <div>
@@ -147,7 +150,34 @@ function ContactUs() {
                     </div>
                 </div>
             </div>
+            {/* thông báo thành công */}
+            <div>
+                {/* Button trigger modal */}
 
+                {/* Modal */}
+                {isDisplayModal && (
+                    <div className="modal show" id="exampleModal" style={{ display: 'block' }} tabIndex={-1} aria-labelledby="exampleModalLabel" aria-modal="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">Thông báo</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={() =>setIsDisplayModal(false)} aria-label="Close" />
+                                </div>
+                                <div className="modal-body">
+                                    {
+
+                                        modal
+                                    }
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => {setIsDisplayModal(false)}}>Đóng</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
