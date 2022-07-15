@@ -24,8 +24,9 @@ function DetailProduct() {
             });
     }, [])
 
+
     var checkUserName = sessionStorage.getItem("userName");
-    console.log("userName",checkUserName)
+    console.log("userName", checkUserName)
 
     return (
         <div>
@@ -80,14 +81,14 @@ function DetailProduct() {
                                     </div>
                                 </form>
                             </div>
-                           
+
                             <Link to={checkUserName !== null ? "/cart" : "/login"} className="btn btn-danger rounded-pill py-3 px-3 mt-3" style={{ margin: '1em' }} href="">
                                 Thêm vào giỏ hàng
                             </Link>
 
 
-                            <Link to={checkUserName!==null?"/cart":"/login"}
-                             className="btn btn-primary rounded-pill py-3 px-5 mt-3" style={{ margin: '1em' }} href="">
+                            <Link to={checkUserName !== null ? "/cart" : "/login"}
+                                className="btn btn-primary rounded-pill py-3 px-5 mt-3" style={{ margin: '1em' }} href="">
                                 Mua ngay
                             </Link>
 

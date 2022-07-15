@@ -4,9 +4,10 @@ function Login () {
 
         window.scrollTo(0,0);
 
-        function registerStoragy(){
-            
-        }
+        //xử lý đăng nhập
+        //if(seccess)
+        // localstoge = userName Nhận từ get api ("/login"), trả về home
+        //else (fail) cho popup thông báo sai tài khoản
 
         return (
             <div>
@@ -25,7 +26,7 @@ function Login () {
                                 <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                                     <form>
                                         <div className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                                        </div>
+                                         </div>
                                         {/* Email input */}
                                         <div className="form-outline mb-4">
                                             <input
