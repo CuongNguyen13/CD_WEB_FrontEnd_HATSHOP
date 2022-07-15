@@ -5,4 +5,10 @@ export const contactApi = {
         // gửi lên params là object
         return axiosClient.post(url, params)
     },
+    //nhận kết quả từ api
+    getResult(){
+        const url = `/contact`
+        return axiosClient.get(url);
+
+    }
 }
