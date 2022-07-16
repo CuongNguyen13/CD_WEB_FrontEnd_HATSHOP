@@ -73,7 +73,7 @@ function DetailProduct() {
                                 <form name='add_cart'>
                                     <div className='col-6'>
                                         <label><b>Số lượng: </b></label>
-                                        <input className='col-2 mb-1' type='number' id="quantity" name="quantity" min="1" defaultValue={1}></input>
+                                        <input className='col-3 mb-1' type='number' id="quantity" name="quantity" min="1" defaultValue={1}></input>
 
                                     </div>
                                     <div className='col-6'>

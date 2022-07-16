@@ -23,9 +23,10 @@ function Login() {
         console.log(input, "cc")
         loginApi.createLogin(input).then(res => {
             sessionStorage.setItem("userName", res);
+            console.log(res)
             navigate("/cart")
             
-            console.log(res)
+           
 
         }).catch(e => {
             console.log(e)
