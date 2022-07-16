@@ -24,15 +24,7 @@ function Login() {
         loginApi.createLogin(input).then(res => {
             sessionStorage.setItem("userName", res);
             navigate("/cart")
-            // <Link to={"/"}></Link>
-            // if (res) {
-            //     setIsDisplayModal(true)
-            //     setInputs("");
-            // }
-            // else {
-            //     setIsDisplayModal(false);
-            // }
-
+            
             console.log(res)
 
         }).catch(e => {
