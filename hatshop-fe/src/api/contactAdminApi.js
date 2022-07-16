@@ -4,5 +4,11 @@ export const contactAdminApi = {
         const url = "/admin/contact"
         return axiosClient.get(url);
 
-    }
+    },
+
+    updateStatus(params) {
+        const url = "/admin/contact/update"
+        // gửi lên params là object
+        return axiosClient.post(url, params)
+    },
 }
