@@ -5,10 +5,11 @@ import HeaderNavbar from './componentsHomePage/HeaderNavbar'
 import FooterHat from './componentsHomePage/FooterHat';
 import HeaderAdmin from './admin/HeaderAdmin';
 function App() {
+  const checkAdmin = sessionStorage.getItem("admin");
+  
   return (
     <div className="App"> 
-      {/* <HeaderNavbar></HeaderNavbar> */}
-      <HeaderAdmin></HeaderAdmin>
+      {checkAdmin!==null?<HeaderAdmin></HeaderAdmin>:<HeaderNavbar></HeaderNavbar>}
       <FooterHat></FooterHat>
     </div>
   );

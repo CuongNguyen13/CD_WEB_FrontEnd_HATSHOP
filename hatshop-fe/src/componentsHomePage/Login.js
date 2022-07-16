@@ -24,9 +24,16 @@ function Login() {
         loginApi.createLogin(input).then(res => {
             sessionStorage.setItem("userName", res);
             console.log(res)
-            navigate("/cart")
-            
            
+            const user = res;
+            console.log(user)
+            if(user.role){
+                console.log("123");
+                sessionStorage.setItem("admin", user);
+                window.location.reload();
+            }
+            
+            navigate("/cart")
 
         }).catch(e => {
             console.log(e)
