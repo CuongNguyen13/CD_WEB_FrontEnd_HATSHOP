@@ -11,4 +11,10 @@ export const contactAdminApi = {
         // gửi lên params là object
         return axiosClient.post(url, params)
     },
+
+    sendMail(params){
+        const url = "/admin/contact/send"
+        return axiosClient.post(url,params)
+    }
+
 }
