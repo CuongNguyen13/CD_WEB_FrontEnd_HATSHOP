@@ -161,16 +161,17 @@ function ContactUs() {
                             <div className="modal-content">
                                 <div className="modal-header">
                                     <h5 className="modal-title" id="exampleModalLabel">Thông báo</h5>
-                                    <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={() =>setIsDisplayModal(false)} aria-label="Close" />
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={() => setIsDisplayModal(false)} aria-label="Close" />
                                 </div>
                                 <div className="modal-body">
-                                    {
+                                    <h3>  {
 
                                         modal
                                     }
+                                    </h3>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => {setIsDisplayModal(false)}}>Đóng</button>
+                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => { setIsDisplayModal(false) }}>Đóng</button>
 
                                 </div>
                             </div>
