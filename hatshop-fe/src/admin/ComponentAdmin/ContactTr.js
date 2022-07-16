@@ -14,7 +14,7 @@ function ContactTr(props) {
 
     const [modelSend, setModalSend] = useState(false);
 
-
+    const [loading, setLoading] = useState(false);
 
     const [checkSend,setCheckSend] = useState(false);
     const modalSend = checkSend ? 'Đã gửi!' : 'Vui lòng thử lại!';
@@ -61,10 +61,13 @@ function ContactTr(props) {
         event.preventDefault();
         //gọi api login
         //send form to service
-        console.log( "sendmail",input)
+        // console.log( "sendmail",input)
+        setModalSend(false)
+        setLoading(true);
         contactAdminApi.sendMail(input).then(res => {
+           
            if(res){
-                setModalSend(false)
+                setLoading(false)
                 setCheckSend(true)
                 handlDelete()
            }else{
@@ -197,6 +200,32 @@ function ContactTr(props) {
                     </div>
                 </div>
             )}
+
+
+            {loading && (
+                <div className="modal show" id="exampleModal" style={{ display: 'block' }} tabIndex={-1} aria-labelledby="exampleModalLabel" aria-modal="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">Thông báo</h5>
+                                {/* <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={() => setCheckSend(false)} aria-label="Close" /> */}
+                            </div>
+                            <div className="modal-body">
+                                <h3>    
+                                    Đang gửi
+                                </h3>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => { setLoading(false) }}>Đóng</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
+
         </tr >
 
     );
