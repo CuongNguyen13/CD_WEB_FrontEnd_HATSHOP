@@ -30,6 +30,7 @@ function Login() {
             if(user.role){
                 console.log("123");
                 sessionStorage.setItem("admin", user);
+                navigate("/admin/static")
                 window.location.reload();
             }
             

@@ -32,14 +32,16 @@ function ContactTr(props) {
     const handlDelete = () => {
         // console.log("params", params)
         contactAdminApi.updateStatus(params).then(res => {
+            console.log(res);
             // check success
             if (res) {
-
+                console.log("134")
                 //  ở đây gọi hàm cho thằng cha cập nhật lại list
                 // nó truyền qua props
+                setModal(false)
                 props.onGetId(id);
                 //  đó là vậy
-                setModal(false)
+               
             }
             else {
 
@@ -85,7 +87,7 @@ function ContactTr(props) {
     return (
 
         <tr>
-            <td>{props.number + 1}</td>
+            <td>{id}</td>
             <td>{email}</td>
             <td>{new Date(dateSend).toLocaleDateString()}</td>
             <td>{title}</td>

@@ -15,6 +15,11 @@ export const contactAdminApi = {
     sendMail(params){
         const url = "/admin/contact/send"
         return axiosClient.post(url,params)
+    },
+    getListPage(limit,page){
+        const url =`/admin/contact?page=`+page+`&limit=`+limit
+        
+        return axiosClient.get(url)
     }
 
 }

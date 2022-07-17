@@ -18,5 +18,10 @@ export const productApi = {
         return axiosClient.get(url);
     },
 
+    getListProductAdmin(limit, page) {
+        const url = `/admin/product?page=` + page + `&limit=` + limit
+        return axiosClient.get(url)
+    }
+
 
 }
