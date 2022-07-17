@@ -14,6 +14,9 @@ import Login from './Login';
 import DetailProduct from './DetailProduct';
 import ShoppingCart from './ShoppingCart';
 import Search from './Search';
+import Register from './Register';
+import Otp from './Otp';
+import Forgetpass from './Forgetpass';
 
 class HeaderNavbar extends Component {
     render() {
@@ -83,8 +86,9 @@ class HeaderNavbar extends Component {
                     <Route path="/detailProduct:id" element={<DetailProduct></DetailProduct>}></Route>
                     <Route path='/cart' element={<ShoppingCart></ShoppingCart>}></Route>
                     <Route path='/search' element={<Search></Search>}></Route>
-
-
+                    <Route path='/Register' element={<Register></Register>}></Route>
+                    <Route path='/Forgetpass' element={<Forgetpass></Forgetpass>}></Route>
+                    <Route path='/OTP' element={<Otp></Otp>}></Route>
                 </Routes>
 
 
