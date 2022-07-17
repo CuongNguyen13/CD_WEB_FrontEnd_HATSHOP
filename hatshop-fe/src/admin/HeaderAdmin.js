@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Routes,Route, NavLink } from 'react-router-dom';
 import ContactAdmin from './ContactAdmin';
+import EditProductAdmin from './EditProductAdmin';
 import ProductAdmin from './ProductAdmin';
 import Static from './Static';
 
@@ -30,6 +31,7 @@ class HeaderAdmin extends Component {
                         <Route path="/admin/contact" element={<ContactAdmin></ContactAdmin>}></Route>
                         <Route path="/admin/static" element={<Static></Static>}></Route>
                         <Route path="/admin/product" element={<ProductAdmin/>}></Route>
+                        <Route path="/admin/editProduct:id" element={<EditProductAdmin></EditProductAdmin>}></Route>
                     </Routes>
                 </div>
             </div>

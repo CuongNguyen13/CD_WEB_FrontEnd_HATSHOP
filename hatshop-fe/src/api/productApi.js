@@ -21,6 +21,12 @@ export const productApi = {
     getListProductAdmin(limit, page) {
         const url = `/admin/product?page=` + page + `&limit=` + limit
         return axiosClient.get(url)
+    },
+
+    deleteProduct(id){
+        const url = "/admin/product/delete"
+        // gửi lên params là object
+        return axiosClient.post(url, id)
     }
 
 

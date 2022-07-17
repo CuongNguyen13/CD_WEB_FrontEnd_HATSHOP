@@ -14,6 +14,17 @@ function ProductAdmin (){
         list: []
     })
 
+    const handleGetId = (id) => {
+        console.log("id", id)
+        // chỗ này xóa thằng nào có id = id đã truyền vào
+        // sử dụng hàm filter cho lẹ, xóa thằng đó có nghĩa là lọc
+        // ra những thằng có id khác với id của thằng đó là được
+
+
+        setPageData({ ...pageData, list: pageData.list.filter(item => item.id !== id) })
+    }
+
+
     //phân trang
     const handlePageClick = (value) => {
         const currentPage = value.selected + 1;
@@ -53,15 +64,8 @@ function ProductAdmin (){
                         <tbody>
                             {pageData.list && pageData.list.map((item, index) => {
                                 return (
-                                    <ProductTr key={index} product = {item}
-                                    // name={pageData.list.name}
-                                    // linkImage1={pageData.list.linkImage1}
-                                    //     date={pageData.list.date}
-                                    //     kind={pageData.list.kind}
-
-                                    
-                                    
-                                    
+                                    <ProductTr onGetId={handleGetId}  key={index} product = {item}
+                                
                                     ></ProductTr>
                                   
                                 )

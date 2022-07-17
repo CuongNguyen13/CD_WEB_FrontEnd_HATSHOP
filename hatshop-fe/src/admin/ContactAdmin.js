@@ -37,13 +37,13 @@ function ContactAdmin() {
     // console.log("contact", contact);
 
     const handleGetId = (id) => {
-        console.log(id)
+        console.log("id",id)
         // chỗ này xóa thằng nào có id = id đã truyền vào
         // sử dụng hàm filter cho lẹ, xóa thằng đó có nghĩa là lọc
         // ra những thằng có id khác với id của thằng đó là được
 
 
-        setContact(contact.filter(item => item.id !== id))
+        setPageData({... pageData,list:pageData.list.filter(item => item.id !== id)})
     }
    
     const handlePageClick = (value) => {

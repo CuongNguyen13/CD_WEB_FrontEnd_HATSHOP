@@ -8,12 +8,11 @@ class ProductItem extends Component {
     
         let { img, name, price, id } = this.props;
         return (
-            
-            
                 <div
                     className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
                     data-wow-delay="0.1s"
                 >
+                 
                     <div className="product-item">
                         <div className="position-relative bg-light overflow-hidden">
                         <Link className="d-block h5 mb-2" to={`/detailProduct${id}`}>

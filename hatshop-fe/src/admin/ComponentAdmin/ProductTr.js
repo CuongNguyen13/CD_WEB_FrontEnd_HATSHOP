@@ -1,38 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import {Link} from 'react-router-dom'
+import { productApi } from '../../api/productApi';
 
 function ProductTr (props){
     const { id, name, linkImage1,date,kind , price,quantity } = props.product;
-   
+    const [modal, setModal] = useState(false);
     // let params = {
     //     id,
     //     status: 0
     // }
     
     const handlDelete = () => {
-    //     // console.log("params", params)
-    //     contactAdminApi.updateStatus(params).then(res => {
-    //         // check success
-    //         if (res) {
+       productApi.deleteProduct(id).then(res => {
+           console.log("id", res);
+            // check success
+            if (res) {
+                
+                //  ở đây gọi hàm cho thằng cha cập nhật lại list
+                // nó truyền qua props
+                props.onGetId(id);
+                //  đó là vậy
+                setModal(false)
+            }
+            else {
 
-    //             //  ở đây gọi hàm cho thằng cha cập nhật lại list
-    //             // nó truyền qua props
-    //             props.onGetId(id);
-    //             //  đó là vậy
-    //             // setModal(false)
-    //         }
-    //         else {
-
-    //         }
-    //     }).catch(e => { console.log(e) })
+            }
+        }).catch(e => { console.log(e) })
 
         // call api
 
     }
     
-    
-    
-    
-    
+  
     
     return (
             <tr>
@@ -43,14 +42,39 @@ function ProductTr (props){
                 <td>{kind}</td>
                 <td>{price}</td>
                 <td>{quantity}</td>
-                <td> <button className='btn btn-success' >
+                <td> <Link className='btn btn-success'  to={`/admin/editProduct${id}`}>
                     Chỉnh sửa
-                </button>
+                </Link>
                 </td>
-                <td><button onClick={handlDelete} type='button' className='btn btn-danger'>
+                <td><button onClick={()=>{setModal(true)}} type='button' className='btn btn-danger'>
                     Xóa
                 </button>
                 </td>
+
+
+            {/* thông báo xóa */}
+            {modal && (
+                <div className="modal show" id="exampleModal" style={{ display: 'block' }} tabIndex={-1} aria-labelledby="exampleModalLabel" aria-modal="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">Thông báo</h5>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={() => setModal(false)} aria-label="Close" />
+                            </div>
+                            <div className="modal-body">
+                                <h6>    Bạn có muốn xóa sản phẩm {name}!!!
+                                </h6>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => { setModal(false) }}>Đóng</button>
+                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={() => { handlDelete() }}>Xóa</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             </tr>
         );
     }

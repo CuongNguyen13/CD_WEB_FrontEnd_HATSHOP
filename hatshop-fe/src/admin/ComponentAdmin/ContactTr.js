@@ -35,10 +35,11 @@ function ContactTr(props) {
             console.log(res);
             // check success
             if (res) {
-                console.log("134")
+                
                 //  ở đây gọi hàm cho thằng cha cập nhật lại list
                 // nó truyền qua props
                 setModal(false)
+                
                 props.onGetId(id);
                 //  đó là vậy
                
