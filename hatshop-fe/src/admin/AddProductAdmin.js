@@ -14,22 +14,26 @@ function AddProductAdmin() {
     const [img2, setImage2] = useState();
     const [img3, setImage3] = useState();
     const [decription,setDecription] = useState();
-    const user = sessionStorage.getItem("admin");
     
 
- const [isDisplayModal, setIsDisplayModal] = useState(false);
+
+
+    const user = sessionStorage.getItem("id");
+    console.log("id",user);
+
+    const [isDisplayModal, setIsDisplayModal] = useState(false);
 
     const modal = isDisplayModal ? 'Đã gửi!' : 'Vui lòng thử lại!';
 
      const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-         setInputs(values => ({ ...values, [name]: value, linkImage1: img1, linkImage2: img2, linkImage3: img3, userId:user.id,decription:decription }))
+         setInputs(values => ({ ...values, [name]: value, linkImage1: img1, linkImage2: img2, linkImage3: img3, userId:user,decription:decription }))
     }
 
     const handleSubmit = (event) => {
        if(img1 != null||img2 != null||img3!=null){
-           event.preventDefault();
+          
            //gọi api contact
            //send form to service
            productApi.addProduct(input).then(res => {
@@ -37,6 +41,7 @@ function AddProductAdmin() {
                if (res) {
                    setIsDisplayModal(true)
                    setInputs("");
+                   window.location.reload()
                }
                else {
                    setIsDisplayModal(false);
@@ -70,15 +75,15 @@ function AddProductAdmin() {
     return (
         <div style={{ maxWidth: '100%' }}>
             <h2>Thêm sản phẩm </h2>
-
-            <form className="row g-3" onSubmit={handleSubmit}>
+            <hr style={{ color: 'red' }}></hr>
+            <form className="row g-3">
                 <div className="col-md-8">
                     <label htmlFor="inputEmail4" className="form-label">
                         Tên
                     </label>
                     <input type="text" required placeholder='Tên sản phẩm' className="form-control"
                         name="name"
-                    value={input&&input.name || ""}
+                    value={input&&input.name}
                     onChange={handleChange}
                     />
                     
@@ -89,7 +94,7 @@ function AddProductAdmin() {
                     </label>
                     <input type="number" required placeholder='Giá bán' className="form-control"
                         name="price"
-                        value={input &&input.price || ""}
+                        value={input &&input.price}
                     onChange={handleChange}
                     />
                 </div>
@@ -105,6 +110,38 @@ function AddProductAdmin() {
 
                 </div>
 
+
+                <hr style={{ color: 'red' }}></hr>
+                <h3>Mô tả sản phẩm</h3>
+                <div className='row'>
+                    <div className='col-5'></div>
+                    <div>
+                        <CKEditor
+
+                            editor={ClassicEditor}
+                            data=""
+                            onReady={editor => {
+                                // You can store the "editor" and use when it is needed.
+
+                                console.log('Editor is ready to use!', editor);
+                            }}
+                            onChange={(event, editor) => {
+                                const data = editor.getData();
+                                console.log({ event, editor, data });
+
+                                setDecription(data);
+
+                            }}
+                            onBlur={(event, editor) => {
+                                console.log('Blur.', editor);
+                            }}
+                            onFocus={(event, editor) => {
+                                console.log('Focus.', editor);
+                            }}
+                        />
+
+                    </div>
+                </div>
                 <hr style={{ color: 'red' }}></hr>
 
                 <div className='row'>
@@ -112,9 +149,9 @@ function AddProductAdmin() {
                         <label htmlFor="inputState" className="form-label">
                             Loại sản phẩm
                         </label>
-                        <select id="inputState" className="form-select" name='kind' value={input && input.kind || ""}
+                        <select id="inputState" className="form-select" name='kind' defaultValue={1} value={input && input.kind || ""}
                             onChange={handleChange}>
-                            <option  value={"1"}>Mũ lưỡi trai</option>
+                            <option  selected value={"1"}>Mũ lưỡi trai</option>
                             <option value={"2"}>Mũ backet</option>
                             <option value={"3"}>Mũ beret</option>
                         </select>
@@ -129,7 +166,7 @@ function AddProductAdmin() {
 
                         <input type="number" min="1" defaultValue={1} className="form-control" required id="inputZip" 
                         name='quantity'
-                            value={input && input.quantity || ""}
+                            value={input && input.quantity}
                             onChange={handleChange}
                         />
                     </div>
@@ -137,35 +174,10 @@ function AddProductAdmin() {
 
                 <hr style={{ color: 'red' }}></hr>
 
-                <h2>Mô tả sản phẩm</h2>
-                <div className='row'>
-                    <div className='col-5'></div>
-                    <div>
-                        <CKEditor
-                            editor={ClassicEditor}
-                            data=""
-                            onReady={editor => {
-                                // You can store the "editor" and use when it is needed.
-                                console.log('Editor is ready to use!', editor);
-                            }}
-                            onChange={(event, editor) => {
-                                const data = editor.getData();
-                                console.log({ event, editor, data });
-                                setDecription(data);
-                            }}
-                            onBlur={(event, editor) => {
-                                console.log('Blur.', editor);
-                            }}
-                            onFocus={(event, editor) => {
-                                console.log('Focus.', editor);
-                            }}
-                        />
-
-                    </div>
-                </div>
+               
 
                 <div className="col-12">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="button" onClick={handleSubmit} className="btn btn-primary">
                         Lưu
                     </button>
                 </div>

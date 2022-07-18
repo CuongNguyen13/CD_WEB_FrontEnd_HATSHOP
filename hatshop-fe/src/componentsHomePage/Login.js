@@ -22,7 +22,7 @@ function Login() {
         //send form to service
         console.log(input, "cc")
         loginApi.createLogin(input).then(res => {
-
+            sessionStorage.setItem("id",res.id)
             sessionStorage.setItem("userName", res);
             console.log(res)
            
@@ -30,7 +30,7 @@ function Login() {
             console.log(user)
             if(user.role){
                 console.log("123");
-                sessionStorage.setItem("admin", res);
+                sessionStorage.setItem("admin", user);
                 navigate("/admin/static")
                 window.location.reload();
             }else{
