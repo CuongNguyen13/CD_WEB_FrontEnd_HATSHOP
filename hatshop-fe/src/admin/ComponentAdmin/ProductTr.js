@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import {Link} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 import { productApi } from '../../api/productApi';
 
 function ProductTr (props){
@@ -42,9 +42,9 @@ function ProductTr (props){
                 <td>{kind}</td>
                 <td>{price}</td>
                 <td>{quantity}</td>
-                <td> <Link className='btn btn-success'  to={`/admin/editProduct${id}`}>
+                <td> <NavLink className='btn btn-success'  to={`/admin/editProduct${id}`}>
                     Chỉnh sửa
-                </Link>
+                </NavLink>
                 </td>
                 <td><button onClick={()=>{setModal(true)}} type='button' className='btn btn-danger'>
                     Xóa
