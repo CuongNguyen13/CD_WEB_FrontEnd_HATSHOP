@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 
 import ReactPaginate from 'react-paginate';
+import { NavLink } from 'react-router-dom';
 import { productApi } from '../api/productApi';
 import ProductTr from './ComponentAdmin/ProductTr';
 
@@ -57,8 +58,11 @@ function ProductAdmin (){
                                 <th className="border-top-0">Ngày thêm</th>
                                 <th className="border-top-0">Loại</th>
                                 <th className="border-top-0">Giá bán</th>
-                        
                                 <th className="border-top-0">Số lượng</th>
+                                
+                                <NavLink to='/admin/productAdd'  >
+                                    <button type="button" class="btn btn-success">Thêm sản phẩm</button>
+                                </NavLink>
                             </tr>
                         </thead>
                         <tbody>

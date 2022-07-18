@@ -4,7 +4,7 @@ import ContactAdmin from './ContactAdmin';
 import EditProductAdmin from './EditProductAdmin';
 import ProductAdmin from './ProductAdmin';
 import Static from './Static';
-
+import UploadFile from './UploadFile';
 class HeaderAdmin extends Component {
     render() {
         return (
@@ -28,6 +28,7 @@ class HeaderAdmin extends Component {
                 </div>
                 <div className='col-9 '>
                    <Routes>
+                        <Route path='/admin/productAdd' element={<UploadFile></UploadFile>}></Route>
                         <Route path="/admin/contact" element={<ContactAdmin></ContactAdmin>}></Route>
                         <Route path="/admin/static" element={<Static></Static>}></Route>
                         <Route path="/admin/product" element={<ProductAdmin/>}></Route>

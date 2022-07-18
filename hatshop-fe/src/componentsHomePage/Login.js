@@ -32,9 +32,10 @@ function Login() {
                 sessionStorage.setItem("admin", user);
                 navigate("/admin/static")
                 window.location.reload();
+            }else{
+                navigate("/cart")
             }
-            
-            navigate("/cart")
+          
 
         }).catch(e => {
             console.log(e)
