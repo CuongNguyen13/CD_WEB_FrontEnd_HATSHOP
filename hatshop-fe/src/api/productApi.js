@@ -31,7 +31,11 @@ export const productApi = {
     addProduct(params){
         const url = "/admin/product/add"
         return axiosClient.post(url,params);
-    }
+    },
 
+    checkName(name){
+        const url = "/admin/product/checkname"
+        return axiosClient.post(url, name);
+    }
 
 }

@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState} from 'react';
 import UploadFile from './UploadFile';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -14,25 +14,44 @@ function AddProductAdmin() {
     const [img2, setImage2] = useState();
     const [img3, setImage3] = useState();
     const [decription,setDecription] = useState();
+    const [checkName,setCheckName] = useState();
+    const [validation,setValidateion] = useState(true);
+   
     
+  
 
 
-
-    const user = sessionStorage.getItem("id");
-    console.log("id",user);
-
+    const id = sessionStorage.getItem("id");
+    
+   
     const [isDisplayModal, setIsDisplayModal] = useState(false);
 
     const modal = isDisplayModal ? 'Đã gửi!' : 'Vui lòng thử lại!';
+    const user = sessionStorage.getItem("admin")
+    console.log("user", user)
 
      const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-         setInputs(values => ({ ...values, [name]: value, linkImage1: img1, linkImage2: img2, linkImage3: img3, userId:user,decription:decription }))
-    }
+        
+         setInputs(values => ({ ...values, [name]: value, linkImage1: img1, linkImage2: img2, linkImage3: img3, user:user,decription:decription }))
+        
+        }
+    useEffect(() => {
+        productApi.checkName(input && input.name)
+            .then(res => {
+                console.log("checkName", input.name)
+                console.log("data", res)
+                setValidateion(res);
+            }).catch(e => {
+
+                console.log(e)
+            });
+    }, [input])
+
 
     const handleSubmit = (event) => {
-       if(img1 != null||img2 != null||img3!=null){
+    //    if(img1 != null||img2 != null||img3!=null){
           
            //gọi api contact
            //send form to service
@@ -41,7 +60,7 @@ function AddProductAdmin() {
                if (res) {
                    setIsDisplayModal(true)
                    setInputs("");
-                   window.location.reload()
+                  
                }
                else {
                    setIsDisplayModal(false);
@@ -51,9 +70,9 @@ function AddProductAdmin() {
            }).catch(e => {
                console.log(e)
            });
-       }else{
-        alert("Vui lòng chọn ảnh!!")
-       }
+    //    }else{
+    //     alert("Vui lòng chọn ảnh!!")
+    //    }
     }
     console.log("input",input);
     
@@ -79,13 +98,14 @@ function AddProductAdmin() {
             <form className="row g-3">
                 <div className="col-md-8">
                     <label htmlFor="inputEmail4" className="form-label">
-                        Tên
+                        Tên 
                     </label>
                     <input type="text" required placeholder='Tên sản phẩm' className="form-control"
                         name="name"
                     value={input&&input.name}
                     onChange={handleChange}
                     />
+                    <p style={{color:'red'}}> {validation&&validation? "" : "Tên đã tồn tại"}</p>
                     
                 </div>
                 <div className="col-md-4">
