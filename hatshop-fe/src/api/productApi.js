@@ -27,6 +27,10 @@ export const productApi = {
         const url = "/admin/product/delete"
         // gửi lên params là object
         return axiosClient.post(url, id)
+    },
+    addProduct(params){
+        const url = "/admin/product/add"
+        return axiosClient.post(url,params);
     }
 
 
