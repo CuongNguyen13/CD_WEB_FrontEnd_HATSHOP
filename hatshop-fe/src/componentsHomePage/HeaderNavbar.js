@@ -5,7 +5,7 @@ import {
     Switch,
     Route,
     Link,
-    Routes
+    Routes,NavLink
 } from "react-router-dom";
 import Home from './Home';
 import Product from './Product';
@@ -34,11 +34,11 @@ class HeaderNavbar extends Component {
                         className="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-8 wow fadeIn"
                         data-wow-delay="0.1s"
                     >
-                        <Link to="/" className="navbar-brand ms-4 ms-lg-0">
+                        <NavLink to="/" className="navbar-brand ms-4 ms-lg-0">
                             <h1 className="fw-bold text-primary m-0">
                                 Hat<span className="text-secondary">Sh</span>op
                             </h1>
-                        </Link>
+                        </NavLink>
                         <button
                             type="button"
                             className="navbar-toggler me-4"
@@ -49,28 +49,28 @@ class HeaderNavbar extends Component {
                         </button>
                         <div className="collapse navbar-collapse" id="navbarCollapse">
                             <div className="navbar-nav ms-auto p-4 p-lg-0">
-                                <Link className="nav-item nav-link active" to="/">
+                                <NavLink className="nav-item nav-link " to="/">
                                     Trang chủ
-                                </Link>
-                                <Link to="/product" className="nav-item nav-link">
+                                </NavLink>
+                                <NavLink to="/product" className="nav-item nav-link">
                                     Sản phẩm
-                                </Link>
+                                </NavLink>
 
-                                <Link to="/contact" className="nav-item nav-link">
+                                <NavLink to="/contact" className="nav-item nav-link">
                                     Liên hệ
-                                </Link>
-                                <Link to="/login" className="nav-item nav-link">
+                                </NavLink>
+                                <NavLink to="/login" className="nav-item nav-link">
                                     Đăng nhập
-                                </Link>
+                                </NavLink>
                             </div>
                             <div className="d-none d-lg-flex ms-2">
-                                <Link to="/search" className="btn-sm-square bg-white rounded-circle ms-3" href="">
+                                <NavLink to="/search" className="btn-sm-square bg-white rounded-circle ms-3" href="">
                                     <small className="fa fa-search text-body" />
-                                </Link>
+                                </NavLink>
 
-                                <Link to="/cart" className="btn-sm-square bg-white rounded-circle ms-3" href="">
+                                <NavLink to="/cart" className="btn-sm-square bg-white rounded-circle ms-3" href="">
                                     <small className="fa fa-shopping-bag text-body" />
-                                </Link>
+                                </NavLink>
                             </div>
                         </div>
                     </nav>

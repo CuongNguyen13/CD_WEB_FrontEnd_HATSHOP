@@ -49,7 +49,7 @@ function ProductAdmin (){
                 <h3 className="box-title">Sản phẩm</h3>
 
                 <div className="table-responsive w-100">
-                    <table className="table text-nowrap">
+                    <table className="table text-nowrap table-hover">
                         <thead>
                             <tr>
                                 <th className="border-top-0">ID</th>

@@ -1,21 +1,21 @@
 import React, { Component, useState } from 'react';
-import {Link, NavLink} from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { productApi } from '../../api/productApi';
 
-function ProductTr (props){
-    const { id, name, linkImage1,date,kind , price,quantity } = props.product;
+function ProductTr(props) {
+    const { id, name, linkImage1, date, kind, price, quantity } = props.product;
     const [modal, setModal] = useState(false);
     // let params = {
     //     id,
     //     status: 0
     // }
-    
+
     const handlDelete = () => {
-       productApi.deleteProduct(id).then(res => {
-           console.log("id", res);
+        productApi.deleteProduct(id).then(res => {
+            console.log("id", res);
             // check success
             if (res) {
-                
+
                 //  ở đây gọi hàm cho thằng cha cập nhật lại list
                 // nó truyền qua props
                 props.onGetId(id);
@@ -30,26 +30,27 @@ function ProductTr (props){
         // call api
 
     }
-    
-  
-    
+
+
+
     return (
-            <tr>
-                <td>{id}</td>
-                <td>{name}</td>
-                <td><img style={{maxWidth:'7em'}} className='rounded float-start' src={linkImage1}></img></td>
-                <td>{new Date(date).toLocaleDateString()}</td>
-                <td>{kind}</td>
-                <td>{price}</td>
-                <td>{quantity}</td>
-                <td> <NavLink className='btn btn-success'  to={`/admin/editProduct${id}`}>
-                    Chỉnh sửa
-                </NavLink>
-                </td>
-                <td><button onClick={()=>{setModal(true)}} type='button' className='btn btn-danger'>
-                    Xóa
-                </button>
-                </td>
+        <tr>
+            <td>{id}</td>
+
+            <td><img style={{ maxWidth: '5em' }} className='rounded rounded-circle float-start' src={linkImage1}></img></td>
+            <td>{name}</td>
+            <td>{new Date(date).toLocaleDateString()}</td>
+            <td>{kind}</td>
+            <td>{price}</td>
+            <td>{quantity}</td>
+            <td> <NavLink className='btn btn-primary' to={`/admin/editProduct${id}`}>
+                Chỉnh sửa
+            </NavLink>
+            </td>
+            <td><button onClick={() => { setModal(true) }} type='button' className='btn btn-danger'>
+                Xóa
+            </button>
+            </td>
 
 
             {/* thông báo xóa */}
@@ -75,9 +76,9 @@ function ProductTr (props){
                 </div>
             )}
 
-            </tr>
-        );
-    }
+        </tr>
+    );
+}
 
 
 export default ProductTr;
