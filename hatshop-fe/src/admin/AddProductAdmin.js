@@ -140,7 +140,7 @@ function AddProductAdmin() {
                         <div className='col-5'></div>
                         <div>
                             <CKEditor
-
+                              
                                 editor={ClassicEditor}
                                 data=""
                                 onReady={editor => {

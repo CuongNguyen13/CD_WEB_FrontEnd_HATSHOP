@@ -34,7 +34,7 @@ function ProductAdmin (){
 
     //gọi api 
     useEffect(() => {
-        productApi.getListProductAdmin(8, pageData.currentPage)
+        productApi.getListProductAdmin(5, pageData.currentPage)
             .then(res => {
                 console.log("data", res)
                 setPageData(res);
