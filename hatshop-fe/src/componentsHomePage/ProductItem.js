@@ -1,12 +1,40 @@
 import React, { Component } from 'react';
-import { Link  } from 'react-router-dom';
+import { Link,useNavigate  } from 'react-router-dom';
+import { cartApi } from '../api/cartAPI';
 
 
-class ProductItem extends Component {
-    render() {
+function ProductItem (props){
+        const navigate = useNavigate();
+        let { img, name, price, id } = props;
+        const user = sessionStorage.getItem("userName");
+        const idUser = sessionStorage.getItem("id");
+        const input = {
+            'productId':id,
+            'userId':idUser,
+            'quantity':1,
+            'id':0
 
-    
-        let { img, name, price, id } = this.props;
+
+        }
+
+
+        const handlCart=()=>{
+            if(user!=null){
+                cartApi.createItemCart(input).then(res => {
+                   if(res){
+                    alert("Đã thêm vào giỏ hàng!")
+                   }else{
+                    alert("Sản phẩm đã tồn tại trong giỏ hàng!")
+                   }
+
+                }).catch(e => {
+                    console.log(e)
+                });
+            }else{
+                navigate("/login")
+            }
+
+        }
         return (
                 <div
                     className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
@@ -45,7 +73,7 @@ class ProductItem extends Component {
 
 
                             <small className="w-50 text-center py-2">
-                                <button className="btn text-body btn-sm" href="">
+                                <button className="btn text-body btn-sm" onClick={handlCart}>
                                     <i className="fa fa-shopping-bag text-primary me-2" />
                                     Thêm vào giỏ hàng
                                 </button>
@@ -56,6 +84,6 @@ class ProductItem extends Component {
                 
         );
     }
-}
+
 
 export default ProductItem;

@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import ProductItem from './ProductItem';
 import { productApi} from '../api/productApi';
 import { useEffect, useState } from 'react';
+import ProductItems from './ProductItems';
 
 function NewProduct(){
-    
+       
         const [product, setProduct] = useState();
         useEffect(() => {
             // gọi api chỗ này
@@ -47,7 +48,8 @@ function NewProduct(){
                                            product && product.map((item, index) => {
                                                return (
                                                    <ProductItem key={index} name={item.name} price={item.price} img={item.linkImage1} id={item.id}></ProductItem>
-                                               )
+                                                   
+                                                   )
                                            })
                                        }
 
