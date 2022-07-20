@@ -1,7 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginApi } from '../api/loginApi';
-
 function Login() {
     // redirect sang trang trước đó navigate(-1)
     const navigate = useNavigate();
@@ -28,6 +27,12 @@ function Login() {
            
             const user = res;
             console.log(user)
+            if(user.email == null){
+                navigate("/Login")
+                const s = document.getElementById('result');
+                s.style.display = 'block';
+            } else{
+                alert("Bạn đã đăng nhập thành công.");
             if(user.role){
                 console.log("123");
                 sessionStorage.setItem("admin", user);
@@ -36,7 +41,7 @@ function Login() {
             }else{
                 navigate("/cart")
             }
-          
+        }
 
         }).catch(e => {
             console.log(e)
@@ -96,20 +101,20 @@ function Login() {
                                     </div>
                                     <div className="d-flex justify-content-between align-items-center">
                                         {/* Checkbox */}
-                                        <div className="form-check mb-0">
-                                            {/* <input
+                                        {/* <div className="form-check mb-0">
+                                            <input
                                                     className="form-check-input me-2"
                                                     type="checkbox"
                                                     defaultValue=""
                                                     id="form2Example3"
-                                                /> */}
+                                                />
                                             <label className="form-check-label" htmlFor="form2Example3">
                                                 Remember me
                                             </label>
-                                        </div>
-                                        <a href="#!" className="text-body">
-                                            Forgot password?
-                                        </a>
+                                        </div> */}
+                                        <Link to="/Forgetpass" className="text-body">
+                                            Quyên mật khẩu
+                                        </Link>
                                     </div>
                                     <div className="text-center text-lg-start mt-4 pt-2">
                                         <button
@@ -117,13 +122,14 @@ function Login() {
                                             className="btn btn-primary btn-lg"
                                             style={{ paddingLeft: "2.5rem", paddingRight: "2.5rem" }}
                                         >
-                                            Login
+                                            Đăng nhập
                                         </button>
+                                        <div id='result' style={{display:"none"}}>Tài khoản không tồn tại</div>
                                         <p className="small fw-bold mt-2 pt-1 mb-0">
-                                            Don't have an account?{" "}
-                                            <a href="#!" className="link-danger">
-                                                Register
-                                            </a>
+                                           Không có tài khoản?{" "}
+                                            <Link to="/Register" className="link-danger">
+                                                Đăng ký
+                                            </Link>
                                         </p>
                                     </div>
                                 </form>

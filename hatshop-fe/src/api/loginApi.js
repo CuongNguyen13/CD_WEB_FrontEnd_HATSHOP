@@ -7,7 +7,7 @@ export const loginApi = {
     },
     //nhận kết quả từ api
     getResult(){
-        const url = "/login1"
+        const url = "/cc"
         return axiosClient.get(url);
 
     }

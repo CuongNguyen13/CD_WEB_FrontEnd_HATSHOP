@@ -20,7 +20,6 @@ function Otp() {
         // console.log(countString);
         setInputs(values => ({ ...values, [name]: value }))
     }
-    // console.log(input, "handleChange",handleChange)
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -41,23 +40,22 @@ function Otp() {
     console.log(email);
 
     return (
-        <div className="container height-100 d-flex justify-content-center align-items-center"> <div className="position-relative"> 
-        <div className="card p-2 text-center"> <h6>Please enter the one time password <br /> to verify your account</h6> 
         <form onSubmit={handleSubmit}>
-            <div> <span>A code has been sent to</span> <small>{email}</small> </div> <div id="otp" className="inputs d-flex flex-row justify-content-center mt-2">
-            <input className="m-2 text-center form-control rounded" type="number" name='first' id="first" maxLength={1} value={input.first || ""}  onChange={handleChange}/> 
-            <input className="m-2 text-center form-control rounded" type="number" name='second' id="second" maxLength={1}value={input.second || ""}  onChange={handleChange} />
-            <input className="m-2 text-center form-control rounded" type="number" name='third' id="third" maxLength={1}value={input.third || ""}  onChange={handleChange} /> 
-            <input className="m-2 text-center form-control rounded" type="number" name='fourth' id="fourth" maxLength={1}value={input.fourth || ""}  onChange={handleChange} />
-            <input className="m-2 text-center form-control rounded" type="number" name='fifth' id="fifth" maxLength={1} value={input.fifth || ""}  onChange={handleChange}/>
-            <input className="m-2 text-center form-control rounded" type="number" name='sixth' id="sixth" maxLength={1}value={input.sixth || ""}  onChange={handleChange} />
-            </div>
-            <div className="mt-4"> <button className="btn btn-danger px-4 validate">Validate</button> </div> 
-
-        </form>
-        </div> <div className="card-2"> <div className="content d-flex justify-content-center align-items-center"> 
-        <span>Didn't get the code</span> <a href="#" className="text-decoration-none ms-3">Resend(1/3)</a> </div> </div> </div>
+        <div className="d-flex justify-content-center align-items-center container">
+        <div className="card1 py-5 px-3">
+          <h5 className="m-0">Xác minh qua email</h5><span className="mobile-text">Nhập mã chúng tôi vừa gửi trên email của bạn<b className="text-danger">{email}</b></span>
+          <div className="d-flex flex-row mt-5">
+          <input type="text" name='in1' className="form-control" autofocus value={input.in1 || ""}  onChange={handleChange} />
+          <input type="text" name='in2' className="form-control" value={input.in2 || ""}  onChange={handleChange}/>
+          <input type="text" name='in3' className="form-control" value={input.in3 || ""}  onChange={handleChange}/>
+          <input type="text" name='in4' className="form-control" value={input.in4 || ""}  onChange={handleChange}/>
+          <input type="text" name='in5' className="form-control" value={input.in5 || ""}  onChange={handleChange}/>
+          <input type="text" name='in6' className="form-control" value={input.in6 || ""}  onChange={handleChange}/></div>
+          <div className="text-center mt-5"><span className="d-block mobile-text">Không nhận được mã?</span>
+          <Link to="/sendOTP2"><span className="font-weight-bold text-danger cursor">Gửi lại</span></Link></div>
         </div>
+      </div>
+      </form>
     );
 }
 
