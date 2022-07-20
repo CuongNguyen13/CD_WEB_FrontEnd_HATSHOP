@@ -21,6 +21,8 @@ import Profile from './Profile';
 
 class HeaderNavbar extends Component {
     render() {
+        var checkUserName = sessionStorage.getItem("userName");
+        console.log("userName", checkUserName)
         return (
 
             <div>
@@ -60,8 +62,8 @@ class HeaderNavbar extends Component {
                                 <NavLink to="/contact" className="nav-item nav-link">
                                     Liên hệ
                                 </NavLink>
-                                <NavLink to="/login" className="nav-item nav-link">
-                                    Đăng nhập
+                                <NavLink to={checkUserName !== null ? "/Profile" : "/login"} className="nav-item nav-link">
+                                {checkUserName !== null ? "Cá nhân" : "Đăng nhập"}
                                 </NavLink>
                             </div>
                             <div className="d-none d-lg-flex ms-2">

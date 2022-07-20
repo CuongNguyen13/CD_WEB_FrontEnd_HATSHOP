@@ -48,7 +48,7 @@ function Register() {
           Create an account here, we will absolutely keep your account confidential. Along with a staff of many years of experience will support you in the best way.
         </p>
         <div className="form-field">
-          <Link to="/Contact"> <input type="submit" className="account" value="Contact Us" /></Link>
+          <Link to="/Contact"> <input type="submit" className="account" value="Liên hệ" /></Link>
         </div>
       </div>
         <form className="form-right" style={{backgroundColor:""}} onSubmit={handleSubmit}>

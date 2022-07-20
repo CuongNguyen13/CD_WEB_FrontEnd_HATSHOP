@@ -4,6 +4,7 @@ import { loginApi } from '../api/loginApi';
 function Login() {
     // redirect sang trang trước đó navigate(-1)
     const navigate = useNavigate();
+
     window.scrollTo(0, 0);
     //sử lý form
     const [input, setInputs] = useState({});
@@ -32,7 +33,7 @@ function Login() {
                 const s = document.getElementById('result');
                 s.style.display = 'block';
             } else{
-                alert("Bạn đã đăng nhập thành công.");
+
             if(user.role){
                 console.log("123");
                 sessionStorage.setItem("admin", user);
@@ -40,6 +41,8 @@ function Login() {
                 window.location.reload();
             }else{
                 navigate("/cart")
+                window.location.reload();
+
             }
         }
 
