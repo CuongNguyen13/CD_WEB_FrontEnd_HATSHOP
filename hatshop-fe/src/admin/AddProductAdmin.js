@@ -15,6 +15,7 @@ function AddProductAdmin() {
     const [img3, setImage3] = useState();
     const [decription, setDecription] = useState();
     const [checkName, setCheckName] = useState();
+    const [validation, setValidateion] = useState(true);
 
 
 
@@ -47,7 +48,7 @@ function AddProductAdmin() {
             }).catch(e => {
                 console.log(e)
             });
-    }, [input])
+    }, [input && input.name])
 
 
     const handleSubmit = (event) => {
@@ -78,7 +79,7 @@ function AddProductAdmin() {
                 alert("Vui lòng chọn tên khác!!")
             }
         }
-        const [validation, setValidateion] = useState(true);
+      
 
         const handleGetImg1 = (url) => {
             setImage1(url);
@@ -187,7 +188,7 @@ function AddProductAdmin() {
                                 Số lượng
                             </label>
 
-                            <input type="number" min="1" defaultValue={1} className="form-control" required id="inputZip"
+                            <input type="number" min="1"  className="form-control" required id="inputZip"
                                 name='quantity'
                                 value={input && input.quantity}
                                 onChange={handleChange}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Routes,Route, NavLink } from 'react-router-dom';
+import { Link, Routes,Route, NavLink, useNavigate } from 'react-router-dom';
 import AddProductAdmin from './AddProductAdmin';
 import ContactAdmin from './ContactAdmin';
 import EditProductAdmin from './EditProductAdmin';
@@ -7,9 +7,15 @@ import ProductAdmin from './ProductAdmin';
 import Static from './Static';
 import UploadFile from './UploadFile';
 import UserAdmin from './UserAdmin';
-class HeaderAdmin extends Component {
-    render() {
+function HeaderAdmin() {
+    const navigate = useNavigate();
         window.scrollTo(0,0)
+        const hanldeClick = () =>{
+            sessionStorage.clear();
+            navigate("/")
+             window.location.reload();
+             
+        }
         return (
 
             <div className=' container row' style={{maxWidth:"100%"}}>
@@ -29,7 +35,11 @@ class HeaderAdmin extends Component {
                         </li>
                         
                     </ul>
-
+                
+                        <button style={{ marginTop: '20em' }} className='btn btn-danger' type='button' onClick={hanldeClick}>
+                        Đăng xuất
+                    </button>
+               
 
                 </div>
                 <div className='col-9' style={{marginTop:'2em'}}>
@@ -46,6 +56,6 @@ class HeaderAdmin extends Component {
 
         );
     }
-}
+
 
 export default HeaderAdmin;

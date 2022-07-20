@@ -34,8 +34,8 @@ export const productApi = {
     },
 
     checkName(name){
-        const url = "/admin/product/checkname"
-        return axiosClient.post(url, name);
+        const url = `/admin/product/checkname/?name=`+name
+        return axiosClient.get(url);
     }
 
 }

@@ -6,6 +6,7 @@ import storage from '../firebaseConfig';
 function UploadFile({ onGetImg }) {
     // State to store uploaded file
     const [file, setFile] = useState("");
+    
 
     // progress
     const [percent, setPercent] = useState(0);
@@ -19,9 +20,9 @@ function UploadFile({ onGetImg }) {
     }
 
     const handleUpload = () => {
-        if (!file) {
-            alert("Vui lòng đợi");
-        } else {
+        
+            const blobFile = URL.createObjectURL(file)
+            console.log("file:",blobFile)
 
             const storageRef = ref(storage, `/files/${file.name}`);
 
@@ -50,7 +51,7 @@ function UploadFile({ onGetImg }) {
                     });
                 }
             );
-        }
+        
     };
 
     return (
