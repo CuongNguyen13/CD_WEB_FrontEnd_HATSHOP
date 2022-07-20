@@ -4,4 +4,8 @@ export const userApi = {
         const url = `/admin/user?page=` + page + `&limit=` + limit
         return axiosClient.get(url)
     },
+    blockUser(id){
+        const url = "admin/block"
+        return axiosClient.post(url,id)
+    }
 }

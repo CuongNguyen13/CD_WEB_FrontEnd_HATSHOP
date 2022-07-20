@@ -4,9 +4,8 @@ class FooterHat extends Component {
     render() {
         return (
             <div>
-                <>
-                    {/* Footer Start */}
-                    <footer
+                
+                    {/* <footer
                         className="container-fluid bg-dark footer pt-5 wow fadeIn"
                         data-wow-delay="0.1s"
                     >
@@ -24,9 +23,9 @@ class FooterHat extends Component {
                             </div>
                         </div>
                         
-                    </footer>
-                    {/* Footer End */}
-                </>
+                    </footer> */}
+                    
+              
 
             </div>
         );

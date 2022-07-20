@@ -9,6 +9,7 @@ import UploadFile from './UploadFile';
 import UserAdmin from './UserAdmin';
 class HeaderAdmin extends Component {
     render() {
+        window.scrollTo(0,0)
         return (
 
             <div className=' container row' style={{maxWidth:"100%"}}>
