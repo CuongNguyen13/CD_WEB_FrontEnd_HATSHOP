@@ -34,7 +34,7 @@ function ProductAdmin (){
 
     //gọi api 
     useEffect(() => {
-        productApi.getListProductAdmin(8, pageData.currentPage)
+        productApi.getListProductAdmin(5, pageData.currentPage)
             .then(res => {
                 console.log("data", res)
                 setPageData(res);
@@ -49,7 +49,7 @@ function ProductAdmin (){
                 <h3 className="box-title">Sản phẩm</h3>
 
                 <div className="table-responsive w-100">
-                    <table className="table text-nowrap">
+                    <table className="table text-nowrap table-hover">
                         <thead>
                             <tr>
                                 <th className="border-top-0">ID</th>
