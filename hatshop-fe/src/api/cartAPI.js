@@ -11,5 +11,14 @@ export const cartApi = {
         return axiosClient.get(url);
 
     },
+    getlistCart(id){
+        const url = "/cart/list/?id="+id
+        return axiosClient.get(url);
+    },
+    deleteCart(id) {
+        const url = "/cart/delete/?id=" + id
+        return axiosClient.get(url);
+    }
+    
     
 }

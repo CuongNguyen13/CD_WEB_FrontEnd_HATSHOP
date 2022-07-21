@@ -1,8 +1,35 @@
-import React, { Component } from 'react';
+import React, { Component ,useEffect, useState} from 'react';
+import { cartApi } from '../api/cartAPI';
+import ItemCart from './ItemCart';
 
-class ShoppingCart extends Component {
-    render() {
+function ShoppingCart() {
+        const [cart,setCart] = useState();
         window.scrollTo(0, 0);
+        const id = sessionStorage.getItem("id")
+        useEffect(() => {
+            cartApi.getlistCart(id)
+                .then(res => {
+                    setCart(res)
+                    console.log(res)
+
+                }).catch(e => {
+                    console.log(e)
+                });
+        }, [])
+
+const handleGetId = (id) => {
+        console.log("id",id)
+        // chỗ này xóa thằng nào có id = id đã truyền vào
+        // sử dụng hàm filter cho lẹ, xóa thằng đó có nghĩa là lọc
+        // ra những thằng có id khác với id của thằng đó là được
+
+
+        setCart({... cart,cart:cart.id.filter(item => item.id !== id)})
+        console.log(cart)
+    }
+   
+
+
         return (
             <div>
                 
@@ -14,137 +41,17 @@ class ShoppingCart extends Component {
                                     <div className=" p-4">
                                         <div className="row">
                                             <div className="col-lg-7">
-                                                <div className="d-flex justify-content-between align-items-center mb-4">
-                                                    <div>
-                                                        <p className="mb-1">Giỏ hàng</p>
-                                                        <p className="mb-0">Tổng số sản phẩm: </p>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div className="card mb-3">
-                                                    <div className="card-body">
-                                                        <div className="d-flex justify-content-between">
-                                                            <div className="d-flex flex-row align-items-center">
-                                                                <div>
-                                                                    <img
-                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                                                                        className="img-fluid rounded-3"
-                                                                        alt="Shopping item"
-                                                                        style={{ width: 65 }}
-                                                                    />
-                                                                </div>
-                                                                <div className="ms-3">
-                                                                    <h5>Iphone 11 pro</h5>
-                                                                    <p className="small mb-0">256GB, Navy Blue</p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="d-flex flex-row align-items-center">
-                                                                <div style={{ width: 50 }}>
-                                                                    <h5 className="fw-normal mb-0">2</h5>
-                                                                </div>
-                                                                <div style={{ width: 80 }}>
-                                                                    <h5 className="mb-0">$900</h5>
-                                                                </div>
-                                                                <a href="#!" style={{ color: "#cecece" }}>
-                                                                    <i className="fas fa-trash-alt" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="card mb-3">
-                                                    <div className="card-body">
-                                                        <div className="d-flex justify-content-between">
-                                                            <div className="d-flex flex-row align-items-center">
-                                                                <div>
-                                                                    <img
-                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img2.webp"
-                                                                        className="img-fluid rounded-3"
-                                                                        alt="Shopping item"
-                                                                        style={{ width: 65 }}
-                                                                    />
-                                                                </div>
-                                                                <div className="ms-3">
-                                                                    <h5>Samsung galaxy Note 10 </h5>
-                                                                    <p className="small mb-0">256GB, Navy Blue</p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="d-flex flex-row align-items-center">
-                                                                <div style={{ width: 50 }}>
-                                                                    <h5 className="fw-normal mb-0">2</h5>
-                                                                </div>
-                                                                <div style={{ width: 80 }}>
-                                                                    <h5 className="mb-0">$900</h5>
-                                                                </div>
-                                                                <a href="#!" style={{ color: "#cecece" }}>
-                                                                    <i className="fas fa-trash-alt" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="card mb-3">
-                                                    <div className="card-body">
-                                                        <div className="d-flex justify-content-between">
-                                                            <div className="d-flex flex-row align-items-center">
-                                                                <div>
-                                                                    <img
-                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img3.webp"
-                                                                        className="img-fluid rounded-3"
-                                                                        alt="Shopping item"
-                                                                        style={{ width: 65 }}
-                                                                    />
-                                                                </div>
-                                                                <div className="ms-3">
-                                                                    <h5>Canon EOS M50</h5>
-                                                                    <p className="small mb-0">Onyx Black</p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="d-flex flex-row align-items-center">
-                                                                <div style={{ width: 50 }}>
-                                                                    <h5 className="fw-normal mb-0">1</h5>
-                                                                </div>
-                                                                <div style={{ width: 80 }}>
-                                                                    <h5 className="mb-0">$1199</h5>
-                                                                </div>
-                                                                <a href="#!" style={{ color: "#cecece" }}>
-                                                                    <i className="fas fa-trash-alt" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="card mb-3 mb-lg-0">
-                                                    <div className="card-body">
-                                                        <div className="d-flex justify-content-between">
-                                                            <div className="d-flex flex-row align-items-center">
-                                                                <div>
-                                                                    <img
-                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img4.webp"
-                                                                        className="img-fluid rounded-3"
-                                                                        alt="Shopping item"
-                                                                        style={{ width: 65 }}
-                                                                    />
-                                                                </div>
-                                                                <div className="ms-3">
-                                                                    <h5>MacBook Pro</h5>
-                                                                    <p className="small mb-0">1TB, Graphite</p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="d-flex flex-row align-items-center">
-                                                                <div style={{ width: 50 }}>
-                                                                    <h5 className="fw-normal mb-0">1</h5>
-                                                                </div>
-                                                                <div style={{ width: 80 }}>
-                                                                    <h5 className="mb-0">$1799</h5>
-                                                                </div>
-                                                                <a href="#!" style={{ color: "#cecece" }}>
-                                                                    <i className="fas fa-trash-alt" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+
+
+                                                {cart && cart.map((item, index) => {
+                                                    return (
+
+                                                        <ItemCart onGetId={handleGetId} cart={item} key = {index}></ItemCart>
+                                                        // <ContactTr onGetId={handleGetId} contact={item} key={index} />
+                                                    )
+
+                                                })
+                                                }
                                             </div>
                                             <div className="col-lg-5">
                                                 <div className="card text-black rounded-3" style={{ background:"#E8E8E8"}}>
@@ -227,6 +134,6 @@ class ShoppingCart extends Component {
             </div>
         );
     }
-}
+
 
 export default ShoppingCart;
