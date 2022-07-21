@@ -127,7 +127,7 @@ function Login() {
                                         >
                                             Đăng nhập
                                         </button>
-                                        <div id='result' style={{display:"none"}}>Tài khoản không tồn tại</div>
+                                        <div id='result' style={{display:"none"}}>Mật khẩu hoặc tài khoản không đúng</div>
                                         <p className="small fw-bold mt-2 pt-1 mb-0">
                                            Không có tài khoản?{" "}
                                             <Link to="/Register" className="link-danger">
