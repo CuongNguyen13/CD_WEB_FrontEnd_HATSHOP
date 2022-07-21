@@ -12,7 +12,7 @@ function ItemCart (props) {
                     props.onGetId(id);
                 }
                 else {
-
+                    props.onGetId(id);
                 }
             }).catch(e => { console.log(e) })
         }

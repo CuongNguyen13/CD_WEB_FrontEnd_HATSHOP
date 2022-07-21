@@ -19,12 +19,7 @@ function ShoppingCart() {
 
 const handleGetId = (id) => {
         console.log("id",id)
-        // chỗ này xóa thằng nào có id = id đã truyền vào
-        // sử dụng hàm filter cho lẹ, xóa thằng đó có nghĩa là lọc
-        // ra những thằng có id khác với id của thằng đó là được
-
-
-        setCart({... cart,cart:cart.id.filter(item => item.id !== id)})
+        setCart({... cart,cart:cart.filter(item => item.id !== id)})
         console.log(cart)
     }
    
