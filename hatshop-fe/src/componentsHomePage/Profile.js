@@ -43,7 +43,6 @@ function Profile() {
     console.log(profile, "profile")
     profileApi.createProfile(profile).then(res => {
         console.log(res)
-
     }).catch(e => {
         console.log(e)
     });
@@ -108,13 +107,6 @@ function Profile() {
       }
   };
 
-if(document.getElementById("imageProfileupload") == null) {
-//   document.getElementById("imageProfileload").style.display = "block";
-//   document.getElementById("imageProfileupload").style.display = "none"
-// } else {
-//   document.getElementById("imageProfileload").style.display = "none";
-//   document.getElementById("imageProfileupload").style.display = "block";
-}
 
     
     return (
@@ -143,6 +135,7 @@ if(document.getElementById("imageProfileupload") == null) {
               <div className="card-header">Account Details</div>
               <div className="card-body">
                 <form style={{height:"407px"}} onSubmit={handleSubmit}>
+                <img style={{width:"200px",height:"200px",display:"block",margin:"0 auto",display:"none"}}  id="imageProfileupload" className="img-account-profile rounded-circle mb-2 imageProfileupload" alt="" onChange={handleChange}  src={img}/>
                   {/* Form Group (username)*/}
                   <div className="mb-3">
                     <input className="form-control" id="email" name='email' disabled type="text" placeholder="Email" value={profile && profile.email} onChange={handleChange}/>
