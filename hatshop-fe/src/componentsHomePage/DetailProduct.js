@@ -118,10 +118,10 @@ function DetailProduct() {
                             </button>
 
 
-                            <Link to={checkUserName !== null ? "/cart" : "/login"}
+                            <button onClick={handlCart}
                                 className="btn btn-primary rounded-pill py-3 px-5 mt-3" style={{ margin: '1em' }} href="">
                                 Mua ngay
-                            </Link>
+                            </button>
 
 
 

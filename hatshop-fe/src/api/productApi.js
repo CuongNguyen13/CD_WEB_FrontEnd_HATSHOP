@@ -36,6 +36,12 @@ export const productApi = {
     checkName(name){
         const url = `/admin/product/checkname/?name=`+name
         return axiosClient.get(url);
+    },
+    listProductKind(limit,page,kind) {
+        const url = `/admin/product?page=` + page + `&limit=` + limit + "&kind=" + kind
+        console.log(url)
+        return axiosClient.get(url)
     }
+
 
 }
