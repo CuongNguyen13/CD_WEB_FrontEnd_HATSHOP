@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ProductItem from './ProductItem';
 import { productApi} from '../api/productApi';
 import { useEffect, useState } from 'react';
-import ProductItems from './ProductItems';
+
 
 function NewProduct(){
        

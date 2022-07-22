@@ -6,7 +6,7 @@ import storage from '../firebaseConfig';
 function UploadFile({ onGetImg }) {
     // State to store uploaded file
     const [file, setFile] = useState("");
-    
+
 
     // progress
     const [percent, setPercent] = useState(0);
@@ -15,43 +15,49 @@ function UploadFile({ onGetImg }) {
 
     // Handle file upload event and update state
     function handleChange(event) {
-        setFile(event.target.files[0]);
-        handleUpload();
+        const file = event.target.files[0]
+        setFile(file);
+        
+        const url = URL.createObjectURL(file)
+        onGetImg(file)
+        setImg(url)
+
+        // handleUpload();
     }
 
     const handleUpload = () => {
-        
-            const blobFile = URL.createObjectURL(file)
-            console.log("file:",blobFile)
 
-            const storageRef = ref(storage, `/files/${file.name}`);
+        const blobFile = URL.createObjectURL(file)
+        console.log("file:", blobFile)
 
-            // progress can be paused and resumed. It also exposes progress updates.
-            // Receives the storage reference and the file to upload.
-            const uploadTask = uploadBytesResumable(storageRef, file);
+        const storageRef = ref(storage, `/files/${file.name}.png`);
 
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    const percent = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
+        // progress can be paused and resumed. It also exposes progress updates.
+        // Receives the storage reference and the file to upload.
+        const uploadTask = uploadBytesResumable(storageRef, file);
 
-                    // update progress
-                    setPercent(percent);
-                },
-                (err) => console.log(err),
-                () => {
-                    // download url
-                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                const percent = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
 
-                        setImg(url);
-                        onGetImg(url)
+                // update progress
+                setPercent(percent);
+            },
+            (err) => console.log(err),
+            () => {
+                // download url
+                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
 
-                    });
-                }
-            );
-        
+                    setImg(url);
+                 
+
+                });
+            }
+        );
+
     };
 
     return (

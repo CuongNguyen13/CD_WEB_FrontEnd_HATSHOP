@@ -3,15 +3,46 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CommentFacebook from './CommentFaceBook';
 import { productApi } from '../api/productApi';
-import { Carousel } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-function DetailProduct() {
+import { Button, Carousel } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { cartApi } from '../api/cartAPI';
 
+
+function DetailProduct() {
+    const navigate = useNavigate();
     let params = useParams();
     const id = params.id;
     window.scrollTo(0, 0);
-
+    const user = sessionStorage.getItem("userName");
+    const idUser = sessionStorage.getItem("id");
     const [product, setProduct] = useState();
+    const [quantity,setQuantity] = useState()
+    const input = {
+        'productId': id,
+        'userId': idUser,
+        'quantity':quantity,
+        'id': 0
+    }
+    const handlCart = () => {
+        if (user != null) {
+        
+            if (quantity == null) {
+                input.quantity = 1;
+            }
+            cartApi.createItemCart(input).then(res => {
+                if (res) {
+                    navigate("/cart")
+                } else {
+                    alert("Vui lòng thử lại!")
+                }
+            }).catch(e => {
+                console.log(e)
+            });
+        } else {
+            navigate("/login")
+        }
+    }
+
 
     useEffect(() => {
         // gọi api chỗ này
@@ -73,7 +104,7 @@ function DetailProduct() {
                                 <form name='add_cart'>
                                     <div className='col-6'>
                                         <label><b>Số lượng: </b></label>
-                                        <input className='col-3 mb-1' type='number' id="quantity" name="quantity" min="1" defaultValue={1}></input>
+                                        <input className='col-3 mb-1' type='number' id="quantity" name="quantity" min="1" defaultValue={1} onChange={(event)=>setQuantity(event.target.value)}></input>
 
                                     </div>
                                     <div className='col-6'>
@@ -82,9 +113,9 @@ function DetailProduct() {
                                 </form>
                             </div>
 
-                            <Link to={checkUserName !== null ? "/cart" : "/login"} className="btn btn-danger rounded-pill py-3 px-3 mt-3" style={{ margin: '1em' }} href="">
+                            <button onClick={handlCart} className="btn btn-danger rounded-pill py-3 px-3 mt-3" style={{ margin: '1em' }} href="">
                                 Thêm vào giỏ hàng
-                            </Link>
+                            </button>
 
 
                             <Link to={checkUserName !== null ? "/cart" : "/login"}
@@ -100,7 +131,7 @@ function DetailProduct() {
                         </div>
                         {/* <CommentFB dataURL={window.location.href}></CommentFB> */}
                         {/* <CommentFacebook dataHref={window.location.href}></CommentFacebook> */}
-                        {/* <CommentFacebook></CommentFacebook> */}
+                        <CommentFacebook></CommentFacebook>
                     </div>
                 </div>
             </div>

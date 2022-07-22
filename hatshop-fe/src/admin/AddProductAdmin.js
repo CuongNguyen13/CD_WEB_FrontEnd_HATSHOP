@@ -4,7 +4,8 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { productApi } from '../api/productApi';
 
-
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import storage from '../firebaseConfig';
 
 
 
@@ -18,6 +19,11 @@ function AddProductAdmin() {
     const [validation, setValidateion] = useState(true);
 
 
+
+    // progress
+    const [percent, setPercent] = useState(0);
+
+    const [img, setImg] = useState();
 
 
 
@@ -41,7 +47,6 @@ function AddProductAdmin() {
     useEffect(() => {
         productApi.checkName(input && input.name)
             .then(res => {
-                console.log("checkName", input.name)
                 console.log("input", input);
                 console.log("data", res)
                 setValidateion(res);
@@ -50,13 +55,42 @@ function AddProductAdmin() {
             });
     }, [input && input.name])
 
+    const handleUpload = (file) => {
+        const blobFile = URL.createObjectURL(file)
+        console.log("file:", blobFile)
+        const storageRef = ref(storage, `/files/${file.name}.png`);
+        // progress can be paused and resumed. It also exposes progress update
+        // Receives the storage reference and the file to upload.
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                const percent = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+                // update progress
+                setPercent(percent);
+            },
+            (err) => console.log(err),
+            () => {
+                // download url
+                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                    return url;
 
+                });
+            }
+        );
+    };
+
+    
     const handleSubmit = (event) => {
         if (validation) {
             // if (img1 != null || img2 != null || img3 != null) {
 
                 //gọi api contact
                 //send form to service
+            const link1 = handleUpload(input&&input.linkImage1);
+            console.log("link1",link1)
                 productApi.addProduct(input).then(res => {
                     // console.log("kết quả:", res)
                     if (res) {

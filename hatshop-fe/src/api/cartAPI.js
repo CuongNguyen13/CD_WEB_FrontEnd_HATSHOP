@@ -18,6 +18,10 @@ export const cartApi = {
     deleteCart(id) {
         const url = "/cart/delete/?id=" + id
         return axiosClient.get(url);
+    },
+    checkEmpty(id) {
+        const url = "/cart/checkEmpty/?id=" + id
+        return axiosClient.get(url);
     }
     
     

@@ -7,12 +7,12 @@ function ItemCart (props) {
         
         const hanldeDeleteCart =()=>{
             cartApi.deleteCart(id).then(res => {
-              
+                props.onGetId(id);
                 if (res) {
-                    props.onGetId(id);
+
                 }
                 else {
-                    props.onGetId(id);
+                    alert("vui lòng thử lại!")
                 }
             }).catch(e => { console.log(e) })
         }

@@ -46,8 +46,8 @@ class componentName extends Component {
                 <h1>Bình luận</h1>
                 <div
                     className="fb-comments"
-                    data-href={dataHref}
-                    // data-href="http://facebook.com"
+                    // data-href={dataHref}
+                    data-href="http://facebook.com"
 
                     data-width="100%"
                     data-numposts={5}
