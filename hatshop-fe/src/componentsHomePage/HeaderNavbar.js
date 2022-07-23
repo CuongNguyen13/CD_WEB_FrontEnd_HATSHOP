@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useState, useRef } from 'react';
 
 import {
     BrowserRouter as Router,
@@ -37,6 +37,7 @@ function HeaderNavbar() {
     }
     useEffect(() => {
         console.log("input start",input)
+        document.addEventListener("click", handleClickOutsize, true)
         searchApi.checkSearchInput(input)
             .then(res => {
                 setProudct(res)
@@ -45,8 +46,23 @@ function HeaderNavbar() {
             });
     }, [input])
 
+    // useRef(() => {
+    //     document.addEventListener("click", handleClickOutsize, true)
+    // }, [])
+    const refOne = useRef(null);
+
     const ClickbuttonSearch = () => {
         document.getElementById("SearchText").style.display = "block";
+    }
+
+    const handleClickOutsize = (e) => {
+        if(!refOne.current.contains(e.target)) {
+            document.getElementById("SearchText").style.display = "none"
+            document.getElementById("detailProduct").style.display = "none"
+        } else{
+            document.getElementById("SearchText").style.display = "block"
+            document.getElementById("detailProduct").style.display = "block"
+        }
     }
 
     return (
@@ -94,13 +110,12 @@ function HeaderNavbar() {
                             </NavLink>
                         </div>
                         <div className="d-none d-lg-flex ms-2">
-                            <input type="text" placeholder='Tìm kiếm' name='name' id='SearchText' style={{ display: "none" }} onChange={(event)=>{setInputs(event.target.value)}}></input>
-                            <div style={{float:"clear",clear:"left", position:"fixed",marginTop:"30px"}}>
+                            <input type="text" placeholder='Tìm kiếm' name='name' id='SearchText' style={{ display: "none" }} onChange={(event)=>{setInputs(event.target.value)}} ref={refOne}></input>
+                            <div style={{float:"clear",clear:"left", position:"fixed",marginTop:"30px"}} id="detailProduct">
                                     {product && product.map((item, index) => {
                                         return (
                                             <div style={{clear:"both", display:"block",backgroundColor:"white",border:"1px solid black",width:"205px"}}>
                                                 <ItemSearch key={index} product={item}></ItemSearch>
-                                                
                                             </div>
 
                                         )
