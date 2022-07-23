@@ -38,7 +38,7 @@ export const productApi = {
         return axiosClient.get(url);
     },
     listProductKind(limit,page,kind) {
-        const url = `/admin/product?page=` + page + `&limit=` + limit + "&kind=" + kind
+        const url = `/product/kind?page=` + page + `&limit=` + limit + "&kind=" + kind
         console.log(url)
         return axiosClient.get(url)
     }

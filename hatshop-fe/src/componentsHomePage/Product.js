@@ -7,7 +7,7 @@ function Product() {
 
     window.scroll(0, 0);
 
-    const [kind, setKind] = useState("Nón thời trang")
+    const [kind, setKind] = useState("Nón bảo hiểm")
 
     const [pageData, setPageData] = useState({
         totalPages: 0,

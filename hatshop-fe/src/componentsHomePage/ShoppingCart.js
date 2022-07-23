@@ -60,7 +60,7 @@ function ShoppingCart() {
                                 <div className=" p-4">
                                     <div className="row">
                                         <div className="col-lg-7">
-
+                                        <h3>Giỏ hàng</h3>
                                          
                                             {cart && cart.map((item, index) => {
                                                 return (
