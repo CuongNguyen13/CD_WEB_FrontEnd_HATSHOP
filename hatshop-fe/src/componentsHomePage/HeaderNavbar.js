@@ -23,7 +23,7 @@ import ItemSearch from './ItemSearch';
 
 
 function HeaderNavbar() {
-    const [input, setInputs] = useState({});
+    const [input, setInputs] = useState();
     var checkUserName = sessionStorage.getItem("userName");
     console.log("userName", checkUserName)
     const [product,setProudct] = useState()
@@ -36,6 +36,7 @@ function HeaderNavbar() {
 
     }
     useEffect(() => {
+        console.log("input start",input)
         searchApi.checkSearchInput(input)
             .then(res => {
                 setProudct(res)
@@ -99,6 +100,7 @@ function HeaderNavbar() {
                                         return (
                                             <div style={{clear:"both", display:"block",backgroundColor:"white",border:"1px solid black",width:"205px"}}>
                                                 <ItemSearch key={index} product={item}></ItemSearch>
+                                                
                                             </div>
 
                                         )
