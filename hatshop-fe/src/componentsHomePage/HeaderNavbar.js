@@ -94,18 +94,20 @@ function HeaderNavbar() {
                         </div>
                         <div className="d-none d-lg-flex ms-2">
                             <input type="text" placeholder='Tìm kiếm' name='name' id='SearchText' style={{ display: "none" }} onChange={(event)=>{setInputs(event.target.value)}}></input>
+                            <div style={{float:"clear",clear:"left", position:"fixed",marginTop:"30px"}}>
+                                    {product && product.map((item, index) => {
+                                        return (
+                                            <div style={{clear:"both", display:"block",backgroundColor:"white",border:"1px solid black",width:"205px"}}>
+                                                <ItemSearch key={index} product={item}></ItemSearch>
+                                            </div>
 
+                                        )
+                                    })
+                                    }
+                            </div>
                             <button className="btn-sm-square bg-white rounded-circle ms-3" onClick={ClickbuttonSearch}>
                                 <small className="fa fa-search text-body" />
                             </button>
-                            <div>
-                                {product && product.map((item, index) => {
-                                    return (
-                                        <ItemSearch key={index} product={item}></ItemSearch>
-                                    )
-                                })
-                                }
-                            </div>
 
                             <NavLink to="/cart" className="btn-sm-square bg-white rounded-circle ms-3" href="">
                                 <small className="fa fa-shopping-bag text-body" />
