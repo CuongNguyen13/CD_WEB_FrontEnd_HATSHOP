@@ -15,7 +15,12 @@ function ItemCart (props) {
                     alert("vui lòng thử lại!")
                 }
             }).catch(e => { console.log(e) })
-        }
+    }
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+        minimumFractionDigits: 0
+    })
     
         return (
             <div>
@@ -35,13 +40,17 @@ function ItemCart (props) {
                                     <h5>{products.name}</h5>
                                   
                                 </div>
+
+                                
+                                
+                                
                             </div>
                             <div className="d-flex flex-row align-items-center">
-                                <div style={{ width: 50 }}>
+                                <div style={{ width: 50,marginRight:'4em' }}>
                                     <h5 className="fw-normal mb-0">SL: {quantity}</h5>
                                 </div>
-                                <div style={{ width: 80,color:'red' }}>
-                                    <h5 className="mb-0">{products.price}</h5>
+                                <div>
+                                    <h5 className="mb-0">{formatter.format(products.price)}</h5>
                                 </div>
                                 <button className='btn btn-danger'>
                                     <i className="fas fa-trash-alt" onClick={hanldeDeleteCart} />

@@ -7,5 +7,9 @@ export const userApi = {
     blockUser(id){
         const url = "admin/block"
         return axiosClient.post(url,id)
+    },
+    userPayment(id) {
+        const url = "user/payment/?id=" + id
+        return axiosClient.get(url, id)
     }
 }

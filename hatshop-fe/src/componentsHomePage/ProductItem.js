@@ -15,7 +15,8 @@ function ProductItem (props){
             'id':0
 
 
-        }
+    }
+    
 
 
         const handlCart=()=>{
@@ -34,7 +35,14 @@ function ProductItem (props){
                 navigate("/login")
             }
 
-        }
+    }
+    
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+        minimumFractionDigits: 0
+    })
+
         return (
                 <div
                     className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
@@ -58,7 +66,7 @@ function ProductItem (props){
                             <Link className="d-block h5 mb-2" to={`/detailProduct${id}`} style={{textDecoration:"none"}}>
                                 {name}
                             </Link>
-                            <span className="text-primary me-1">{price} vnđ</span>
+                        <h5 className="text-danger me-1">{formatter.format(price)}</h5>
                             
                         </div>
                         <div className="d-flex border-top">
