@@ -31,7 +31,6 @@ function Profile() {
       const name = event.target.name;
       const value = event.target.value;
       setProfile(values => ({ ...values, [name]: value }))
-      console.log(profile)
   }
 
   

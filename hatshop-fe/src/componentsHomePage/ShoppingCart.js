@@ -1,22 +1,33 @@
 import React, { Component, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cartApi } from '../api/cartAPI';
+import { userApi } from '../api/userApi';
 import ItemCart from './ItemCart';
+import {prepaymentApi} from '../api/prepaymentApi'
 
 function ShoppingCart() {
+    const [input,setInputs] = useState();
     const [cart, setCart] = useState([]);
     window.scrollTo(0, 0);
     const id = sessionStorage.getItem("id")
+    const [user, setUser] = useState();
     const [modal, setModal] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
         cartApi.checkEmpty(id)
             .then(res => {
-                console.log("res", res);
                 if (!res) {
 
                     setModal(true)
                 }
+            }).catch(e => {
+                console.log(e)
+            });
+
+        userApi.userPayment(id)
+            .then(res => {
+                setUser(res)
+                console.log(user)
             }).catch(e => {
                 console.log(e)
             });
@@ -28,7 +39,7 @@ function ShoppingCart() {
                     setCart(res)
                 }
                 else {
-                    alert("Giỏ hàng trống!")
+                    alert("Vui lòng thử lại!")
                 }
 
             }).catch(e => {
@@ -52,19 +63,34 @@ function ShoppingCart() {
     }
 
 
-
-
-
-
-
-
     const handleGetId = (id) => {
         console.log("id", id)
         setCart(cart.filter(item => item.id !== id))
         console.log(cart)
     }
 
+    const handleChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setInputs(values => ({ ...values, [name]: value}))
+    }
 
+    const handleSubmit = (event) => {
+
+        prepaymentApi.save(input).then(res => {
+
+            if (res) {
+                navigate("/bill")
+            } else {
+                alert("Hệ thống đang bận, vui lòng thử lại")
+            }
+
+
+
+        }).catch(e => {
+            console.log(e)
+        });
+    }
 
 
 
@@ -102,43 +128,76 @@ function ShoppingCart() {
                                                     </div>
                                                     <form className="mt-4">
                                                         <div className="form-outline form-white mb-4">
+                                                            <label className="form-label" htmlFor="typeName">
+                                                                Tên khách hàng
+                                                            </label>
                                                             <input
                                                                 type="text"
                                                                 id="typeName"
                                                                 className="form-control form-control-lg"
-
+                                                                value={user&&user.lastName+" "+user.firstName}
                                                                 placeholder="Tên khách hàng"
                                                             />
-                                                            <label className="form-label" htmlFor="typeName">
-                                                                Tên khách hàng
-                                                            </label>
+
                                                         </div>
+
                                                         <div className="form-outline form-white mb-4">
+                                                            <label className="form-label" htmlFor="typeText">
+                                                                Số điện thoại
+                                                            </label>
                                                             <input
                                                                 type="phone"
                                                                 id="typeText"
+                                                                required
                                                                 className="form-control form-control-lg"
                                                                 siez={10}
                                                                 placeholder="099xxxxxxxx"
                                                                 minLength={10}
                                                                 maxLength={10}
                                                             />
-                                                            <label className="form-label" htmlFor="typeText">
-                                                                Số điện thoại
-                                                            </label>
+
                                                         </div>
                                                         <div className="form-outline form-white mb-4">
+                                                            <label className="form-label" htmlFor="typeText">
+                                                                Địa chỉ
+                                                            </label>
+                                                            <input
+                                                                type="text"
+                                                                id="typeText"
+                                                                className="form-control form-control-lg"
+                                                                value={user&&user.address}
+                                                                placeholder="Địa chỉ"
+
+                                                            />
+
+                                                        </div>
+                                                        <div className="form-outline form-white mb-4">
+                                                            <label className="form-label" htmlFor="typeText">
+                                                                Email
+                                                            </label>
                                                             <input
                                                                 type="text"
                                                                 id="typeText"
                                                                 className="form-control form-control-lg"
 
-                                                                placeholder="hcm"
+                                                                placeholder="Email"
+                                                                defaultValue={user && user.email}
+                                                            />
+
+                                                        </div>
+                                                        <div className="form-outline form-white mb-4">
+                                                            <label className="form-label" htmlFor="typeText">
+                                                                Mô tả
+                                                            </label>
+                                                            <textarea
+                                                                type="text"
+                                                                id="typeText"
+                                                                className="form-control form-control-lg"
+
+                                                                placeholder="Mô tả"
 
                                                             />
-                                                            <label className="form-label" htmlFor="typeText">
-                                                                Địa chỉ
-                                                            </label>
+
                                                         </div>
 
                                                     </form>
