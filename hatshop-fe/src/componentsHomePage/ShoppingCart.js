@@ -4,7 +4,7 @@ import { cartApi } from '../api/cartAPI';
 import ItemCart from './ItemCart';
 
 function ShoppingCart() {
-    const [cart, setCart] = useState();
+    const [cart, setCart] = useState([]);
     window.scrollTo(0, 0);
     const id = sessionStorage.getItem("id")
     const [modal, setModal] = useState(false);
@@ -24,12 +24,12 @@ function ShoppingCart() {
 
         cartApi.getlistCart(id)
             .then(res => {
-                if (res!=null){
-                     setCart(res)
+                if (res != null) {
+                    setCart(res)
                 }
                 else {
                     alert("Giỏ hàng trống!")
-             }
+                }
 
             }).catch(e => {
                 console.log(e)
@@ -37,17 +37,36 @@ function ShoppingCart() {
     }, [])
 
 
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+        minimumFractionDigits: 0
+    })
+
+    const totalPrice = () => {
+        let rs = 0;
+        cart.forEach(item => {
+            rs += item.quantity * item.products.price;
+        })
+        return formatter.format(rs);
+    }
+
+
+
+
+
 
 
 
     const handleGetId = (id) => {
         console.log("id", id)
-        setCart({ ...cart, cart: cart.filter(item => item.id !== id) })
+        setCart(cart.filter(item => item.id !== id))
         console.log(cart)
     }
-    
-    
-    
+
+
+
+
 
     return (
         <div>
@@ -60,14 +79,16 @@ function ShoppingCart() {
                                 <div className=" p-4">
                                     <div className="row">
                                         <div className="col-lg-7">
-                                        <h3>Giỏ hàng</h3>
-                                         
+                                            <h3>Giỏ hàng</h3>
+
                                             {cart && cart.map((item, index) => {
                                                 return (
 
                                                     <ItemCart onGetId={handleGetId} cart={item} key={index}></ItemCart>
                                                     // <ContactTr onGetId={handleGetId} contact={item} key={index} />
+
                                                 )
+
 
                                             })
                                             }
@@ -123,21 +144,17 @@ function ShoppingCart() {
                                                     </form>
                                                     <hr className="my-4" />
                                                     <div className="d-flex justify-content-between">
-                                                        <p className="mb-2">Tổng tiền</p>
-                                                        <p className="mb-2">200vnđ</p>
+                                                        <h4 className="mb-2">Tổng tiền</h4>
+                                                        <h4 className="mb-2" style={{ color: "red" }}>{totalPrice()}</h4>
                                                     </div>
 
                                                     <button
                                                         type="button"
-                                                        className="btn btn-info btn-block btn-lg"
+                                                        className="btn btn-danger btn-block btn-lg"
                                                     >
-                                                        <div className="d-flex justify-content-between">
-                                                            <span>$4818.00</span>
-                                                            <span>
-                                                                Checkout{" "}
-                                                                <i className="fas fa-long-arrow-alt-right ms-2" />
-                                                            </span>
-                                                        </div>
+                                                        Thanh toán
+
+
                                                     </button>
                                                 </div>
                                             </div>
@@ -151,7 +168,7 @@ function ShoppingCart() {
             </section>
             <div>
                 {/* Button trigger modal */}
-                                            
+
                 {/* Modal */}
                 {modal && (
                     <div className="modal show" id="exampleModal" style={{ display: 'block' }} tabIndex={-1} aria-labelledby="exampleModalLabel" aria-modal="true">
@@ -167,15 +184,15 @@ function ShoppingCart() {
                                 </div>
                                 <div className="modal-footer">
                                     {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => { setModal(false) }}>Đóng</button> */}
-                                    <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={() => {navigate("/product")} }>Mua ngay</button>
+                                    <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={() => { navigate("/product") }}>Mua ngay</button>
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                    )}
-                </div>
-            
+                )}
+            </div>
+
         </div>
     );
 }
