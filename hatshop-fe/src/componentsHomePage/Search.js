@@ -1,24 +1,88 @@
-import React  from 'react';
+import { Link } from 'react-router-dom';
+
+import ProductItem from './ProductItem';
+import { useEffect, useState } from 'react';
+import { searchApi } from '../api/searchApi';
 
 function Search (){
-   
-        return (
-            <div>
-                <div className="input-group">
-                    <div className="form-outline">
-                        <input type="search" id="form1" className="form-control" />
-                        <label className="form-label" htmlFor="form1">
-                            Search
-                        </label>
-                    </div>
-                    <button type="button" className="btn btn-primary">
-                        <i className="fas fa-search" />
-                    </button>
-                </div>
 
-            </div>
-        );
-    }
+     const [product, setProduct] = useState();
+     useEffect(() => {
+         // gọi api chỗ này
+         const name = sessionStorage.getItem("nameSearch")
+         searchApi.checkSearchInput(name)
+             .then(res=> {
+                 setProduct(res);
+                 const s = document.getElementById('message');
+                 const s2 = document.getElementById('titleProduct');
+                 if(product == null) {
+                    s.style.display = "block"
+                    s2.style.display = "none";}
+                     else{
+                        s.style.display = "none"
+                    }
+             }).catch(e => {
+                 console.log(e);
+             });
+     }, [])
+
+     
+     
+   if(product){
+       return (
+
+           <div>
+
+               <div className="container-xxl py-5">
+                   <div className="container">
+                       <div className="row g-0 gx-5 align-items-end">
+                           <div className="col-lg-6">
+                               <div
+                                   className="section-header text-start mb-5 wow fadeInUp"
+                                   data-wow-delay="0.1s"
+                                   style={{ maxWidth: 500 }}
+                               >
+                                   <h1 className="display-5 mb-3" id="titleProduct" style={{display:"block"}}>Sản phẩm tìm kiếm</h1>
+                                   <h1 className="display-5 mb-3" id="message" style={{display:"none"}}>Không có sản phẩn tìm kiếm</h1>
+
+                               </div>
+                           </div>
+                       </div>
+                       <div className="tab-content">
+                           <div id="tab-1" className="tab-pane fade show p-0 active">
+                               <div className="row g-4">
+                                   {/* <ProductItem name="Táo" price="200000" img="img/product-5.jpg" id="1"></ProductItem> */}
+                                   {
+                                       product && product.map((item, index) => {
+                                           return (
+                                               <ProductItem key={index} name={item.name} price={item.price} img={item.linkImage1} id={item.id}></ProductItem>
+                                               
+                                               )
+                                       })
+                                   }
+
+
+                                   <div
+                                       className="col-12 text-center wow fadeInUp"
+                                       data-wow-delay="0.1s"
+                                   >
+
+                                   </div>
+                               </div>
+
+                               <div className="col-12 text-center">
+                                   <Link to="/product" className="btn btn-primary rounded-pill py-3 px-5" href="">
+                                       Xem thêm
+                                   </Link>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       );
+   }
+}
 
 
 export default Search;

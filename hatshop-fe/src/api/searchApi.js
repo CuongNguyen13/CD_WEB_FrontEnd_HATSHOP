@@ -1,6 +1,6 @@
 import axiosClient from "./axiosClient"
 export const searchApi = {
 checkSearchInput(name){
-    const url = `/searchNoFilter/?name=`+name
+    const url = `/searchNoFilter?name=`+name
     return axiosClient.get(url);
 }}

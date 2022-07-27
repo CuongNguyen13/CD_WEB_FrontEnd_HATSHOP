@@ -4,7 +4,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link,
+    Link, useNavigate,
     Routes, NavLink
 } from "react-router-dom";
 import Home from './Home';
@@ -28,13 +28,9 @@ function HeaderNavbar() {
     console.log("userName", checkUserName)
     const [product,setProudct] = useState()
 
-    const handleChange = (event) => {
+    window.scrollTo(0, 0);
 
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(value)
 
-    }
     useEffect(() => {
         console.log("input start",input)
         document.addEventListener("click", handleClickOutsize, true)
@@ -45,6 +41,23 @@ function HeaderNavbar() {
                 console.log(e)
             });
     }, [input])
+
+    const navigate = useNavigate();
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        //gọi api login
+        //send form to service
+        console.log(input, "Dk")
+        sessionStorage.setItem("nameSearch",input)
+        searchApi.checkSearchInput(input).then(res => {
+            console.log(res)
+
+        }).catch(e => {
+            console.log(e)
+        });
+        navigate("/search");
+    }
 
     // useRef(() => {
     //     document.addEventListener("click", handleClickOutsize, true)
@@ -109,27 +122,28 @@ function HeaderNavbar() {
                                 {checkUserName !== null ? "Cá nhân" : "Đăng nhập"}
                             </NavLink>
                         </div>
-                        <div className="d-none d-lg-flex ms-2">
-                            <input type="text" placeholder='Tìm kiếm' name='name' id='SearchText' style={{ display: "none" }} onChange={(event)=>{setInputs(event.target.value)}} ref={refOne}></input>
-                            <div style={{float:"clear",clear:"left", position:"fixed",marginTop:"30px"}} id="detailProduct">
-                                    {product && product.map((item, index) => {
-                                        return (
-                                            <div style={{clear:"both", display:"block",backgroundColor:"white",border:"1px solid black",width:"205px"}}>
-                                                <ItemSearch key={index} product={item}></ItemSearch>
-                                            </div>
+                        <form onSubmit={handleSubmit}>
+                            <div className="d-none d-lg-flex ms-2">
+                                <input type="text" placeholder='Tìm kiếm' name='name' id='SearchText' style={{ display: "none" }} onChange={(event)=>{setInputs(event.target.value)}} ref={refOne}></input>
+                                <div style={{float:"clear",clear:"left", position:"fixed",marginTop:"30px"}} id="detailProduct">
+                                        {product && product.map((item, index) => {
+                                            return (
+                                                <div style={{clear:"both", display:"block",backgroundColor:"white",border:"1px solid black",width:"205px"}}>
+                                                    <ItemSearch key={index} product={item}></ItemSearch>
+                                                </div>
 
-                                        )
-                                    })
-                                    }
+                                            )
+                                        })
+                                        }
+                                </div>
+                                <button className="btn-sm-square bg-white rounded-circle ms-3" onClick={ClickbuttonSearch}>
+                                    <small className="fa fa-search text-body" />
+                                </button>
+                                <NavLink to="/cart" className="btn-sm-square bg-white rounded-circle ms-3" href="">
+                                    <small className="fa fa-shopping-bag text-body" />
+                                </NavLink>
                             </div>
-                            <button className="btn-sm-square bg-white rounded-circle ms-3" onClick={ClickbuttonSearch}>
-                                <small className="fa fa-search text-body" />
-                            </button>
-
-                            <NavLink to="/cart" className="btn-sm-square bg-white rounded-circle ms-3" href="">
-                                <small className="fa fa-shopping-bag text-body" />
-                            </NavLink>
-                        </div>
+                        </form>
                     </div>
                 </nav>
             </div>
