@@ -6,11 +6,11 @@ import ItemCart from './ItemCart';
 import {prepaymentApi} from '../api/prepaymentApi'
 
 function ShoppingCart() {
-    const [input,setInputs] = useState();
+   
     const [cart, setCart] = useState([]);
     window.scrollTo(0, 0);
     const id = sessionStorage.getItem("id")
-    const [user, setUser] = useState();
+    const [user, setUser] = useState({});
     const [modal, setModal] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
@@ -27,7 +27,7 @@ function ShoppingCart() {
         userApi.userPayment(id)
             .then(res => {
                 setUser(res)
-                console.log(user)
+
             }).catch(e => {
                 console.log(e)
             });
@@ -59,7 +59,8 @@ function ShoppingCart() {
         cart.forEach(item => {
             rs += item.quantity * item.products.price;
         })
-        return formatter.format(rs);
+       
+        return rs;
     }
 
 
@@ -69,28 +70,40 @@ function ShoppingCart() {
         console.log(cart)
     }
 
+    const [input, setInputs] = useState();
+
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        setInputs(values => ({ ...values, [name]: value}))
+        setUser(values => ({ ...values, [name]: value}))
+        
+        if (user.phone == null || input.phone == '' || user.phone.length < 11) {
+            setCheckPhone("block")
+        } else {
+            setCheckPhone("none")
+        }
+        setInputs(values => ({ ...values, name: user.firstName + " " + user.lastName, address: user.address, email: user.email, phone: user.phone, total: totalPrice(), userId: id, description: user.description }))
+        
     }
-
+    const [checkPhone,setCheckPhone] = useState(false)
     const handleSubmit = (event) => {
-
-        prepaymentApi.save(input).then(res => {
-
-            if (res) {
-                navigate("/bill")
-            } else {
-                alert("Hệ thống đang bận, vui lòng thử lại")
-            }
-
-
-
-        }).catch(e => {
-            console.log(e)
-        });
+       if (user.phone==null||user.phone.length<10) {
+        alert("Vui lòng điền đầy đủ thông tin");
+        setCheckPhone("block")
+       } else {
+           prepaymentApi.save(input).then(res => {
+               if (res) {
+               navigate("/bill")
+               } else {
+                   alert("Hệ thống đang bận, vui lòng thử lại")
+               }
+           }).catch(e => {
+               console.log(e)
+           });
+       }
+     
     }
+
 
 
 
@@ -128,23 +141,27 @@ function ShoppingCart() {
                                                     </div>
                                                     <form className="mt-4">
                                                         <div className="form-outline form-white mb-4">
-                                                            <label className="form-label" htmlFor="typeName">
-                                                                Tên khách hàng
+                                                             <label className="form-label" htmlFor="typeText">
+                                                               Tên
                                                             </label>
                                                             <input
                                                                 type="text"
-                                                                id="typeName"
+                                                                id="typeText"
+                                                                required
                                                                 className="form-control form-control-lg"
-                                                                value={user&&user.lastName+" "+user.firstName}
-                                                                placeholder="Tên khách hàng"
+                                                               
+                                                                placeholder="Tên"
+                                                                
+                                                                name='name'
+                                                                value={user&& user.lastName+" "+user.firstName}
+                                                                onChange={handleChange}
                                                             />
-
                                                         </div>
-
                                                         <div className="form-outline form-white mb-4">
                                                             <label className="form-label" htmlFor="typeText">
                                                                 Số điện thoại
                                                             </label>
+                                                            <p style={{display:{checkPhone},color:'red'}}>Vui lòng kiểm tra lại</p>
                                                             <input
                                                                 type="phone"
                                                                 id="typeText"
@@ -154,8 +171,10 @@ function ShoppingCart() {
                                                                 placeholder="099xxxxxxxx"
                                                                 minLength={10}
                                                                 maxLength={10}
+                                                                name='phone'
+                                                                value={user.phone || ""}
+                                                                onChange={handleChange}
                                                             />
-
                                                         </div>
                                                         <div className="form-outline form-white mb-4">
                                                             <label className="form-label" htmlFor="typeText">
@@ -164,26 +183,28 @@ function ShoppingCart() {
                                                             <input
                                                                 type="text"
                                                                 id="typeText"
+                                                                required
                                                                 className="form-control form-control-lg"
                                                                 value={user&&user.address}
                                                                 placeholder="Địa chỉ"
-
+                                                                name='address'
+                                                                onChange={handleChange}
                                                             />
-
                                                         </div>
                                                         <div className="form-outline form-white mb-4">
                                                             <label className="form-label" htmlFor="typeText">
                                                                 Email
                                                             </label>
                                                             <input
-                                                                type="text"
+                                                                type="email"
                                                                 id="typeText"
                                                                 className="form-control form-control-lg"
-
+                                                                required
                                                                 placeholder="Email"
-                                                                defaultValue={user && user.email}
+                                                                name='email'
+                                                                value={user&&user.email}
+                                                                onChange={handleChange}
                                                             />
-
                                                         </div>
                                                         <div className="form-outline form-white mb-4">
                                                             <label className="form-label" htmlFor="typeText">
@@ -193,28 +214,26 @@ function ShoppingCart() {
                                                                 type="text"
                                                                 id="typeText"
                                                                 className="form-control form-control-lg"
-
                                                                 placeholder="Mô tả"
-
+                                                                name='description'
+                                                                value={user.description || ""}
+                                                                onChange={handleChange}
                                                             />
-
                                                         </div>
-
+                                                        <hr className="my-4" />
+                                                        <div className="d-flex justify-content-between">
+                                                            <h4 className="mb-2">Tổng tiền</h4>
+                                                            <h4 className="mb-2" style={{ color: "red" }}>{formatter.format(totalPrice())}</h4>
+                                                        </div>
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-danger btn-block btn-lg"
+                                                            onClick={handleSubmit}
+                                                        >
+                                                            Thanh toán
+                                                        </button>
                                                     </form>
-                                                    <hr className="my-4" />
-                                                    <div className="d-flex justify-content-between">
-                                                        <h4 className="mb-2">Tổng tiền</h4>
-                                                        <h4 className="mb-2" style={{ color: "red" }}>{totalPrice()}</h4>
-                                                    </div>
-
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-danger btn-block btn-lg"
-                                                    >
-                                                        Thanh toán
-
-
-                                                    </button>
+                                                   
                                                 </div>
                                             </div>
                                         </div>
