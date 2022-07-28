@@ -35,6 +35,8 @@ function HeaderNavbar() {
     useEffect(() => {
         console.log("input start",input)
         document.addEventListener("click", handleClickOutsize, true)
+        // document.getElementById('SearchText').addEventListener('keydown', detectKeyDown, true)
+
         searchApi.checkSearchInput(input)
             .then(res => {
                 setProudct(res)
@@ -43,10 +45,16 @@ function HeaderNavbar() {
             });
     }, [input])
 
+    const detectKeyDown = (e) => {
+        console.log("Clicked : ", e.key)
+        if(e.key === "Enter") {
+            handleSubmit();
+        }
+    }
+
     const navigate = useNavigate();
     const handleSubmit = (event) => {
-        event.preventDefault();
-
+        // event.preventDefault();
         //gọi api login
         //send form to service
         console.log(input, "Dk")
@@ -123,9 +131,8 @@ function HeaderNavbar() {
                                 {checkUserName !== null ? "Cá nhân" : "Đăng nhập"}
                             </NavLink>
                         </div>
-                        <form onSubmit={handleSubmit}>
                             <div className="d-none d-lg-flex ms-2">
-                                <input type="text" placeholder='Tìm kiếm' name='name' id='SearchText' style={{ display: "none" }} onChange={(event)=>{setInputs(event.target.value)}} ref={refOne}></input>
+                                <input type="text" placeholder='Tìm kiếm' name='name' id='SearchText' style={{ display: "none" }} onChange={(event)=>{setInputs(event.target.value)}} ref={refOne} onKeyDown={detectKeyDown}></input>
                                 <div style={{float:"clear",clear:"left", position:"fixed",marginTop:"30px"}} id="detailProduct">
                                         {product && product.map((item, index) => {
                                             return (
@@ -144,7 +151,6 @@ function HeaderNavbar() {
                                     <small className="fa fa-shopping-bag text-body" />
                                 </NavLink>
                             </div>
-                        </form>
                     </div>
                 </nav>
             </div>
