@@ -57,6 +57,18 @@ function Search (){
         searchApi.createSearch(input).then(res => {
             console.log(res)
             setProduct(res)
+            const s = document.getElementById("message");
+            const s2 = document.getElementById("titleProduct");
+            const length = res.length;
+            console.log( "product length", length)
+            if(length < 1) {
+                s.style.display = "block";
+                s2.style.display = "none";
+            }
+                else{
+                s.style.display = "none";
+                s2.style.display = "block";
+            }
                 }).catch(e => {
                     console.log(e)
                 });
