@@ -13,6 +13,7 @@ function ShoppingCart() {
     const [user, setUser] = useState({});
     const [modal, setModal] = useState(false);
     const navigate = useNavigate();
+
     useEffect(() => {
         cartApi.checkEmpty(id)
             .then(res => {
@@ -62,12 +63,10 @@ function ShoppingCart() {
        
         return rs;
     }
-
+ const [checkPhone,setCheckPhone] = useState("none")
 
     const handleGetId = (id) => {
-        console.log("id", id)
         setCart(cart.filter(item => item.id !== id))
-        console.log(cart)
     }
 
     const [input, setInputs] = useState();
@@ -77,23 +76,20 @@ function ShoppingCart() {
         const value = event.target.value;
         setUser(values => ({ ...values, [name]: value}))
         
-        if (user.phone == null || input.phone == '' || user.phone.length < 11) {
-            setCheckPhone("block")
-        } else {
-            setCheckPhone("none")
-        }
         setInputs(values => ({ ...values, name: user.firstName + " " + user.lastName, address: user.address, email: user.email, phone: user.phone, total: totalPrice(), userId: id, description: user.description }))
         
     }
-    const [checkPhone,setCheckPhone] = useState(false)
+   
     const handleSubmit = (event) => {
        if (user.phone==null||user.phone.length<10) {
-        alert("Vui lòng điền đầy đủ thông tin");
-        setCheckPhone("block")
+        alert("Vui lòng điền đúng số điện thoại");
+        
        } else {
+        
            prepaymentApi.save(input).then(res => {
-               if (res) {
-               navigate("/bill")
+               if (res!=null) {
+                    const id = res
+                   navigate(`/bill${id}`)
                } else {
                    alert("Hệ thống đang bận, vui lòng thử lại")
                }
@@ -127,8 +123,6 @@ function ShoppingCart() {
                                                     // <ContactTr onGetId={handleGetId} contact={item} key={index} />
 
                                                 )
-
-
                                             })
                                             }
                                         </div>
@@ -161,7 +155,7 @@ function ShoppingCart() {
                                                             <label className="form-label" htmlFor="typeText">
                                                                 Số điện thoại
                                                             </label>
-                                                            <p style={{display:{checkPhone},color:'red'}}>Vui lòng kiểm tra lại</p>
+                                                           
                                                             <input
                                                                 type="phone"
                                                                 id="typeText"
