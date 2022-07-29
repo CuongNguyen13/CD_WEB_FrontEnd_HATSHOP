@@ -51,16 +51,14 @@ function HeaderNavbar() {
             const regex = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
             
             console.log("Mystring", myString.value.trim().length);
-            if (myString.value.trim().length === 0) {
-                document.getElementById("message").style.display = 'block';
+            if (myString.value.trim().length < 1) {
+                document.getElementById("message1").style.display = 'block';
                 document.getElementById("message2").style.display = 'none';
             } else if(regex.test(myString.value.trim())) {
-                document.getElementById("message").style.display = 'none';
+                document.getElementById("message1").style.display = 'none';
                 document.getElementById("message2").style.display = 'block';
             } 
             else {
-                document.getElementById("message").style.display = 'none';
-                document.getElementById("message2").style.display = 'none';
                 handleSubmit();
             }
         }
@@ -69,16 +67,15 @@ function HeaderNavbar() {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         // event.preventDefault();
-        //gọi api login
-        //send form to service
         console.log(input, "Dk")
+        document.getElementById("message1").style.display = 'none';
+        document.getElementById("message2").style.display = 'none';
         searchApi.checkSearchInput(input).then(res => {
             console.log(res)
         }).catch(e => {
             console.log(e)
         });
         navigate("/search");
-
     }
 
     // useRef(() => {
@@ -94,7 +91,7 @@ function HeaderNavbar() {
         if(!refOne.current.contains(e.target)) {
             document.getElementById("SearchText").style.display = "none"
             document.getElementById("detailProduct").style.display = "none"
-            document.getElementById("message").style.display = 'none';
+            document.getElementById("message1").style.display = 'none';
             document.getElementById("message2").style.display = 'none';
         } else{
             document.getElementById("SearchText").style.display = "block"
@@ -149,7 +146,7 @@ function HeaderNavbar() {
                         </div>
                             <div className="d-none d-lg-flex ms-2">
                                 <input type="text" placeholder='Tìm kiếm' name='name' id='SearchText' style={{ display: "none" }} onChange={(event)=>{setInputs(event.target.value)}} ref={refOne} onKeyDown={detectKeyDown}></input>
-                                <div id='message' style={{display:"none", color:"red", position:"fixed", margin:"30px 0 0 0"}}>Trường đang trống!</div>
+                                <div id='message1' style={{display:"none", color:"red", position:"fixed", margin:"30px 0 0 0"}}>Trường đang trống!</div>
                                 <div id='message2' style={{display:"none", color:"red", position:"fixed", margin:"30px 0 0 0"}}>Trường có kí tự đặc biệt!</div>
                                 <div style={{float:"clear",clear:"left", position:"fixed",marginTop:"30px"}} id="detailProduct">
                                         {product && product.map((item, index) => {
