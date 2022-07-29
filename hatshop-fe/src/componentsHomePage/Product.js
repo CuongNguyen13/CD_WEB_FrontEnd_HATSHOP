@@ -32,33 +32,33 @@ function Product() {
 
                 console.log(e)
             });
-    },[kind,pageData.currentPage])
+    }, [kind, pageData.currentPage])
 
     const kindFashion = () => {
-      
+
         const currentPage = 1;
         console.log(kind)
         setKind("Nón thời trang")
         setPageData({ ...pageData, currentPage })
-        
+
     }
 
     const kindHelmet = () => {
-        
+
         const currentPage = 1;
         console.log(kind)
         setKind("Nón bảo hiểm")
         setPageData({ ...pageData, currentPage })
-       
+
     }
 
     const kindWimcap = () => {
-       
+
         const currentPage = 1;
         console.log(kind)
-        setKind("Nón tắm biển")
+        setKind("Mũ panama")
         setPageData({ ...pageData, currentPage })
-     
+
     }
 
 
@@ -101,7 +101,7 @@ function Product() {
                                         className="btn btn-outline-primary border-2"
                                         data-bs-toggle="pill"
                                     >
-                                        Nón tắm biển
+                                        Nón panama
                                     </button>
                                 </li>
                             </ul>

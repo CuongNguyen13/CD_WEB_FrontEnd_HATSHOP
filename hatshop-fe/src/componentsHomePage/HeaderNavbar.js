@@ -168,7 +168,7 @@ function HeaderNavbar() {
                 <Route path='/Forgetpass' element={<Forgetpass></Forgetpass>}></Route>
                 <Route path='/OTP' element={<Otp></Otp>}></Route>
                 <Route path='/Profile' element={<Profile></Profile>}></Route>
-                <Route path='/bill' element={<Bill></Bill>}></Route>
+                <Route path='/bill:id' element={<Bill></Bill>}></Route>
             </Routes>
 
 
