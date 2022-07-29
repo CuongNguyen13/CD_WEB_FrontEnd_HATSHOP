@@ -9,28 +9,38 @@ function Search (){
 
      const [product, setProduct] = useState();
      const navigate = useNavigate();
-     const [input, setInputs] = useState({});
+     const name = sessionStorage.getItem("nameSearch")
+
+     const [input, setInputs] = useState({
+        name : name,
+        biginDate : new Date("2020/01/01"),
+        endate : new Date("2024/01/01"),
+        beginPrice : 250000.0,
+        endPrice : 750000.0,
+        kind : ""
+     })
      useEffect(() => {
          // gọi api chỗ này
-         const name = sessionStorage.getItem("nameSearch")
          searchApi.checkSearchInput(name)
              .then(res=> {
-                 setProduct(res);
-                 console.log("length", product)
+                setProduct(res);
+                 console.log("res : ", res)
                  const s = document.getElementById("message");
                  const s2 = document.getElementById("titleProduct");
-                 if(product.length == 0) {
-                    s.style.display = "block";
-                    s2.style.display = "none";
-                }
+                 const length = res.length;
+                 console.log( "product length", length)
+                 if(length < 1) {
+                     s.style.display = "block";
+                     s2.style.display = "none";
+                 }
                      else{
-                        s.style.display = "none";
-                        s2.style.display = "block";
-                    }
+                     s.style.display = "none";
+                     s2.style.display = "block";
+                 }
              }).catch(e => {
-                 console.log(e);
+                //  console.log(e);
              });
-     }, [])
+     }, [name])
 
      const handleChange = (event) => {
         const name = event.target.name;
@@ -40,20 +50,18 @@ function Search (){
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        //gọi api login
-        //send form to service
+        const nameInput = sessionStorage.getItem("nameSearch")
+        // setInputs({...input,name1:nameInput+""})
+       
         console.log(input, "Dk")
         searchApi.createSearch(input).then(res => {
             console.log(res)
-
-        }).catch(e => {
-            console.log(e)
-        });
-        // navigate("/")
+            setProduct(res)
+                }).catch(e => {
+                    console.log(e)
+                });
     }
     const nameSearch = sessionStorage.getItem("nameSearch");
-
 
     const rangeInput = document.querySelectorAll(".range-input input"),
     priceInput = document.querySelectorAll(".price-input input"),
@@ -93,7 +101,7 @@ function Search (){
             }
         });
     });
-     
+    
      
    if(product){
        return (
@@ -111,7 +119,7 @@ function Search (){
                                    <h1 className="display-5 mb-3" id="titleProduct" style={{display:"block"}}>Sản phẩm tìm kiếm</h1>
                                    <h1 className="display-5 mb-3" id="message" style={{display:"none"}}>Không có sản phẩn tìm kiếm</h1>
                                    <form onSubmit={handleSubmit} style={{ width:"100%", display:"flex"}}>
-                                    <input value={nameSearch} style={{display:"none"}} onChange={handleChange}></input>
+                                        <input name="name" style={{display:"none"}} value={nameSearch} onChange={handleChange}></input>
                                         <div style={{float:"left", width:"100%"}}>
                                             <div style={{float:"left", width:"12%", marginTop:"25px"}}>
                                                 <div class="input-group" style={{width:"150px", float:"left"}}>
@@ -142,8 +150,8 @@ function Search (){
                                                     <div className="progress" />
                                                 </div>  
                                                 <div className="range-input" style={{float:"left", width:"60%"}}>
-                                                    <input type="range" style={{width:"100%", marginTop:"8px"}} class="beginPrice" className="range-min" min={0} max={2000000} defaultValue={100000} step={10000} onChange={handleChange}/>
-                                                    <input type="range" style={{width:"100%", marginTop:"26px"}} class="endPrice" className="range-max" min={0} max={2000000} defaultValue={500000} step={10000} onChange={handleChange}/>
+                                                    <input type="range" style={{width:"100%", marginTop:"8px"}} name="beginPrice" className="range-min" min={0} max={2000000} defaultValue={250000} step={10000} onChange={handleChange}/>
+                                                    <input type="range" style={{width:"100%", marginTop:"26px"}} name="endPrice" className="range-max" min={0} max={2000000} defaultValue={500000} step={10000} onChange={handleChange}/>
                                                 </div>
                                             </div>
                                             <div class="" style={{float:"left", width:"20%", backgroundColor:"gray", marginTop:"20px"}}>

@@ -12,7 +12,7 @@ createSearch(params) {
 //nhận kết quả từ api
 getResult(){
     const url = "/search"
-    return axiosClient.get(url);
+    return axiosClient.post(url);
 
 }
 }

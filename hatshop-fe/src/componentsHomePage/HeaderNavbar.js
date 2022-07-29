@@ -33,7 +33,6 @@ function HeaderNavbar() {
 
 
     useEffect(() => {
-        console.log("input start",input)
         document.addEventListener("click", handleClickOutsize, true)
         // document.getElementById('SearchText').addEventListener('keydown', detectKeyDown, true)
 
@@ -46,9 +45,24 @@ function HeaderNavbar() {
     }, [input])
 
     const detectKeyDown = (e) => {
-        console.log("Clicked : ", e.key)
         if(e.key === "Enter") {
-            handleSubmit();
+            sessionStorage.setItem("nameSearch",input)
+            const myString = document.getElementById("SearchText");
+            const regex = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+            
+            console.log("Mystring", myString.value.trim().length);
+            if (myString.value.trim().length === 0) {
+                document.getElementById("message").style.display = 'block';
+                document.getElementById("message2").style.display = 'none';
+            } else if(regex.test(myString.value.trim())) {
+                document.getElementById("message").style.display = 'none';
+                document.getElementById("message2").style.display = 'block';
+            } 
+            else {
+                document.getElementById("message").style.display = 'none';
+                document.getElementById("message2").style.display = 'none';
+                handleSubmit();
+            }
         }
     }
 
@@ -58,14 +72,13 @@ function HeaderNavbar() {
         //gọi api login
         //send form to service
         console.log(input, "Dk")
-        sessionStorage.setItem("nameSearch",input)
         searchApi.checkSearchInput(input).then(res => {
             console.log(res)
-
         }).catch(e => {
             console.log(e)
         });
         navigate("/search");
+
     }
 
     // useRef(() => {
@@ -81,11 +94,14 @@ function HeaderNavbar() {
         if(!refOne.current.contains(e.target)) {
             document.getElementById("SearchText").style.display = "none"
             document.getElementById("detailProduct").style.display = "none"
+            document.getElementById("message").style.display = 'none';
+            document.getElementById("message2").style.display = 'none';
         } else{
             document.getElementById("SearchText").style.display = "block"
             document.getElementById("detailProduct").style.display = "block"
         }
     }
+
 
     return (
 
@@ -133,6 +149,8 @@ function HeaderNavbar() {
                         </div>
                             <div className="d-none d-lg-flex ms-2">
                                 <input type="text" placeholder='Tìm kiếm' name='name' id='SearchText' style={{ display: "none" }} onChange={(event)=>{setInputs(event.target.value)}} ref={refOne} onKeyDown={detectKeyDown}></input>
+                                <div id='message' style={{display:"none", color:"red", position:"fixed", margin:"30px 0 0 0"}}>Trường đang trống!</div>
+                                <div id='message2' style={{display:"none", color:"red", position:"fixed", margin:"30px 0 0 0"}}>Trường có kí tự đặc biệt!</div>
                                 <div style={{float:"clear",clear:"left", position:"fixed",marginTop:"30px"}} id="detailProduct">
                                         {product && product.map((item, index) => {
                                             return (
@@ -147,7 +165,7 @@ function HeaderNavbar() {
                                 <button className="btn-sm-square bg-white rounded-circle ms-3" onClick={ClickbuttonSearch}>
                                     <small className="fa fa-search text-body" />
                                 </button>
-                                <NavLink to="/cart" className="btn-sm-square bg-white rounded-circle ms-3" href="">
+                                <NavLink to={checkUserName !== null ? "/cart" : "/login"} className="btn-sm-square bg-white rounded-circle ms-3" href="">
                                     <small className="fa fa-shopping-bag text-body" />
                                 </NavLink>
                             </div>
