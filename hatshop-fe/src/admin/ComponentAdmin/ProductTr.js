@@ -31,6 +31,11 @@ function ProductTr(props) {
 
     }
 
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+        minimumFractionDigits: 0
+    })
 
 
     return (
@@ -41,7 +46,7 @@ function ProductTr(props) {
             <td>{name}</td>
             <td>{new Date(date).toLocaleDateString()}</td>
             <td>{kind}</td>
-            <td>{price}</td>
+            <td style={{ color:'red'}}>{formatter.format(price)}</td>
             <td>{quantity}</td>
             <td> <NavLink className='btn btn-primary' to={`/admin/editProduct${id}`}>
                 Chỉnh sửa

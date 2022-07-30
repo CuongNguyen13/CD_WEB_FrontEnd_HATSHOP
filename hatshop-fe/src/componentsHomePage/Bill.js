@@ -16,11 +16,13 @@ function Bill() {
         prepaymentApi.bill(params.id)
             .then(res => {
                 if (res != null) {
-                    console.log(res)
+                    console.log("bill", res)
                     setBill(res);
-                    if (bill.status = 1) {
+                  
+                  
+                    if (res.status == "1") {
                         setStatus("Đã xác nhận")
-                    } else if(bill.status = 0){
+                    } else if(res.status == "0"){
                         setStatus("Đang chờ xác nhận")
                     } else {
                         setStatus("Đơn hàng đã hủy")
@@ -98,7 +100,7 @@ function Bill() {
 
 
             </div>
-
+            <button className='btn btn-primary end' onClick={()=>{navigate("/")}}>Mua tiếp</button>
 
 
 

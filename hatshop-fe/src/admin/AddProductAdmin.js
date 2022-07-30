@@ -11,7 +11,7 @@ import storage from '../firebaseConfig';
 
 function AddProductAdmin() {
     const [input, setInputs] = useState();
-    const [img1, setImage1] = useState();
+    const [img1, setImage1] = useState([]);
     const [img2, setImage2] = useState();
     const [img3, setImage3] = useState();
     const [decription, setDecription] = useState();
@@ -56,8 +56,8 @@ function AddProductAdmin() {
     }, [input && input.name])
 
     const handleUpload = (file) => {
-        const blobFile = URL.createObjectURL(file)
-        console.log("file:", blobFile)
+        
+        console.log("filekkkkkkk:", file)
         const storageRef = ref(storage, `/files/${file.name}.png`);
         // progress can be paused and resumed. It also exposes progress update
         // Receives the storage reference and the file to upload.
@@ -75,6 +75,7 @@ function AddProductAdmin() {
             () => {
                 // download url
                 getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                    console.log("url",url)
                     return url;
 
                 });
@@ -89,7 +90,7 @@ function AddProductAdmin() {
 
             //gọi api contact
             //send form to service
-            const link1 = handleUpload(input && input.linkImage1);
+            const link1 = handleUpload(img1);
             console.log("link1", link1)
             productApi.addProduct(input).then(res => {
                 // console.log("kết quả:", res)
@@ -113,7 +114,11 @@ function AddProductAdmin() {
             alert("Vui lòng chọn tên khác!!")
         }
     }
-
+    function handleChangeImg(event) {
+        const file = event.target.files[0]
+        console.log("file event", file);
+        setImage1(file);   
+    }
 
     const handleGetImg1 = (url) => {
         setImage1(url);
@@ -125,9 +130,6 @@ function AddProductAdmin() {
         setImage3(url);
 
     }
-
-
-
 
     return (
         <div style={{ maxWidth: '100%' }}>
@@ -162,9 +164,11 @@ function AddProductAdmin() {
                 <div style={{ marginTop: '2em' }}></div>
                 <h1>Chọn ít nhất 1 ảnh</h1>
                 <div className="row">
-                    <UploadFile onGetImg={handleGetImg1} />
-                    <UploadFile onGetImg={handleGetImg2} />
-                    <UploadFile onGetImg={handleGetImg3} />
+                    {/* <UploadFile onGetImg={handleGetImg1} /> */}
+                    {/* <UploadFile onGetImg={handleGetImg2} /> */}
+                    {/* <UploadFile onGetImg={handleGetImg3} /> */}
+                    <input type="file" onChange={handleChangeImg} accept="/image/*" />
+
 
                 </div>
 

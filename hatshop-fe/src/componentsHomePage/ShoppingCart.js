@@ -75,7 +75,7 @@ function ShoppingCart() {
         const name = event.target.name;
         const value = event.target.value;
         setUser(values => ({ ...values, [name]: value}))
-        
+        console.log(user.phone)
         setInputs(values => ({ ...values, name: user.firstName + " " + user.lastName, address: user.address, email: user.email, phone: user.phone, total: totalPrice(), userId: id, description: user.description }))
         
     }
@@ -210,7 +210,7 @@ function ShoppingCart() {
                                                                 className="form-control form-control-lg"
                                                                 placeholder="Mô tả"
                                                                 name='description'
-                                                                value={user.description || ""}
+                                                                value={user.description || " "}
                                                                 onChange={handleChange}
                                                             />
                                                         </div>

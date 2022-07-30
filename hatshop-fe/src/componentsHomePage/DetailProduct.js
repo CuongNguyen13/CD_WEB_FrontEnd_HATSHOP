@@ -53,7 +53,7 @@ function DetailProduct() {
             }).catch(e => {
                 console.log(e)
             });
-    }, [])
+    }, [id])
 
 
     var checkUserName = sessionStorage.getItem("userName");
