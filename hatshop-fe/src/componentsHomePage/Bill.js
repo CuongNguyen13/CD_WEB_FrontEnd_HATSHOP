@@ -9,7 +9,8 @@ function Bill() {
         cart:[]
     });
     let params = useParams();
-    const [cart, setCart] = useState([]);
+
+    const [status,setStatus] = useState([])
     useEffect(() => {
         // gọi api chỗ này
         prepaymentApi.bill(params.id)
@@ -17,6 +18,14 @@ function Bill() {
                 if (res != null) {
                     console.log(res)
                     setBill(res);
+                    if (bill.status = 1) {
+                        setStatus("Đã xác nhận")
+                    } else if(bill.status = 0){
+                        setStatus("Đang chờ xác nhận")
+                    } else {
+                        setStatus("Đơn hàng đã hủy")
+                    }
+            
                 
                 } else {
                     alert("Vui lòng thử lại");
@@ -45,7 +54,7 @@ function Bill() {
             </h5>
             <h4 className='text-start'>Xin chào: <span style={{ color: "blue" }}>{bill&&bill.name}</span></h4>
             <h6 className='text-start'>Đơn hàng của bạn đã được đặt thành công vào ngày: <span style={{ color: "blue" }}>{new Date(bill &&bill.date).toLocaleDateString()}</span></h6>
-            <h6 className='text-start'>Tình trạng đơn hàng: <i className='text-primary'>{bill && bill.status?"Chưa xác nhận":"Đã xác nhận"}</i></h6>
+            <h6 className='text-start'>Tình trạng đơn hàng: <i className='text-primary'>{status}</i></h6>
             <hr style={{ color: 'black', fontSize: '15px' }}></hr>
             <h4 className='text-start'>Thông tin đơn hàng:</h4>
             <div className='center'>
