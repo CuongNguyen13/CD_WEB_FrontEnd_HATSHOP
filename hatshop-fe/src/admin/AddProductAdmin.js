@@ -1,7 +1,4 @@
 import React, { Component, useEffect, useState } from 'react';
-import UploadFile from './UploadFile';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { productApi } from '../api/productApi';
 
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -11,10 +8,10 @@ import storage from '../firebaseConfig';
 
 function AddProductAdmin() {
     const [input, setInputs] = useState();
-    const [img1, setImage1] = useState([]);
+    const [img1, setImage1] = useState();
     const [img2, setImage2] = useState();
     const [img3, setImage3] = useState();
-    const [decription, setDecription] = useState();
+    // const [decription, setDecription] = useState('');
     const [checkName, setCheckName] = useState();
     const [validation, setValidateion] = useState(true);
 
@@ -41,7 +38,7 @@ function AddProductAdmin() {
         const name = event.target.name;
         const value = event.target.value;
 
-        setInputs(values => ({ ...values, [name]: value, linkImage1: img1, linkImage2: img2, linkImage3: img3, user: user.id, decription: decription }))
+        setInputs(values => ({ ...values, [name]: (name === 'price' || name === "quantity") ? Number(value) : value, linkImage1: img1, linkImage2: img2, linkImage3: img3 }))
 
     }
     useEffect(() => {
@@ -55,9 +52,8 @@ function AddProductAdmin() {
             });
     }, [input && input.name])
 
-    const handleUpload = (file) => {
-        
-        console.log("filekkkkkkk:", file)
+    const handleUpload = (file, callback) => {
+
         const storageRef = ref(storage, `/files/${file.name}.png`);
         // progress can be paused and resumed. It also exposes progress update
         // Receives the storage reference and the file to upload.
@@ -75,60 +71,82 @@ function AddProductAdmin() {
             () => {
                 // download url
                 getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                    console.log("url",url)
-                    return url;
-
+                    callback(url);
                 });
             }
         );
     };
 
+    const [url1, setUrl1] = useState();
+    const [url2, setUrl2] = useState();
+    const [url3, setUrl3] = useState();
+
+    const [anh1, setAnh1] = useState([]);
+    const [anh2, setAnh2] = useState([]);
+    const [anh3, setAnh3] = useState([]);
+
+
 
     const handleSubmit = (event) => {
         if (validation) {
-            // if (img1 != null || img2 != null || img3 != null) {
+            if (img1 && img2 && img3) {
 
-            //gọi api contact
-            //send form to service
-            const link1 = handleUpload(img1);
-            console.log("link1", link1)
-            productApi.addProduct(input).then(res => {
-                // console.log("kết quả:", res)
-                if (res) {
-                    setIsDisplayModal(true)
-                    setInputs("");
+                //gọi api contact
+                //send form to service
+                handleUpload(img1, (url) => {
+                    setUrl1(url)
+                });
+                handleUpload(img2, (url) => {
+                    setUrl2(url)
+                });
+                handleUpload(img3, (url) => {
+                    setUrl3(url)
+                });
 
+                // setInputs(values => ({ ...values,  linkImage1: img1, linkImage2: img2, linkImage3: img3, user: user.id, decription: decription }))
+
+
+                if (url1 && url2 && url3) {
+                    const newInput = { ...input, linkImage1: url1, linkImage2: url2, linkImage3: url3 }
+                    productApi.addProduct(newInput).then(res => {
+                        console.log("kết quả:", res)
+                        if (res) {
+                            setIsDisplayModal(true)
+                            setInputs("");
+
+                        }
+                        else {
+                            setIsDisplayModal(false);
+                        }
+                        console.log(res)
+
+                    }).catch(e => {
+                        console.log(e)
+                    });
                 }
-                else {
-                    setIsDisplayModal(false);
-                }
-                console.log(res)
-
-            }).catch(e => {
-                console.log(e)
-            });
-            //    }else{
-            //     alert("Vui lòng chọn ảnh!!")
-            //    }
+            } else {
+                alert("Vui lòng chọn ảnh!!")
+            }
         } else {
             alert("Vui lòng chọn tên khác!!")
         }
     }
+
     function handleChangeImg(event) {
         const file = event.target.files[0]
-        console.log("file event", file);
-        setImage1(file);   
-    }
+        setImage1(file);
+        setAnh1(URL.createObjectURL(file))
 
-    const handleGetImg1 = (url) => {
-        setImage1(url);
     }
-    const handleGetImg2 = (url) => {
-        setImage2(url);
+    function handleChangeImg2(event) {
+        const file = event.target.files[0]
+        setImage2(file);
+        setAnh2(URL.createObjectURL(file))
     }
-    const handleGetImg3 = (url) => {
-        setImage3(url);
-
+    function handleChangeImg3(event) {
+        const file = event.target.files[0]
+        setImage3(file);
+        setAnh3(URL.createObjectURL(file))
     }
 
     return (
@@ -167,8 +185,19 @@ function AddProductAdmin() {
                     {/* <UploadFile onGetImg={handleGetImg1} /> */}
                     {/* <UploadFile onGetImg={handleGetImg2} /> */}
                     {/* <UploadFile onGetImg={handleGetImg3} /> */}
-                    <input type="file" onChange={handleChangeImg} accept="/image/*" />
+                    <div className='col-4'>
+                        <input type="file" onChange={handleChangeImg} accept="/image/*" />
+                        <img src={anh1}></img>
+                    </div>
+                    <div className='col-4'>
+                        <input type="file" onChange={handleChangeImg2} accept="/image/*" />
+                        <img src={anh2}></img>
+                    </div>
 
+                    <div className='col-4'>
+                        <input type="file" onChange={handleChangeImg3} accept="/image/*" />
+                        <img src={anh3}></img>
+                    </div>
 
                 </div>
 
@@ -176,33 +205,12 @@ function AddProductAdmin() {
                 <hr style={{ color: 'red' }}></hr>
                 <h3>Mô tả sản phẩm</h3>
                 <div className='row'>
-                    <div className='col-5'></div>
-                    <div>
-                        <CKEditor
+                    <div className='col-1'></div>
 
-                            editor={ClassicEditor}
-                            data=""
-                            onReady={editor => {
-                                // You can store the "editor" and use when it is needed.
+                    <textarea className='col-11' rows={5} name='description' value={input && input.description || ""} onChange={handleChange} >
 
-                                console.log('Editor is ready to use!', editor);
-                            }}
-                            onChange={(event, editor) => {
-                                const data = editor.getData();
-                                console.log({ event, editor, data });
+                    </textarea>
 
-                                setDecription(data);
-
-                            }}
-                            onBlur={(event, editor) => {
-                                console.log('Blur.', editor);
-                            }}
-                            onFocus={(event, editor) => {
-                                console.log('Focus.', editor);
-                            }}
-                        />
-
-                    </div>
                 </div>
                 <hr style={{ color: 'red' }}></hr>
 

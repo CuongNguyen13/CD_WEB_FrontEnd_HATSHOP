@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CommentFacebook from './CommentFaceBook';
 import { productApi } from '../api/productApi';
-import { Button, Carousel } from 'react-bootstrap';
+import {  Carousel } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { cartApi } from '../api/cartAPI';
 
