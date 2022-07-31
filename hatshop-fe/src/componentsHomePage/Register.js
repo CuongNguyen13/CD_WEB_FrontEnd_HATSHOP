@@ -4,16 +4,41 @@ import { registerApi } from '../api/registerApi';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 import "../css/Register.css";
+import axios from 'axios';
 
 
 function Register() {
     // redirect sang trang trước đó navigate(-1)
     const navigate = useNavigate();
     window.scrollTo(0, 0);
-    //sử lý form
-    const [input, setInputs] = useState({});
+    
+    const [check, setCheck] = useState(false);
+    const CheckEmailExist = (email, values) => {
+      registerApi.checkEmailExist(email).then(res => {
+        
+        console.log("res",check)
+        setCheck(res)
+        if (res) {
+          setCheck(res)
+        } else {
+          console.log(values, "Dk")
+          registerApi.createRegister(values).then(res => {
+              console.log(res)
+          }).catch(e => {
+              console.log(e)
+          });
+          navigate("/")
+          alert("Bạn đã đăng ký thành công.");     
+        }
+      }).catch(e => {
+          console.log("e",e)
+      });
+  }
 
+   
+    //sử lý form
     const formik = useFormik({
+      
       initialValues:{
         fistName : "",
         lastName : "",
@@ -24,49 +49,18 @@ function Register() {
         date : ""
       },
       validationSchema: Yup.object({
-        fistName: Yup.string().required("Trống!").min(4, "Tên tối thiểu 4 ký tự!"),
-        lastName: Yup.string().required("Trống!").min(4, "Họ và tên đệm tối thiểu 4 ký tự!"),
+        fistName: Yup.string().required("Tên không được trống!").min(2, "Tên tối thiểu 2 ký tự!"),
+        lastName: Yup.string().required("Họ và tên đệm không được trống!").min(2, "Họ và tên đệm tối thiểu 2 ký tự!"),
         email : Yup.string().required("Trống!").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "chưa phù hợp định dạng email!"),
         pass: Yup.string().required("Trống!").min(8, "Mật khẩu tối thiểu từ 8 ký tự!"),
         province: Yup.string().required("Trống!").min(3, "Nguyên quán tối thiểu 3 ký tự!"),
         address: Yup.string().required("Trống!").min(3, "Địa chỉ tối thiểu 3 ký tự!"),
       }),
+     
       onSubmit: (values) => {
-        //gọi api login
-        //send form to service
-        console.log(values, "Dk")
-        registerApi.createRegister(values).then(res => {
-            console.log(res)
-        }).catch(e => {
-            console.log(e)
-        });
-        navigate("/")
-        alert("Bạn đã đăng ký thành công.");      }
+        CheckEmailExist(values.email, values)
+        }
     })
-    console.log(formik.errors.email);
-
-    const handleChange = (event) => {
-      const name = event.target.name;
-      const value = event.target.value;
-      setInputs(values => ({ ...values, [name]: value }))
-      
-  }
-
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-
-    //     //gọi api login
-    //     //send form to service
-    //     console.log(input, "Dk")
-    //     registerApi.createRegister(input).then(res => {
-    //         console.log(res)
-
-    //     }).catch(e => {
-    //         console.log(e)
-    //     });
-    //     navigate("/")
-    //     alert("Bạn đã đăng ký thành công.");
-    // }
 
 
 
@@ -101,6 +95,7 @@ function Register() {
           <div className="mb-3">
             <input type="email" className="input-field" name="email" id="email" required placeholder='Email' value={formik.values.email} onChange={formik.handleChange}/>
             <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.email}</span>
+            <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{check?"Email này đã được đăng ký":""}</span>
           </div>
           <div className="mb-3">
             <input type="password" className="input-field input-pass" id="pass" name="pass" required placeholder='Mật khẩu' value={formik.values.pass} onChange={formik.handleChange}/>

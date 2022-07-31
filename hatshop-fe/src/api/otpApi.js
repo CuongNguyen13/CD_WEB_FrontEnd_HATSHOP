@@ -9,7 +9,6 @@ export const otpApi = {
     resendOtp(email) {
         // chỗ này ghi cái path tương ứng vs api
         const url = `/resetOTP2?email=${email}`
-
         // nếu có tham số thì axiosClient.get(url,{params});
         return axiosClient.get(url);
 

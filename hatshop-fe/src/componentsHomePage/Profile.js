@@ -13,8 +13,6 @@ function Profile() {
     window.scrollTo(0, 0);
 
     const [profile, setProfile] = useState();
-    const [isDisplayModal, setIsDisplayModal] = useState(false);
-    const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {     
         // gọi api chỗ này
