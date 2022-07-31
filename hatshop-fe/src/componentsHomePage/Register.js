@@ -1,6 +1,8 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { registerApi } from '../api/registerApi';
+import { useFormik } from 'formik';
+import * as Yup from "yup";
 import "../css/Register.css";
 
 
@@ -10,30 +12,63 @@ function Register() {
     window.scrollTo(0, 0);
     //sử lý form
     const [input, setInputs] = useState({});
-    const [isDisplayModal, setIsDisplayModal] = useState(false);
 
-    const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({ ...values, [name]: value }))
-    }
-    // console.log(input, "handleChange",handleChange)
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
+    const formik = useFormik({
+      initialValues:{
+        fistName : "",
+        lastName : "",
+        email : "",
+        pass : "",
+        province : "",
+        address : "",
+        date : ""
+      },
+      validationSchema: Yup.object({
+        fistName: Yup.string().required("Trống!").min(4, "Tên tối thiểu 4 ký tự!"),
+        lastName: Yup.string().required("Trống!").min(4, "Họ và tên đệm tối thiểu 4 ký tự!"),
+        email : Yup.string().required("Trống!").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "chưa phù hợp định dạng email!"),
+        pass: Yup.string().required("Trống!").min(8, "Mật khẩu tối thiểu từ 8 ký tự!"),
+        province: Yup.string().required("Trống!").min(3, "Nguyên quán tối thiểu 3 ký tự!"),
+        address: Yup.string().required("Trống!").min(3, "Địa chỉ tối thiểu 3 ký tự!"),
+      }),
+      onSubmit: (values) => {
         //gọi api login
         //send form to service
-        console.log(input, "Dk")
-        registerApi.createRegister(input).then(res => {
+        console.log(values, "Dk")
+        registerApi.createRegister(values).then(res => {
             console.log(res)
-
         }).catch(e => {
             console.log(e)
         });
         navigate("/")
-        alert("Bạn đã đăng ký thành công.");
-    }
+        alert("Bạn đã đăng ký thành công.");      }
+    })
+    console.log(formik.errors.email);
+
+    const handleChange = (event) => {
+      const name = event.target.name;
+      const value = event.target.value;
+      setInputs(values => ({ ...values, [name]: value }))
+      
+  }
+
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+
+    //     //gọi api login
+    //     //send form to service
+    //     console.log(input, "Dk")
+    //     registerApi.createRegister(input).then(res => {
+    //         console.log(res)
+
+    //     }).catch(e => {
+    //         console.log(e)
+    //     });
+    //     navigate("/")
+    //     alert("Bạn đã đăng ký thành công.");
+    // }
+
+
 
     return (
       
@@ -51,42 +86,46 @@ function Register() {
           <Link to="/Contact"> <input type="submit" className="account" value="Liên hệ" /></Link>
         </div>
       </div>
-        <form className="form-right" style={{backgroundColor:""}} onSubmit={handleSubmit}>
-          <h2 className="text-uppercase">form đăng ký</h2>
+        <form className="form-right" style={{backgroundColor:""}} onSubmit={formik.handleSubmit}>
+          <h2 className="text-uppercase">Đăng ký</h2>
           <div className="row">
             <div className="col-sm-6 mb-3">
-              <input type="text" name="fistName" id="first_name" className="input-field"  placeholder='Tên' value={input.fistName || ""} onChange={handleChange}/>
+              <input type="text" name="fistName" id="first_name" className="input-field"  placeholder='Tên' value={formik.values.fistName} onChange={formik.handleChange}/>
+              <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.fistName}</span>
             </div>
             <div className="col-sm-6 mb-3">
-              <input type="text" name="lastName" id="last_name" className="input-field" placeholder='Họ và tên đệm' value={input.lastName || ""} onChange={handleChange}/>
+              <input type="text" name="lastName" id="last_name" className="input-field" placeholder='Họ và tên đệm' value={formik.values.lastName} onChange={formik.handleChange}/>
+              <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.lastName}</span>
             </div>
           </div>
           <div className="mb-3">
-            <input type="email" className="input-field" name="email" required placeholder='Email' value={input.email || ""} onChange={handleChange}/>
+            <input type="email" className="input-field" name="email" id="email" required placeholder='Email' value={formik.values.email} onChange={formik.handleChange}/>
+            <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.email}</span>
           </div>
           <div className="mb-3">
-            <input type="password" className="input-field input-pass" name="pass" required placeholder='Mật khẩu' value={input.pass || ""} onChange={handleChange}/>
-          </div>
-          <div class="invalid-feedback err-from-pass">
-                    Trường này không được trống !
-                </div>
-          <div className="mb-3">
-            <input type="text" className="input-field" name="province" required placeholder='Quê quán'value={input.province || ""} onChange={handleChange}/>
+            <input type="password" className="input-field input-pass" id="pass" name="pass" required placeholder='Mật khẩu' value={formik.values.pass} onChange={formik.handleChange}/>
+            <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.pass}</span>
           </div>
           <div className="mb-3">
-            <input type="text" className="input-field" name="address" required placeholder='Địa chỉ' value={input.address || ""} onChange={handleChange}/>
+            <input type="text" className="input-field" name="province" id="province" required placeholder='Quê quán' value={formik.values.province} onChange={formik.handleChange}/>
+            <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.province}</span>
           </div>
           <div className="mb-3">
-            <input type="date" className="input-field" name="date" required value={input.date || ""} onChange={handleChange}/>
+            <input type="text" className="input-field" name="address" id="address" required placeholder='Địa chỉ' value={formik.values.address} onChange={formik.handleChange}/>
+            <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.address}</span>
+          </div>
+          <div className="mb-3">
+            <input type="date" id="date" className="input-field" name="date" required value={formik.values.date} onChange={formik.handleChange}/>
           </div>
           <div className="mb-3">
             <label className="option">tôi đồng ý với<a href="#">các Điều khoản và Điều kiện</a>
-              <input type="checkbox" defaultChecked />
+              <input id="option" type="checkbox" defaultChecked />
               <span className="checkmark" />
             </label>
+            <span id="agree" style={{color:"red", display:"none", fontSize:"15px"}}>Quý khách phải đồng ý với cái điều khoản!</span>
           </div>
           <div className="form-field">
-            <input type="submit" defaultValue="Register" className="register btn-register" name="register" />
+            <input type="submit" defaultValue="Đăng ký" className="register btn-register" name="register" />
           </div>
           {/* {Object.keys(errors).length != 0 && (
           <ul className='error-container'>

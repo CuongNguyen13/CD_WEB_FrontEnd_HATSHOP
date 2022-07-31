@@ -132,49 +132,51 @@ function Search (){
                                    <h1 className="display-5 mb-3" id="message" style={{display:"none"}}>Không có sản phẩn tìm kiếm</h1>
                                    <form onSubmit={handleSubmit} style={{ width:"100%", display:"flex"}}>
                                         <input name="name" style={{display:"none"}} value={nameSearch} onChange={handleChange}></input>
-                                        <div style={{float:"left", width:"100%"}}>
-                                            <div style={{float:"left", width:"12%", marginTop:"25px"}}>
-                                                <div class="input-group" style={{width:"150px", float:"left"}}>
-                                                    <input type="date" id="birthday" name="biginDate" value={input.biginDate || ""} onChange={handleChange}></input>
-                                                    <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                        <div style={{float:"left"}} className="col-lg-12">
+                                            <div style={{float:"left"}} className="col-lg-2">
+                                                <div className='col-lg-12'>
+                                                    <div class="input-group" className='col-lg-12' style={{float:"left"}}>
+                                                        <input type="date" id="birthday" className='col-lg-10' name="biginDate" value={input.biginDate || ""} onChange={handleChange}></input>
+                                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar" className='col-lg-2'></i>
+                                                    </div>
+                                                </div>
+                                                <div className='col-lg-10' style={{textAlign:"center"}}>To</div>
+                                                <div className='col-lg-12'>
+                                                    <div class="input-group" className='col-lg-12' style={{float:"left"}}>
+                                                        <input type="date" className='col-lg-10' id="birthday" name="endate" value={input.endate || ""} onChange={handleChange}></input>
+                                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar" className='col-lg-2'></i>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div style={{float:"left", margin:"28px 10px 0 8px" }}>To  </div>
-                                            <div style={{float:"left", width:"12%"}}>
-                                                <div class="input-group" style={{width:"150px", float:"left", marginTop:"25px"}}>
-                                                    <input type="date" id="birthday" name="endate" value={input.endate || ""} onChange={handleChange}></input>
-                                                    <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                                                </div>
-                                            </div>
-                                           <div className="" style={{float:"left", width:"50%"}}>
-                                                <div className="price-input" style={{width:"40%", float:"left"}}>
-                                                    <div className="field">
-                                                        <span>Min</span>
-                                                        <input type="number" className="input-min" defaultValue={250000} />
+                                           <div className="col-lg-7" style={{float:"left"}}>
+                                                <div className="col-lg-4" style={{float:"left"}}>
+                                                    <div className="field col-lg-12">
+                                                        <span className='col-lg-3'>Min</span>
+                                                        <input  type="number" className="input-min col-lg-9" defaultValue={250000} />
                                                     </div>
                                                     <div className="separator">-</div>
-                                                        <div className="field" style={{float:"left"}}>
-                                                            <span>Max</span>
-                                                            <input type="number" className="input-max" defaultValue={750000} />
+                                                        <div className="field col-lg-12" style={{float:"left"}}>
+                                                            <span className='col-lg-3'>Max</span>
+                                                            <input type="number" className="input-max col-lg-9" defaultValue={750000} />
                                                         </div>
                                                 </div>
-                                                <div className="slider" style={{display:"none"}}>
+                                                <div className="slider" style={{display:"none", float:"left"}}>
                                                     <div className="progress" />
                                                 </div>  
-                                                <div className="range-input" style={{float:"left", width:"60%"}}>
+                                                <div className="range-input col-lg-8" style={{float:"left"}}>
                                                     <input type="range" style={{width:"100%", marginTop:"8px"}} name="beginPrice" className="range-min" min={0} max={2000000} defaultValue={250000} step={10000} onChange={handleChange}/>
                                                     <input type="range" style={{width:"100%", marginTop:"26px"}} name="endPrice" className="range-max" min={0} max={2000000} defaultValue={500000} step={10000} onChange={handleChange}/>
                                                 </div>
                                             </div>
-                                            <div class="" style={{float:"left", width:"20%", backgroundColor:"gray", marginTop:"20px"}}>
-                                                <select name="kind" class="form-select" aria-label="Default select example" style={{width:"65%", float:"left"}} value={input.kind || ""} onChange={handleChange}>
+                                            <div className='col-lg-3' style={{float:"left", marginTop:"25px"}}>
+                                                <select name="kind" class="form-select" className='col-lg-6' aria-label="Default select example" style={{float:"left"}} value={input.kind || ""} onChange={handleChange}>
                                                     <option selected="selected">Loại</option>
                                                     <option>Nón bảo hiểm</option>
                                                     <option>Nón thời trang</option>
                                                     <option>Mũ panama</option>
                                                 </select>
-                                                <div class="select-dropdown"></div>
-                                                <button class="btn btn-primary" type="submit" style={{width:"35%", float:"left"}}>Submit</button>
+                                                <div class="select-dropdown" style={{display:"none"}}></div>
+                                                <button class="btn btn-primary" className='col-lg-4 btn-primary' type="submit" style={{float:"left"}}>Submit</button>
                                             </div>
                                         </div>
                                     </form>
