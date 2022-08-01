@@ -24,13 +24,14 @@ function Profile() {
           .then(res => {
               // console.log(res)
               setProfile(res) 
-              formik.setValues(res)
+            formik.setValues(res)
+            setAnh1(res.avatarlink)
           }).catch(e => {
               console.log(e)
           });
   }, [])
 
-  console.log("Profile", profile.fistName);
+  console.log("Profile", profile);
   const formik = useFormik({
     initialValues:{
       avatarlink : "",
@@ -41,7 +42,8 @@ function Profile() {
       address : "",
       age : 0,
       workplace : "",
-      birthday : "",
+      birthday: "",
+     
     },
     validationSchema: Yup.object({
       fistName: Yup.string().required("Tên không được trống!").min(2, "Tên tối thiểu 2 ký tự!").matches(/^[a-zA-Z\s]*$/, "Tên không được là số"),
@@ -60,15 +62,28 @@ function Profile() {
 
   
   const handleSubmit = (values) => {
-
-    //gọi api login
-    //send form to service
-    console.log(values, "profile")
-    profileApi.createProfile(values).then(res => {
-       alert("Luu thành công!")
-    }).catch(e => {
-        console.log(e)
+    handleUpload(img1, (url) => {
+      setUrl1(url)
     });
+    if (url1!=null) {
+      const newInput = { ...values, avatarlink: url1 }
+      profileApi.createProfile(newInput).then(res => {
+        alert("Luu thành công!")
+      }).catch(e => {
+        console.log(e)
+      });
+    } else {
+      alert("Vui lòng thử lại")
+    }
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 }
 
@@ -93,43 +108,39 @@ function Profile() {
 
     navigate("/login");
   }
-
-
-  const handleUpload = () => {
-      if (!file) {
-          alert("Vui lòng đợi");
-      } else {
-
-          const storageRef = ref(storage, `/files/${file.name}`);
-
-          // progress can be paused and resumed. It also exposes progress updates.
-          // Receives the storage reference and the file to upload.
-          const uploadTask = uploadBytesResumable(storageRef, file);
-
-          uploadTask.on(
-              "state_changed",
-              (snapshot) => {
-                  const percent = Math.round(
-                      (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                  );
-
-                  // update progress
-                  setPercent(percent);
-              },
-              (err) => console.log(err),
-              () => {
-                  // download url
-                  getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-
-                      setImg(url);
-                
-
-                  });
-              }
-          );
+  const handleUpload = (file, callback) => {
+    const storageRef = ref(storage, `/files/${file.name}.png`);
+    // progress can be paused and resumed. It also exposes progress update
+    // Receives the storage reference and the file to upload.
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        // update progress
+        setPercent(percent);
+      },
+      (err) => console.log(err),
+      () => {
+        // download url
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          callback(url);
+        });
       }
+    );
   };
+  const [anh1, setAnh1] = useState([]);
+  const [url1, setUrl1] = useState();
+  const [img1, setImage1] = useState();
 
+
+  function handleChangeImg(event) {
+    const file = event.target.files[0]
+    setImage1(file);
+    setAnh1(URL.createObjectURL(file))
+  }
 
     
     return (
@@ -138,16 +149,16 @@ function Profile() {
           <div className="col-xl-4" >
             {/* Profile picture card*/}
             <div className="card mb-4 mb-xl-0">
-              <div className="card-header">Profile Picture</div>
+              <div className="card-header">Ảnh</div>
               <div className="card-body text-center">
                 {/* Profile picture image*/}
-                <img style={{width:"200px",height:"200px",display:"block",margin:"0 auto"}}  id="imageProfileupload" className="img-account-profile rounded-circle mb-2 imageProfileupload" alt="" onChange={formik.handleChange}  src={img}/>
+                <img style={{width:"200px",height:"200px",display:"block",margin:"0 auto"}}  className="img-account-profile rounded-circle mb-2 imageProfileupload" alt="" src={anh1}/>
                 {/* Profile picture help block*/}
-                <div className="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                {/* <div className="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div> */}
                 {/* Profile picture upload button*/}
-                <input type="file" onChange={handleChangeImage} accept="/image/*" />
-
-                <p>{percent} "%"</p>
+                <input type="file" onChange={handleChangeImg} accept="/image/*" />
+                {/* <img class="card-img-top" src={anh1} alt="Card image cap"></img> */}
+                
 
               </div>
             </div>
@@ -155,7 +166,7 @@ function Profile() {
           <div className="col-xl-8">
             {/* Account details card*/}
             <div className="card mb-4">
-              <div className="card-header">Account Details</div>
+              <div className="card-header">Chỉnh sửa tài khoản</div>
               <div className="card-body">
                 <form style={{height:"407px"}}  onSubmit={formik.handleSubmit}>
                 <img style={{width:"200px",height:"200px",display:"block",margin:"0 auto",display:"none"}} name="avatarlink"  id="imageProfileupload" className="img-account-profile rounded-circle mb-2 imageProfileupload" alt="" value={formik.values.avatarlink || "" || profile.avatarlink} onChange={formik.handleChange}  src={img}/>

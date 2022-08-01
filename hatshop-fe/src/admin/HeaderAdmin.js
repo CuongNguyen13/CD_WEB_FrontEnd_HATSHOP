@@ -23,9 +23,9 @@ function HeaderAdmin() {
         <div className=' container row' style={{ maxWidth: "100%" }}>
             <div className='col-3' style={{ backgroundColor: '#DDDDDD' }}>
                 <ul className="nav nav-pills mb-3 flex-column w-100" id="pills-tab" role="tablist">
-                    <li class="nav-item mt-5">
-                        <NavLink to="/admin/static" className="nav-link" >Thống kê</NavLink>
-                    </li>
+                    {/* <li class="nav-item mt-5"> */}
+                        {/* <NavLink to="/admin/static" className="nav-link" >Thống kê</NavLink> */}
+                    {/* </li> */}
                     <li class="nav-item mt-2">
                         <NavLink to="/admin/user" className="nav-link" href="#">Quản lý tài khoản</NavLink>
                     </li>
