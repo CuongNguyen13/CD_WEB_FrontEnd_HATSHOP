@@ -5,45 +5,75 @@ import { profileApi } from '../api/profileApi';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import storage from '../firebaseConfig';
 import "../css/profile.css";
+import { useFormik } from 'formik';
+import * as Yup from "yup";
 import { Link, useNavigate } from 'react-router-dom';
+import { async } from '@firebase/util';
 function Profile() {
 
   var id = sessionStorage.getItem("id");
-  console.log("id", id);
+  // console.log("id", id);
     window.scrollTo(0, 0);
 
-    const [profile, setProfile] = useState();
-
-    useEffect(() => {     
-        // gọi api chỗ này
-        profileApi.getProfile(id)
-            .then(res => {
-                console.log(res)
-                setProfile(res) 
-            }).catch(e => {
-                console.log(e)
-            });
-    }, [])
+    const [profile, setProfile] = useState({});
+      
     
-    const handleChange = (event) => {
-      const name = event.target.name;
-      const value = event.target.value;
-      setProfile(values => ({ ...values, [name]: value }))
-  }
+    useEffect(() => {
+      // gọi api chỗ này
+      profileApi.getProfile(id)
+          .then(res => {
+              // console.log(res)
+              setProfile(res) 
+          }).catch(e => {
+              console.log(e)
+          });
+  }, [])
+
+  console.log("Profile", profile.fistName);
+  const formik = useFormik({
+    initialValues:{
+      avatarlink : "",
+      fistName : "",
+      lastName : "",
+      email : "",
+      province : "",
+      address : "",
+      age : 0,
+      workplace : "",
+      birthday : "",
+    },
+    onSubmit: (values) => {
+      // handleSubmit(values);
+      console.log("initialValues ", values)
+      }
+  })
+    
+  //   const handleChange = (event) => {
+  //     const name = event.target.name;
+  //     const value = event.target.value;
+  //     setProfile(values => ({ ...values, [name]: value }))
+  // }
 
   
-  const handleSubmit = (event) => {
-    event.preventDefault();
+//   const handleSubmit = (values) => {
 
-    //gọi api login
-    //send form to service
-    console.log(profile, "profile")
-    profileApi.createProfile(profile).then(res => {
-        console.log(res)
-    }).catch(e => {
-        console.log(e)
-    });
+//     //gọi api login
+//     //send form to service
+//     console.log(values, "profile")
+//     profileApi.createProfile(values).then(res => {
+//         console.log(res)
+//     }).catch(e => {
+//         console.log(e)
+//     });
 
+// }
+
+function a(value) {
+  const newInput = { ...formik.values, fistName: value}
+  console.log(newInput)
+  formik.setValues(newInput, "NewInput")
+  const newInput1 = { ...profile, fistName: value}
+  setProfile(newInput1)
 }
 
 
@@ -115,7 +145,7 @@ function Profile() {
               <div className="card-header">Profile Picture</div>
               <div className="card-body text-center">
                 {/* Profile picture image*/}
-                <img style={{width:"200px",height:"200px",display:"block",margin:"0 auto"}}  id="imageProfileupload" className="img-account-profile rounded-circle mb-2 imageProfileupload" alt="" onChange={handleChange}  src={img}/>
+                <img style={{width:"200px",height:"200px",display:"block",margin:"0 auto"}}  id="imageProfileupload" className="img-account-profile rounded-circle mb-2 imageProfileupload" alt="" onChange={formik.handleChange}  src={img}/>
                 {/* Profile picture help block*/}
                 <div className="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                 {/* Profile picture upload button*/}
@@ -131,47 +161,48 @@ function Profile() {
             <div className="card mb-4">
               <div className="card-header">Account Details</div>
               <div className="card-body">
-                <form style={{height:"407px"}} onSubmit={handleSubmit}>
-                <img style={{width:"200px",height:"200px",display:"block",margin:"0 auto",display:"none"}}  id="imageProfileupload" className="img-account-profile rounded-circle mb-2 imageProfileupload" alt="" onChange={handleChange}  src={img}/>
+                <form style={{height:"407px"}}  onSubmit={formik.handleSubmit}>
+                <img style={{width:"200px",height:"200px",display:"block",margin:"0 auto",display:"none"}} name="avatarlink"  id="imageProfileupload" className="img-account-profile rounded-circle mb-2 imageProfileupload" alt="" value={formik.values.avatarlink || "" || profile.avatarlink} onChange={(event)=>a(event.target.value)}  src={img}/>
                   {/* Form Group (username)*/}
                   <div className="mb-3">
-                    <input className="form-control" id="email" name='email' disabled type="text" placeholder="Email" value={profile && profile.email} onChange={handleChange}/>
+                    <input className="form-control" id="email" name='email' disabled type="text" placeholder="Email" value={formik.values.email || "" || profile.email} onChange={(event)=>a(event.target.value)}/>
                   </div>
                   {/* Form Row*/}
                   <div className="row gx-3 mb-3">
                     {/* Form Group (first name)*/}
                     <div className="col-md-6">
-                      <input className="form-control" id="inputFirstName" name='fistName' type="text" placeholder="First Name"value={profile && profile.fistName} onChange={handleChange}/>
+                      <input className="form-control" id="inputFirstName" name='fistName' type="text" placeholder="First Name" value={formik.values.fistName || "" || profile.fistName} onChange={(event)=>a(event.target.value)}/>
                     </div>
                     {/* Form Group (last name)*/}
                     <div className="col-md-6">
-                      <input className="form-control" id="inputLastName" name='lastName' type="text" placeholder="Last Name"value={profile && profile.lastName} onChange={handleChange}/>
+                      <input className="form-control" id="inputLastName" name='lastName' type="text" placeholder="Last Name" value={formik.values.lastName || "" || profile.lastName} onChange={(event)=>a(event.target.value)}/>
                     </div>
                   </div>
                   {/* Form Row        */}
                   <div className="row gx-3 mb-3">
                     {/* Form Group (organization name)*/}
                     <div className="col-md-6">
-                      <input className="form-control" id="inputOrgName" name='province' type="text" placeholder="Enter your province"value={profile && profile.province} onChange={handleChange}/>
+                      <input className="form-control" id="inputOrgName" name='province' type="text" placeholder="Enter your province" value={formik.values.province || "" || profile.profile} onChange={(event)=>a(event.target.value)}/>
                     </div>
                     {/* Form Group (location)*/}
                     <div className="col-md-6">
-                      <input className="form-control" id="inputLocation" type="text" name='address' placeholder="Enter your location"value={profile && profile.address} onChange={handleChange}/>
+                      <input className="form-control" id="inputLocation" type="text" name='address' placeholder="Enter your location" value={formik.values.address || "" || profile.address} onChange={(event)=>a(event.target.value)}/>
                     </div>
                   </div>
                   {/* Form Group (email address)*/}
                   <div className="mb-3">
-                    <input className="form-control" id="inputEmailAddress" type="number" name='age' placeholder="Enter your age"value={profile && profile.age} onChange={handleChange}/>
+                    <input className="form-control" id="inputEmailAddress" type="number" name='age' placeholder="Enter your age" value={formik.values.age || "" || profile.age} onChange={(event)=>a(event.target.value)}/>
                   </div>
                   {/* Form Row*/}
                   <div className="row gx-3 mb-3">
                     {/* Form Group (phone number)*/}
                     <div className="col-md-6">
-                      <input className="form-control" id="inputPhone" name='workplace' type="tel" placeholder="Enter your workplace" value={profile && profile.workplace} onChange={handleChange}/>
+                      <input className="form-control" id="inputPhone" name='workplace' type="tel" placeholder="Enter your workplace"  value={formik.values.workplace || "" || profile.workplace} onChange={(event)=>a(event.target.value)}/>
                     </div>
                     {/* Form Group (birthday)*/}
                     <div className="col-md-6">
-                      <input className="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday"value={profile &&new Date( profile.dateOfBirth).toLocaleDateString()} onChange={handleChange}/>
+                      <input className="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday"  value={ new Date(formik.values.Date || "" || profile.Date).toLocaleDateString()} onChange={(event)=>a(event.target.value)}/>
+                      {/* value={profile &&new Date( profile.dateOfBirth).toLocaleDateString()} onChange={handleChange} */}
                     </div>
                   </div>
                   {/* Save changes button*/}

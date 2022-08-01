@@ -49,12 +49,12 @@ function Register() {
         date : ""
       },
       validationSchema: Yup.object({
-        fistName: Yup.string().required("Tên không được trống!").min(2, "Tên tối thiểu 2 ký tự!"),
-        lastName: Yup.string().required("Họ và tên đệm không được trống!").min(2, "Họ và tên đệm tối thiểu 2 ký tự!"),
-        email : Yup.string().required("Trống!").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "chưa phù hợp định dạng email!"),
-        pass: Yup.string().required("Trống!").min(8, "Mật khẩu tối thiểu từ 8 ký tự!"),
-        province: Yup.string().required("Trống!").min(3, "Nguyên quán tối thiểu 3 ký tự!"),
-        address: Yup.string().required("Trống!").min(3, "Địa chỉ tối thiểu 3 ký tự!"),
+        fistName: Yup.string().required("Tên không được trống!").min(2, "Tên tối thiểu 2 ký tự!").matches(/^[a-zA-Z\s]*$/, "Tên không được là số"),
+        lastName: Yup.string().required("Họ và tên đệm không được trống!").min(2, "Họ và tên đệm tối thiểu 2 ký tự!").matches(/^[a-zA-Z\s]*$/, "Họ không được là số"),
+        email : Yup.string().required("Email không được trống!").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "chưa phù hợp định dạng email!"),
+        pass: Yup.string().required("Mật khẩu không được trống!").min(8, "Mật khẩu tối thiểu từ 8 ký tự!"),
+        province: Yup.string().required("Quê quán không được trống!").min(3, "Nguyên quán tối thiểu 3 ký tự!"),
+        address: Yup.string().required("Địa chỉ không được trống!").min(3, "Địa chỉ tối thiểu 3 ký tự!"),
       }),
      
       onSubmit: (values) => {
