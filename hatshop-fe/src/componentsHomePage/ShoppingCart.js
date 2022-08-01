@@ -4,13 +4,14 @@ import { cartApi } from '../api/cartAPI';
 import { userApi } from '../api/userApi';
 import ItemCart from './ItemCart';
 import {prepaymentApi} from '../api/prepaymentApi'
+import { useFormik } from 'formik';
+import * as Yup from "yup";
 
 function ShoppingCart() {
    
     const [cart, setCart] = useState([]);
     window.scrollTo(0, 0);
     const id = sessionStorage.getItem("id")
-    const [user, setUser] = useState({});
     const [modal, setModal] = useState(false);
     const navigate = useNavigate();
 
@@ -18,7 +19,6 @@ function ShoppingCart() {
         cartApi.checkEmpty(id)
             .then(res => {
                 if (!res) {
-
                     setModal(true)
                 }
             }).catch(e => {
@@ -27,7 +27,9 @@ function ShoppingCart() {
 
         userApi.userPayment(id)
             .then(res => {
-                setUser(res)
+                console.log("User", res)
+                formik.setValues(({ ...res, name: res.firstName + " " + res.lastName, address: res.address, email: res.email, phone: res.phone, userId: id, description: res.description })
+                )
 
             }).catch(e => {
                 console.log(e)
@@ -63,30 +65,15 @@ function ShoppingCart() {
        
         return rs;
     }
- const [checkPhone,setCheckPhone] = useState("none")
 
     const handleGetId = (id) => {
         setCart(cart.filter(item => item.id !== id))
     }
 
-    const [input, setInputs] = useState();
-
-    const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setUser(values => ({ ...values, [name]: value}))
-        console.log(user.phone)
-        setInputs(values => ({ ...values, name: user.firstName + " " + user.lastName, address: user.address, email: user.email, phone: user.phone, total: totalPrice(), userId: id, description: user.description }))
-        
-    }
+    // const [input, setInputs] = useState();
    
-    const handleSubmit = (event) => {
-       if (user.phone==null||user.phone.length<10) {
-        alert("Vui lòng điền đúng số điện thoại");
-        
-       } else {
-        
-           prepaymentApi.save(input).then(res => {
+    const handleSubmit = (values) => {
+           prepaymentApi.save(values).then(res => {
                if (res!=null) {
                     const id = res
                    navigate(`/bill${id}`)
@@ -96,11 +83,33 @@ function ShoppingCart() {
            }).catch(e => {
                console.log(e)
            });
-       }
-     
+        console.log("Value ",values)
     }
 
-
+    const formik = useFormik({
+        initialValues:{
+          name : "",
+          phone : 0,
+          email : "",
+          address : "",
+          description : "",
+          userId: 0,
+          total : 0,
+        },
+        validationSchema: Yup.object({
+          name: Yup.string().required("Tên không được trống!").min(2, "Tên tối thiểu 2 ký tự!").matches(/^[a-zA-Z\s]*$/, "Tên không được là số"),
+          email : Yup.string().required("Email không được trống!").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Chưa phù hợp định dạng email!"),
+          phone: Yup.string().required("Số điện thoại không được trống!").min(10, "Số điện thoại tối thiểu 10 ký tự!").matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, "Không phải định dạng số điện thoại VN"),
+          address: Yup.string().required("Địa chỉ không được trống!").min(3, "Địa chỉ tối thiểu 3 ký tự!"),
+        }),
+        
+        onSubmit: (values) => {
+            console.log(values)
+            const newInput = { ...values, total: totalPrice()}
+            console.log(totalPrice(), "Total")
+            handleSubmit(newInput)
+          }
+      })
 
 
     return (
@@ -133,7 +142,7 @@ function ShoppingCart() {
                                                         <h5 className="mb-0">Thông tin khách hàng</h5>
 
                                                     </div>
-                                                    <form className="mt-4">
+                                                    <form className="mt-4" onSubmit={formik.handleSubmit}>
                                                         <div className="form-outline form-white mb-4">
                                                              <label className="form-label" htmlFor="typeText">
                                                                Tên
@@ -143,32 +152,29 @@ function ShoppingCart() {
                                                                 id="typeText"
                                                                 required
                                                                 className="form-control form-control-lg"
-                                                               
                                                                 placeholder="Tên"
-                                                                
                                                                 name='name'
-                                                                value={user&& user.lastName+" "+user.firstName}
-                                                                onChange={handleChange}
+                                                                value={formik.values.name} onChange={formik.handleChange}
                                                             />
+                                                            <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.name}</span>
+
                                                         </div>
                                                         <div className="form-outline form-white mb-4">
                                                             <label className="form-label" htmlFor="typeText">
                                                                 Số điện thoại
                                                             </label>
-                                                           
                                                             <input
                                                                 type="phone"
                                                                 id="typeText"
                                                                 required
                                                                 className="form-control form-control-lg"
                                                                 siez={10}
-                                                                placeholder="099xxxxxxxx"
                                                                 minLength={10}
                                                                 maxLength={10}
                                                                 name='phone'
-                                                                value={user.phone || ""}
-                                                                onChange={handleChange}
+                                                                value={formik.values.phone} onChange={formik.handleChange}
                                                             />
+                                                             <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.phone}</span>
                                                         </div>
                                                         <div className="form-outline form-white mb-4">
                                                             <label className="form-label" htmlFor="typeText">
@@ -179,11 +185,11 @@ function ShoppingCart() {
                                                                 id="typeText"
                                                                 required
                                                                 className="form-control form-control-lg"
-                                                                value={user&&user.address}
                                                                 placeholder="Địa chỉ"
                                                                 name='address'
-                                                                onChange={handleChange}
+                                                                value={formik.values.address} onChange={formik.handleChange}
                                                             />
+                                                             <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.address}</span>
                                                         </div>
                                                         <div className="form-outline form-white mb-4">
                                                             <label className="form-label" htmlFor="typeText">
@@ -196,9 +202,9 @@ function ShoppingCart() {
                                                                 required
                                                                 placeholder="Email"
                                                                 name='email'
-                                                                value={user&&user.email}
-                                                                onChange={handleChange}
+                                                                value={formik.values.email} onChange={formik.handleChange}
                                                             />
+                                                             <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.email}</span>
                                                         </div>
                                                         <div className="form-outline form-white mb-4">
                                                             <label className="form-label" htmlFor="typeText">
@@ -210,9 +216,9 @@ function ShoppingCart() {
                                                                 className="form-control form-control-lg"
                                                                 placeholder="Mô tả"
                                                                 name='description'
-                                                                value={user.description || " "}
-                                                                onChange={handleChange}
+                                                                value={formik.values.description} onChange={formik.handleChange}
                                                             />
+                                                            
                                                         </div>
                                                         <hr className="my-4" />
                                                         <div className="d-flex justify-content-between">
@@ -220,9 +226,8 @@ function ShoppingCart() {
                                                             <h4 className="mb-2" style={{ color: "red" }}>{formatter.format(totalPrice())}</h4>
                                                         </div>
                                                         <button
-                                                            type="button"
+                                                            type="submit"
                                                             className="btn btn-danger btn-block btn-lg"
-                                                            onClick={handleSubmit}
                                                         >
                                                             Thanh toán
                                                         </button>
