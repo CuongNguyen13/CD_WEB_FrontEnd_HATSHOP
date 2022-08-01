@@ -11,14 +11,14 @@ class Home extends Component {
                 {/* product */}
                 <NewProduct></NewProduct>
                     {/* Carousel Start */}
-                    <div className="container-fluid p-0 mb-5 wow fadeIn" data-wow-delay="0.1s">
+                    <div className="container p-0 mt-5 wow fadeIn" data-wow-delay="0.1s">
                         <div
                             id="header-carousel"
                             className="carousel slide"
                             data-bs-ride="carousel"
                         >
                             <div className="carousel-inner">
-                                <SlideshowHome></SlideshowHome>
+                                {/* <SlideshowHome></SlideshowHome> */}
                             </div>
                             <button
                                 className="carousel-control-prev"

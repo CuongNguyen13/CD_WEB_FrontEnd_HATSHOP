@@ -189,23 +189,29 @@ function AddProductAdmin() {
 
                 <hr style={{ color: 'red' }}></hr>
                 <div style={{ marginTop: '2em' }}></div>
-                <h1>Chọn ít nhất 1 ảnh</h1>
+                <h1>Chọn ảnh</h1>
                 <div className="row">
                     {/* <UploadFile onGetImg={handleGetImg1} /> */}
                     {/* <UploadFile onGetImg={handleGetImg2} /> */}
                     {/* <UploadFile onGetImg={handleGetImg3} /> */}
                     <div className='col-4'>
+                        {/* <div class="card" style="width: 18rem;"> */}
+
                         <input type="file" onChange={handleChangeImg} accept="/image/*" />
-                        <img src={anh1}></img>
+                        {/* <img src={anh1}></img> */}
+                
+                        <img class="card-img-top" src={anh1} alt="Card image cap"></img>
+                        {/* </div> */}
                     </div>
                     <div className='col-4'>
                         <input type="file" onChange={handleChangeImg2} accept="/image/*" />
-                        <img src={anh2}></img>
+                        {/* <img src={anh2}></img> */}
+                        <img class="card-img-top" src={anh2} alt="Card image cap"></img>
                     </div>
-
                     <div className='col-4'>
                         <input type="file" onChange={handleChangeImg3} accept="/image/*" />
-                        <img src={anh3}></img>
+                        {/* <img src={anh3}></img> */}
+                        <img class="card-img-top" src={anh3} alt="Card image cap"></img>
                     </div>
 
                 </div>
