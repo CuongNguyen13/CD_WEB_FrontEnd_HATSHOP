@@ -18,4 +18,11 @@ export const registerApi = {
         return axiosClient.get(url);
 
     },
+    getId(email) {
+        // chỗ này ghi cái path tương ứng vs api
+        const url = `/getId?email=${email}`
+        // nếu có tham số thì axiosClient.get(url,{params});
+        console.log("url",url)
+        return axiosClient.get(url);
+    },
 }

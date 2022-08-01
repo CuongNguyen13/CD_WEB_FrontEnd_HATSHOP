@@ -24,11 +24,18 @@ function Register() {
           console.log(values, "Dk")
           registerApi.createRegister(values).then(res => {
               console.log(res)
+              sessionStorage.setItem("userName", res)
+              registerApi.getId(email).then(res => {
+                console.log("Id", res)
+                sessionStorage.setItem("id", res)
+            }).catch(e => {
+                console.log(e)
+            });
           }).catch(e => {
               console.log(e)
           });
-          navigate("/")
-          alert("Bạn đã đăng ký thành công.");     
+        navigate("/")
+        alert("Bạn đã đăng ký thành công.");
         }
       }).catch(e => {
           console.log("e",e)
