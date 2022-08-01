@@ -9,14 +9,14 @@ class SlideshowHome extends Component {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="holder.js/800x400?text=First slide&bg=373940"
+                            src="https://fado.vn/blog/wp-content/uploads/2020/10/cac-thuong-hieu-mu-luoi-trai-noi-tieng-1.jpg"
                             alt="First slide"
                         />
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="holder.js/800x400?text=Second slide&bg=282c34"
+                            src="https://fado.vn/blog/wp-content/uploads/2020/10/cac-thuong-hieu-mu-luoi-trai-noi-tieng-7.jpg"
                             alt="Second slide"
                         />
 

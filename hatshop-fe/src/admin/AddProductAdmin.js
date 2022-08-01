@@ -30,7 +30,12 @@ function AddProductAdmin() {
 
     const [isDisplayModal, setIsDisplayModal] = useState(false);
 
-    const modal = isDisplayModal ? 'Đã gửi!' : 'Vui lòng thử lại!';
+    const modal = isDisplayModal ? 'Đã tạo!' : 'Vui lòng thử lại!';
+
+
+    const [isDisplayModal1, setIsDisplayModal1] = useState(false);
+    const modal1 = isDisplayModal1 ? 'Tạo sản phẩm mới!' : '';
+
     const user = sessionStorage.getItem("admin")
 
 
@@ -103,17 +108,21 @@ function AddProductAdmin() {
                     setUrl3(url)
                 });
 
+                
                 // setInputs(values => ({ ...values,  linkImage1: img1, linkImage2: img2, linkImage3: img3, user: user.id, decription: decription }))
 
-
+                setIsDisplayModal1(true)
                 if (url1 && url2 && url3) {
                     const newInput = { ...input, linkImage1: url1, linkImage2: url2, linkImage3: url3 }
                     productApi.addProduct(newInput).then(res => {
                         console.log("kết quả:", res)
+                        setIsDisplayModal1(false)
                         if (res) {
                             setIsDisplayModal(true)
                             setInputs("");
-
+                            setImage1("")
+                            setImage2("")
+                            setImage3("")
                         }
                         else {
                             setIsDisplayModal(false);
@@ -271,6 +280,32 @@ function AddProductAdmin() {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => { setIsDisplayModal(false) }}>Đóng</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+
+            {
+                isDisplayModal1 && (
+                    <div className="modal show" id="exampleModal" style={{ display: 'block' }} tabIndex={-1} aria-labelledby="exampleModalLabel" aria-modal="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">Thông báo</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={() => setIsDisplayModal1(false)} aria-label="Close" />
+                                </div>
+                                <div className="modal-body">
+                                    <h3>  {
+
+                                        modal1
+                                    }
+                                    </h3>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={ handleSubmit }>Tạo</button>
 
                                 </div>
                             </div>
