@@ -1,27 +1,20 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginApi } from '../api/loginApi';
+import { useFormik } from 'formik';
+import * as Yup from "yup";
 function Login() {
     // redirect sang trang trước đó navigate(-1)
     const navigate = useNavigate();
 
     window.scrollTo(0, 0);
-    //sử lý form
-    const [input, setInputs] = useState({});
-    const [isDisplayModal, setIsDisplayModal] = useState(false);
+    const [check, setCheck] = useState(false);
 
-    const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({ ...values, [name]: value }))
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = (values) => {
         //gọi api login
         //send form to service
-        console.log(input, "cc")
-        loginApi.createLogin(input).then(res => {
+        console.log(values, "cc")
+        loginApi.createLogin(values).then(res => {
             sessionStorage.setItem("id",res.id)
             sessionStorage.setItem("userName", res);
             console.log(res)
@@ -29,15 +22,17 @@ function Login() {
             const user = res;
             console.log(user)
             if(user.email == null){
+                setCheck(true);
                 navigate("/Login")
-                const s = document.getElementById('result');
-                s.style.display = 'block';
+                setCheck(true);
+                console.log(check)
             } else{
 
             if(user.role){
                 console.log("123");
                 sessionStorage.setItem("admin", user);
                 navigate("/admin/static")
+                setCheck(false);
                 window.location.reload();
             }else{
                 navigate("/cart")
@@ -50,10 +45,21 @@ function Login() {
             console.log(e)
         });
     }
-    //xử lý đăng nhập
-    //if(seccess)
-    // localstoge = userName Nhận từ get api ("/login"), trả về home
-    //else (fail) cho popup thông báo sai tài khoản
+    const formik = useFormik({
+      
+        initialValues:{
+          email : "",
+          pass : "",
+        },
+        validationSchema: Yup.object({
+          email : Yup.string().required("Email không được trống!").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "chưa phù hợp định dạng email!"),
+          pass: Yup.string().required("Mật khẩu không được trống!").min(8, "Mật khẩu tối thiểu từ 8 ký tự!"),
+        }),
+       
+        onSubmit: (values) => {
+            handleSubmit(values)
+          }
+      })
 
     return (
         <div>
@@ -70,7 +76,7 @@ function Login() {
                                 />
                             </div>
                             <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                                <form onSubmit={handleSubmit}>
+                                <form onSubmit={formik.handleSubmit}>
                                     <div className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                                     </div>
                                     {/* Email input */}
@@ -82,27 +88,25 @@ function Login() {
                                             placeholder="Nhập email"
                                             name="email"
                                             required
-                                            value={input.email || ""}
-                                            onChange={handleChange}
+                                            value={formik.values.email} onChange={formik.handleChange}
                                         />
-
+                                        <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.email}</span>
                                     </div>
                                     {/* Password input */}
                                     <div className="form-outline mb-3">
                                         <input
                                             type="password"
                                             name="pass"
-
+                                            value={formik.values.pass} onChange={formik.handleChange}
                                             id="form3Example4"
                                             className="form-control form-control-lg"
                                             placeholder="Nhập mật khẩu"
                                             required
-                                            value={input.pass || ""}
-                                            onChange={handleChange}
                                         />
-
+                                        <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{formik.errors.pass}</span>
+                                        <span style={{textAlign:"left", color:"red", margin:"0",fontSize:"15px",float:"left"}}>{check?"Mật khẩu hoặc tài khoản không đúng":""}</span>
                                     </div>
-                                    <div className="d-flex justify-content-between align-items-center">
+                                    <div className="d-flex justify-content-between align-items-center" style={{display:"flex", clear:"both"}}>
                                         {/* Checkbox */}
                                         {/* <div className="form-check mb-0">
                                             <input
@@ -127,7 +131,6 @@ function Login() {
                                         >
                                             Đăng nhập
                                         </button>
-                                        <div id='result' style={{display:"none"}}>Mật khẩu hoặc tài khoản không đúng</div>
                                         <p className="small fw-bold mt-2 pt-1 mb-0">
                                            Không có tài khoản?{" "}
                                             <Link to="/Register" className="link-danger">
